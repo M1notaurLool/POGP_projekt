@@ -1,1 +1,1 @@
-print("Ahoj")
+import pygame
