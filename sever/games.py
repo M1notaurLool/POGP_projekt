@@ -1,5 +1,5 @@
 import pygame
-from network import Network
+from networks import Network
 
 
 class Player():
