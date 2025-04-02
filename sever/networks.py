@@ -1,23 +1,24 @@
 import socket
 
-from lobby import Okno
-
-
-
+import sys
 class Network:
-
-    def __init__(self):
+    def __init__(self, okno_instance):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.host = Okno.button_pressed()   # For this to work on your machine this must be equal to the ipv4 address of the machine running the server
-                                                # You can find this address by typing ipconfig in CMD and copying the ipv4 address. Again this must be the servers
-                                                # ipv4 address. This feild will be the same for all your clients.
+        self.host = okno_instance.get_saved_address()  # Použijeme metódu na získanie IP
         self.port = 11000
         self.addr = (self.host, self.port)
         self.id = self.connect()
 
     def connect(self):
-        self.client.connect(self.addr)
-        return self.client.recv(2048).decode()
+        try:
+            self.client.connect(self.addr)
+            print(f"✅ Pripojený k: {self.addr}")
+            return self.client.recv(2048).decode()
+        except Exception as e:
+            print(f"❌ Chyba pri pripájaní: {e}")
+            sys.exit()
+            return "ERROR"
+
 
     def send(self, data):
         """
