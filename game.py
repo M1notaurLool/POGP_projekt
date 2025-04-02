@@ -2,7 +2,8 @@ import pygame
 from player import Player
 from enemy import Enemy
 from powerup import PowerUp
-from config import SCREEN_WIDTH, SCREEN_HEIGHT
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
 
 class Game:
     def __init__(self):
