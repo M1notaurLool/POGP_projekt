@@ -30,9 +30,6 @@ class Player():
         if dirn == 0:  # Pohyb dopredu
             self.x += self.velocity * math.cos(radian_angle)
             self.y -= self.velocity * math.sin(radian_angle)
-        elif dirn == 1:  # Cúvanie
-            self.x -= self.velocity * math.cos(radian_angle)
-            self.y += self.velocity * math.sin(radian_angle)
         elif dirn == 2:  # Otáčanie doľava
             self.angle += 5
         elif dirn == 3:  # Otáčanie doprava
