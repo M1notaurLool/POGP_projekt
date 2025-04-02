@@ -9,7 +9,8 @@ class Network:
         self.host = okno_instance.get_saved_address()
 
 
-        self.port = 11000
+        self.port = okno_instance.get_saved_port()
+
         self.addr = (self.host, self.port)
         self.id = self.connect()
 
