@@ -17,14 +17,18 @@ class Okno(QtWidgets.QMainWindow):
         self._listview = QtWidgets.QListWidget(self)
         self._listview.setGeometry(0, 0, 400, 370)
 
-        self._btn = QtWidgets.QPushButton("Odoslať", self)
+        self._btn = QtWidgets.QPushButton("Spustit hru", self)
         self._btn.clicked.connect(self.start)
         self._btn.setGeometry(320, 270, 80, 30)
 
-        self._message = QtWidgets.QLineEdit("Ahoj", self)
-        self._message.setGeometry(80, 273, 240, 25)
+        self._btn = QtWidgets.QPushButton("Sava confg", self)
+        self._btn.clicked.connect(self.button_pressed)
+        self._btn.setGeometry(200, 270, 80, 30)
 
-        self._address = QtWidgets.QLineEdit("192.168.10.84", self)
+        self._message = QtWidgets.QLineEdit("Ahoj", self)
+        self._message.setGeometry(80, 273, 100, 25)
+
+        self._address = QtWidgets.QLineEdit("127.0.0.1", self)
         self._address.setGeometry(3, 273, 65, 25)
 
         self._timer = QtCore.QTimer(self)
@@ -38,10 +42,11 @@ class Okno(QtWidgets.QMainWindow):
 
     def button_pressed(self):
         adresa = self._address.text()
+        data_type = type(adresa)  # Zistenie dátového typu
+        print(f"Adresa: {adresa}, Typ: {data_type}")
         return adresa
 
     def start(self):
-
         if __name__ == "__main__":
             g = games.Game(500, 500)
             g.run()
