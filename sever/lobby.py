@@ -15,7 +15,7 @@ class Okno(QtWidgets.QMainWindow):
         self.resize(700, 600)
 
         #nastavenie pozadia
-        self.setStyleSheet("background-image: url('Obrazok/wellcome1.png');")
+        self.setStyleSheet("background-image: url('Obrazok/wellcome.png');")
 
 
         # Tlačidlo na spustenie hry
