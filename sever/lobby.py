@@ -14,43 +14,36 @@ class Okno(QtWidgets.QMainWindow):
         self.setWindowTitle("Triskáč blast")
         self.resize(700, 600)
 
-        #nastavenie farby pozadia
-        self.setStyleSheet("background: #54C392;")
+        #nastavenie pozadia
+        self.setStyleSheet("background-image: url('Obrazok/wellcome1.png');")
 
 
         # Tlačidlo na spustenie hry
         self._btn_start = QtWidgets.QPushButton("ŠTART", self)
         self._btn_start.clicked.connect(self.start)
         self._btn_start.setGeometry(540, 540, 150, 50)
-        self._btn_start.setStyleSheet("font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color:#15B392; border-radius: 5px; ")
+        self._btn_start.setStyleSheet("font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color:none; border-radius: 5px; ")
 
         # Tlačidlo na uloženie IP
         self._btn_save = QtWidgets.QPushButton("ULOŽIŤ", self)
         self._btn_save.clicked.connect(self.button_pressed)
         self._btn_save.setGeometry(300, 540, 150, 50)
         self._btn_save.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color:#15B392; border-radius: 5px;")
+            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; border-radius: 5px;")
 
-        # text nadpis
-        self._title = QtWidgets.QLabel("TRISKÁČ BLAST", self)
-        self._title.setGeometry(100, 200, 500, 80)
-        self._title.setStyleSheet("font-size: 60px; font-weight: bold; font-family: 'Comic Sans MS'; border-radius: 20px;")
 
-        self._title2 = QtWidgets.QLabel("LOBBY!", self)
-        self._title2.setGeometry(290, 280, 120, 35)
-        self._title2.setStyleSheet(
-            "font-size: 35px; font-weight: bold; font-family: 'Comic Sans MS';")
+
 
         # Pole pre nastavenie IP adresy
         self._address = QtWidgets.QLineEdit("127.0.0.1", self)
         self._address.setGeometry(10, 540, 150, 50)
         self._address.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS'; background-color:#15B392")
+            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; padding-left: 10px;")
 
         self._port = QtWidgets.QLineEdit("11000", self)
         self._port.setGeometry(170, 540, 120, 50)
         self._port.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS'; background-color:#15B392")
+            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; padding-left: 10px;")
 
         # Uložená IP adresa a port
         self._saved_address = "127.0.0.1"  # Defaultná IP adresa
