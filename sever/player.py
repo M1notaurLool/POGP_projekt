@@ -1,5 +1,6 @@
 import pygame
 import math
+from Bullet import Bullet
 
 class Player:
     WIDTH = HEIGHT = 50  # Veľkosť raketky
@@ -54,11 +55,18 @@ class Player:
 
     def draw(self, screen):
         """Nakreslí raketku a strely na obrazovku."""
-        rotated_image = pygame.Surface((self.WIDTH, self.HEIGHT), pygame.SRCALPHA)
-        pygame.draw.polygon(rotated_image, self.color, [(25, 0), (50, 50), (0, 50)])  # Trojuholníková raketa
-        rotated_image = pygame.transform.rotate(rotated_image, self.angle)  # Otáčanie raketky
-        new_rect = rotated_image.get_rect(center=(self.x, self.y))
-        screen.blit(rotated_image, new_rect.topleft)
+        # Nastavenie bodov trojuholníka (rakety)
+        center = (self.x, self.y)
+        radian_angle = math.radians(self.angle)
+        # Určíme vrcholy trojuholníka s ohľadom na uhol
+        points = [
+            (self.x + math.cos(radian_angle) * self.HEIGHT, self.y - math.sin(radian_angle) * self.HEIGHT),  # Hrot
+            (self.x + math.cos(radian_angle + math.pi / 3) * self.WIDTH, self.y - math.sin(radian_angle + math.pi / 3) * self.WIDTH),  # Ľavý okraj
+            (self.x + math.cos(radian_angle - math.pi / 3) * self.WIDTH, self.y - math.sin(radian_angle - math.pi / 3) * self.WIDTH)  # Pravý okraj
+        ]
+
+        # Vytvoríme povrch pre raketu
+        pygame.draw.polygon(screen, self.color, points)  # Trojuholník rakety (hrot je tam, kde sa otáča)
 
         # Nakreslenie striel
         for bullet in self.bullets:
@@ -67,27 +75,3 @@ class Player:
     def get_hitbox(self):
         """Vráti hitbox ako pygame Rect (na kolízie)."""
         return pygame.Rect(self.x - 25, self.y - 25, self.WIDTH, self.HEIGHT)
-
-
-class Bullet:
-    SIZE = 8  # Veľkosť strely
-
-    def __init__(self, x, y, angle, speed):
-        self.x = x
-        self.y = y
-        self.angle = angle
-        self.speed = speed
-
-    def move(self):
-        """Posunie strelu v smere uhla."""
-        radian_angle = math.radians(self.angle)
-        self.x += self.speed * math.cos(radian_angle)
-        self.y -= self.speed * math.sin(radian_angle)
-
-    def draw(self, screen):
-        """Nakreslí strelu na obrazovku."""
-        pygame.draw.circle(screen, (255, 255, 0), (int(self.x), int(self.y)), self.SIZE)
-
-    def get_hitbox(self):
-        """Vráti hitbox strely."""
-        return pygame.Rect(self.x - self.SIZE // 2, self.y - self.SIZE // 2, self.SIZE, self.SIZE)
