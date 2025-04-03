@@ -1,5 +1,6 @@
 import socket
 
+
 import sys
 class Network:
     def __init__(self, okno_instance):
@@ -21,9 +22,10 @@ class Network:
             self.client.connect(self.addr)
             print(f"Pripojený k: {self.addr}")
             return self.client.recv(2048).decode()
-        except Exception as e:
-            print(f"Chyba pri pripájaní: {e}")
-            sys.exit()
+        except:
+            from games import Game
+            print(f"Pri pripajani nastala chyba skontrolujte udaje na pripojenie na server.")
+            Game.close_game()
             return "ERROR"
 
 

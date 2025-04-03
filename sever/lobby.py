@@ -23,7 +23,7 @@ class Okno(QtWidgets.QMainWindow):
         self._btn_start.setGeometry(320, 270, 80, 30)
 
         # Tlačidlo na uloženie IP
-        self._btn_save = QtWidgets.QPushButton("Uložiť IP", self)
+        self._btn_save = QtWidgets.QPushButton("Uložiť", self)
         self._btn_save.clicked.connect(self.button_pressed)
         self._btn_save.setGeometry(203, 270, 80, 30)
 
