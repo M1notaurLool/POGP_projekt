@@ -13,16 +13,28 @@ class Player:
         self.bullets = []  # Zoznam vystrelených projektilov
 
     def move(self, direction, dt):
+        """Posunie raketu podľa smeru a času"""
+        if direction == "forward":  # Pohyb vpred
+            self.move_forward(dt)
+        elif direction == "left":  # Otáčanie doľava
+            self.rotate_left(dt)
+        elif direction == "right":  # Otáčanie doprava
+            self.rotate_right(dt)
+
+    def move_forward(self, dt):
+        """Pohyb vpred podľa uhla raketky"""
         radian_angle = math.radians(self.angle)
         speed = self.velocity * dt * 60  # Normalizovaná rýchlosť
+        self.x += speed * math.cos(radian_angle)
+        self.y -= speed * math.sin(radian_angle)
 
-        if direction == "forward":  # Pohyb v smere raketky
-            self.x += speed * math.cos(radian_angle)
-            self.y -= speed * math.sin(radian_angle)
-        elif direction == "left":  # Otáčanie doľava
-            self.angle += 3 * dt * 60
-        elif direction == "right":  # Otáčanie doprava
-            self.angle -= 3 * dt * 60
+    def rotate_left(self, dt):
+        """Otáčanie raketky doľava"""
+        self.angle += 3 * dt * 60  # Normalizované otáčanie doľava
+
+    def rotate_right(self, dt):
+        """Otáčanie raketky doprava"""
+        self.angle -= 3 * dt * 60  # Normalizované otáčanie doprava
 
     def shoot(self):
         """Vytvorí novú strelu v smere raketky."""
@@ -44,7 +56,7 @@ class Player:
         """Nakreslí raketku a strely na obrazovku."""
         rotated_image = pygame.Surface((self.WIDTH, self.HEIGHT), pygame.SRCALPHA)
         pygame.draw.polygon(rotated_image, self.color, [(25, 0), (50, 50), (0, 50)])  # Trojuholníková raketa
-        rotated_image = pygame.transform.rotate(rotated_image, -self.angle)
+        rotated_image = pygame.transform.rotate(rotated_image, self.angle)  # Otáčanie raketky
         new_rect = rotated_image.get_rect(center=(self.x, self.y))
         screen.blit(rotated_image, new_rect.topleft)
 
