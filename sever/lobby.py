@@ -31,6 +31,12 @@ class Okno(QtWidgets.QMainWindow):
         self._btn_save.setStyleSheet(
             "font-size: 20px; font-family: 'Comic Sans MS'; border: none; border-radius: 5px;")
 
+        # Tlačidlo na uloženie IP
+        self._btn_nastavenia = QtWidgets.QPushButton("Nastavenia", self)
+        self._btn_nastavenia.clicked.connect(self.options)
+        self._btn_nastavenia.setGeometry(300, 400, 150, 50)
+        self._btn_nastavenia.setStyleSheet(
+            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; border-radius: 5px;")
 
 
 
@@ -44,6 +50,7 @@ class Okno(QtWidgets.QMainWindow):
         self._port.setGeometry(170, 540, 120, 50)
         self._port.setStyleSheet(
             "font-size: 20px; font-family: 'Comic Sans MS'; border: none; padding-left: 10px;")
+
 
         # Uložená IP adresa a port
         self._saved_address = "127.0.0.1"  # Defaultná IP adresa
@@ -80,6 +87,71 @@ class Okno(QtWidgets.QMainWindow):
         return self._saved_port
 
     #zapinanie hry pygame a pripajanie na server
+
+    def clear(self):
+        for widget in self.findChildren(QtWidgets.QWidget):
+            widget.hide()
+
+    def main_windov(self):
+        self.clear()
+
+        # Tlačidlo na spustenie hry
+        self._btn_start = QtWidgets.QPushButton("ŠTART", self)
+        self._btn_start.clicked.connect(self.start)
+        self._btn_start.setGeometry(540, 540, 150, 50)
+        self._btn_start.setStyleSheet(
+            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color:none; border-radius: 5px; ")
+
+        # Tlačidlo na uloženie IP
+        self._btn_save = QtWidgets.QPushButton("Nastavenia", self)
+        self._btn_save.clicked.connect(self.options)
+        self._btn_save.setGeometry(300, 400, 150, 50)
+        self._btn_save.setStyleSheet(
+            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; border-radius: 5px;")
+
+        self._btn_save.show()
+        self._btn_start.show()
+
+    def options(self):
+        self.clear()
+
+        # Pole pre nastavenie IP adresy
+        self._address = QtWidgets.QLineEdit("127.0.0.1", self)
+        self._address.setGeometry(10, 540, 150, 50)
+        self._address.setStyleSheet(
+                "font-size: 20px; font-family: 'Comic Sans MS'; border: none; padding-left: 10px;")
+
+        self._port = QtWidgets.QLineEdit("11000", self)
+        self._port.setGeometry(170, 540, 120, 50)
+        self._port.setStyleSheet(
+                "font-size: 20px; font-family: 'Comic Sans MS'; border: none; padding-left: 10px;")
+
+            # Tlačidlo na uloženie IP
+        self._btn_save = QtWidgets.QPushButton("ULOŽIŤ", self)
+        self._btn_save.clicked.connect(self.button_pressed)
+        self._btn_save.setGeometry(300, 540, 150, 50)
+        self._btn_save.setStyleSheet(
+                "font-size: 20px; font-family: 'Comic Sans MS'; border: none; border-radius: 5px;")
+
+        # Tlačidlo na vratenie do main
+        self._btn_back_main = QtWidgets.QPushButton("VRATIT SA", self)
+        self._btn_back_main.clicked.connect(self.main_windov)
+        self._btn_back_main.setGeometry(540, 540, 150, 50)
+        self._btn_back_main.setStyleSheet(
+            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color:none; border-radius: 5px; ")
+
+        # Uložená IP adresa a port
+        self._saved_address = "127.0.0.1"  # Defaultná IP adresa
+        self._saved_port = 11000
+
+            # 4️⃣ Zobrazenie nových prvkov
+        self._address.show()
+        self._port.show()
+        self._btn_save.show()
+        self._btn_back_main.show()
+
+
+
     def start(self):
         """Spustí hru a pripojí sa na server."""
         print("Spúšťam hru")
