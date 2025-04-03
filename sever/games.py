@@ -13,6 +13,10 @@ class Game:
         self.player2 = Player(100, 100)
         self.canvas = Canvas(self.width, self.height, "Testing...")
 
+
+    def close_game(self):
+        pygame.quit()
+
     def run(self):
         clock = pygame.time.Clock()
         run = True
