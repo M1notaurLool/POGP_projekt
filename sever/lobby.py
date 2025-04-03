@@ -24,12 +24,7 @@ class Okno(QtWidgets.QMainWindow):
         self._btn_start.setGeometry(540, 540, 150, 50)
         self._btn_start.setStyleSheet("font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color:none; border-radius: 5px; ")
 
-        # Tlačidlo na uloženie IP
-        self._btn_save = QtWidgets.QPushButton("ULOŽIŤ", self)
-        self._btn_save.clicked.connect(self.button_pressed)
-        self._btn_save.setGeometry(300, 540, 150, 50)
-        self._btn_save.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; border-radius: 5px;")
+
 
         # Tlačidlo na uloženie IP
         self._btn_nastavenia = QtWidgets.QPushButton("Nastavenia", self)
@@ -38,23 +33,6 @@ class Okno(QtWidgets.QMainWindow):
         self._btn_nastavenia.setStyleSheet(
             "font-size: 20px; font-family: 'Comic Sans MS'; border: none; border-radius: 5px;")
 
-
-
-        # Pole pre nastavenie IP adresy
-        self._address = QtWidgets.QLineEdit("127.0.0.1", self)
-        self._address.setGeometry(10, 540, 150, 50)
-        self._address.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; padding-left: 10px;")
-
-        self._port = QtWidgets.QLineEdit("11000", self)
-        self._port.setGeometry(170, 540, 120, 50)
-        self._port.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; padding-left: 10px;")
-
-
-        # Uložená IP adresa a port
-        self._saved_address = "127.0.0.1"  # Defaultná IP adresa
-        self._saved_port = 11000
 
         # Timer pre periodické kontroly správ
         self._timer = QtCore.QTimer(self)
