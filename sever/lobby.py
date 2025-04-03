@@ -11,7 +11,7 @@ PORT = 5555
 class Okno(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Lobby!")
+        self.setWindowTitle("Triskáč blast")
         self.resize(700, 600)
 
         #nastavenie farby pozadia
