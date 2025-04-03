@@ -12,27 +12,39 @@ class Okno(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Lobby!")
-        self.resize(400, 300)
+        self.resize(700, 600)
 
-        self._listview = QtWidgets.QListWidget(self)
-        self._listview.setGeometry(0, 0, 400, 370)
+        #nastavenie farby pozadia
+        self.setStyleSheet("""
+            background: qlineargradient(
+                x1:0.5, y1:0, x2:0.5, y2:1,
+                stop:0 rgba(24, 231, 148, 1),
+                stop:1 rgba(249, 255, 2, 1)
+            );
+        """)
 
         # Tlačidlo na spustenie hry
-        self._btn_start = QtWidgets.QPushButton("Spustiť hru", self)
+        self._btn_start = QtWidgets.QPushButton("ŠTART", self)
         self._btn_start.clicked.connect(self.start)
-        self._btn_start.setGeometry(320, 270, 80, 30)
+        self._btn_start.setGeometry(540, 540, 150, 50)
+        self._btn_start.setStyleSheet("font-size: 20px; font-family: 'Comic Sans MS'")
 
         # Tlačidlo na uloženie IP
         self._btn_save = QtWidgets.QPushButton("Uložiť", self)
         self._btn_save.clicked.connect(self.button_pressed)
-        self._btn_save.setGeometry(203, 270, 80, 30)
+        self._btn_save.setGeometry(203, 540, 80, 50)
+
+        self._title = QtWidgets.QLabel("TRISKÁČ BLAST", self)
+        self._title.setGeometry(3, 0, 100, 50)
+        self._title.setStyleSheet("background-color: red;")
+
 
         # Pole pre nastavenie IP adresy
         self._address = QtWidgets.QLineEdit("127.0.0.1", self)
-        self._address.setGeometry(3, 273, 100, 25)
+        self._address.setGeometry(3, 540, 100, 50)
 
         self._port = QtWidgets.QLineEdit("11000", self)
-        self._port.setGeometry(113, 273, 80, 25)
+        self._port.setGeometry(113, 540, 80, 50)
 
         # Uložená IP adresa a port
         self._saved_address = "127.0.0.1"  # Defaultná IP adresa
