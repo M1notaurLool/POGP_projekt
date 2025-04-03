@@ -55,14 +55,12 @@ class Player:
 
     def draw(self, screen):
         """Nakreslí raketku a strely na obrazovku."""
-        # Nastavenie bodov trojuholníka (rakety)
-        center = (self.x, self.y)
         radian_angle = math.radians(self.angle)
         # Určíme vrcholy trojuholníka s ohľadom na uhol
         points = [
             (self.x + math.cos(radian_angle) * self.HEIGHT, self.y - math.sin(radian_angle) * self.HEIGHT),  # Hrot
-            (self.x + math.cos(radian_angle + math.pi / 3) * self.WIDTH, self.y - math.sin(radian_angle + math.pi / 3) * self.WIDTH),  # Ľavý okraj
-            (self.x + math.cos(radian_angle - math.pi / 3) * self.WIDTH, self.y - math.sin(radian_angle - math.pi / 3) * self.WIDTH)  # Pravý okraj
+            (self.x + math.cos(radian_angle + math.pi / 2) * self.WIDTH, self.y - math.sin(radian_angle + math.pi / 2) * self.WIDTH),  # Ľavý okraj
+            (self.x + math.cos(radian_angle - math.pi / 2) * self.WIDTH, self.y - math.sin(radian_angle - math.pi / 2) * self.WIDTH)  # Pravý okraj
         ]
 
         # Vytvoríme povrch pre raketu
