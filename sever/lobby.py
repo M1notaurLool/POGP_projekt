@@ -6,6 +6,8 @@ from PyQt6 import QtWidgets, QtCore
 import games
 from networks import Network
 
+
+
 PORT = 5555
 
 
@@ -155,16 +157,9 @@ class Okno(QtWidgets.QMainWindow):
 
 
     def start(self):
-        """Spustí hru a pripojí sa na server."""
-        print("Spúšťam hru")
-        try:
-            # Vytvorte objekt Network až po stlačení tlačidla
-            network = Network(self)  # Odovzdáme Okno inštanciu
-            print(f"Pripojenie na server: {self.get_saved_address()}:{self.get_saved_port()}")
-            g = games.Game(1000, 1000, self)  # Očakávame, že trieda Game existuje v games.py
-            g.run()  # Spustíme hru
-        except Exception as e:
-            print(f"Chyba pri spúšťaní hry: {e}")
+        network = Network(self)
+        g = games.Game(500, 500, self)
+        g.run()
 
     def periodic(self):
         """Periodicky kontroluje prijaté správy zo socketu."""
