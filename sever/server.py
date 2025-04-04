@@ -28,7 +28,8 @@ pos = ["0:50,50", "1:100,100"]
 
 def threaded_client(conn):
     global currentId, pos
-    lock.acquire()
+    # Priraď ID klientovi
+    lock.acquire()  # Uzamkneme, aby sme zabezpečili, že len jeden klient dostane ID
     clientId = currentId
     currentId += 1
     lock.release()
@@ -39,25 +40,25 @@ def threaded_client(conn):
     while True:
         try:
             data = conn.recv(2048)
-            if not data:
-                print("No data received, closing connection")
-                break  # Koniec komunikácie
-
             reply = data.decode('utf-8')
-            print(f"Received: {reply}")
+            if not data:
+                conn.send(str.encode("Goodbye"))
+                break
+            else:
+                print(f"Received: {reply}")
+                arr = reply.split(":")
+                id = int(arr[0])  # Klient ID
+                pos[id] = reply  # Aktualizácia pozície
 
-            arr = reply.split(":")
-            id = int(arr[0])
-            pos[id] = reply
+                # Zistenie id druhého klienta
+                nid = 1 if id == 0 else 0
 
-            nid = 1 if id == 0 else 0
-            reply = pos[nid]
-            print(f"Sending: {reply}")
+                reply = pos[nid][:]  # Pošleme pozíciu druhého klienta
+                print(f"Sending: {reply}")
 
-            conn.sendall(str.encode(reply))  # Posielanie dát klientovi
-        except socket.error as e:
-            print(f"Socket error: {e}")
-            break  # V prípade chyby prerušíme komunikáciu
+            conn.sendall(str.encode(reply))
+        except:
+            break
 
     print("Connection Closed")
     conn.close()
