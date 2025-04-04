@@ -5,13 +5,19 @@ from Bullet import Bullet
 class Player:
     WIDTH = HEIGHT = 50  # Veľkosť raketky
 
-    def __init__(self, x, y, color=(255, 0, 0)):
+    def __init__(self, x, y, image_path="RaketaPassive.png"):
         self.x = float(x)
         self.y = float(y)
         self.velocity = 3  # Rýchlosť pohybu
         self.angle = 0  # Uhol otočenia (v stupňoch)
-        self.color = color
         self.bullets = []  # Zoznam vystrelených projektilov
+
+        # Načítanie obrázka
+        self.original_image = pygame.image.load(image_path)  # Načítanie obrázka
+        self.original_image = pygame.transform.rotate(self.original_image, -90)  # Otočenie o 90° doprava
+        self.original_image = pygame.transform.scale(self.original_image, (self.WIDTH, self.HEIGHT))  # Zmenšenie obrázka
+        self.image = self.original_image  # Aktuálny obrázok, ktorý sa bude otáčať pri pohybe
+
 
     def move(self, direction, dt):
         """Posunie raketu podľa smeru a času"""
@@ -54,17 +60,15 @@ class Player:
                 self.bullets.remove(bullet)
 
     def draw(self, screen):
-        """Nakreslí raketku a strely na obrazovku."""
-        radian_angle = math.radians(self.angle)
-        # Určíme vrcholy trojuholníka s ohľadom na uhol
-        points = [
-            (self.x + math.cos(radian_angle) * self.HEIGHT, self.y - math.sin(radian_angle) * self.HEIGHT),  # Hrot
-            (self.x + math.cos(radian_angle + math.pi / 2) * self.WIDTH, self.y - math.sin(radian_angle + math.pi / 2) * self.WIDTH),  # Ľavý okraj
-            (self.x + math.cos(radian_angle - math.pi / 2) * self.WIDTH, self.y - math.sin(radian_angle - math.pi / 2) * self.WIDTH)  # Pravý okraj
-        ]
+        """Nakreslí raketku ako obrázok na obrazovku."""
+        # Otočenie obrázka podľa uhla rakety
+        rotated_image = pygame.transform.rotate(self.image, self.angle)
 
-        # Vytvoríme povrch pre raketu
-        pygame.draw.polygon(screen, self.color, points)  # Trojuholník rakety (hrot je tam, kde sa otáča)
+        # Nájdeme stred obrázka po otočení
+        rect = rotated_image.get_rect(center=(self.x, self.y))
+
+        # Vykreslenie obrázka
+        screen.blit(rotated_image, rect.topleft)
 
         # Nakreslenie striel
         for bullet in self.bullets:

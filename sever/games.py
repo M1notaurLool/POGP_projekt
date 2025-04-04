@@ -11,7 +11,7 @@ class Game:
         self.width = w
         self.height = h
         self.player = Player(250, 250)  # Hlavný hráč
-        self.player2 = Player(100, 100, color=(0, 0, 255))  # Druhý hráč (súper)
+        self.player2 = Player(100, 100, image_path="RaketaPassive.png")  # Druhý hráč (súper)
         self.canvas = Canvas(self.width, self.height, "Triskáč Blast")
         self.last_received_data = "0,0"
 
