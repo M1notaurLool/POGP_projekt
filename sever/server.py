@@ -1,30 +1,41 @@
-
 import socket
 from _thread import *
 import sys
+import threading  # Pre zámky (locks)
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-server = '192.168.88.11'
+server = '127.0.0.1'
 port = 11000
 
 server_ip = socket.gethostbyname(server)
 
 try:
     s.bind((server, port))
-
 except socket.error as e:
     print(str(e))
 
 s.listen(2)
 print("Waiting for a connection")
 
-currentId = "0"
+# Zámok na synchronizáciu prístupu k "pos"
+lock = threading.Lock()
+
+# Inicializácia ID a pozícií
+currentId = 0  # Ak by si chcel dynamicky priraďovať ID
 pos = ["0:50,50", "1:100,100"]
+
+
 def threaded_client(conn):
     global currentId, pos
-    conn.send(str.encode(currentId))
-    currentId = "1"
+    # Priraď ID klientovi
+    lock.acquire()  # Uzamkneme, aby sme zabezpečili, že len jeden klient dostane ID
+    clientId = currentId
+    currentId += 1
+    lock.release()
+
+    conn.send(str.encode(str(clientId)))
+
     reply = ''
     while True:
         try:
@@ -34,16 +45,16 @@ def threaded_client(conn):
                 conn.send(str.encode("Goodbye"))
                 break
             else:
-                print("Recieved: " + reply)
+                print(f"Received: {reply}")
                 arr = reply.split(":")
-                id = int(arr[0])
-                pos[id] = reply
+                id = int(arr[0])  # Klient ID
+                pos[id] = reply  # Aktualizácia pozície
 
-                if id == 0: nid = 1
-                if id == 1: nid = 0
+                # Zistenie id druhého klienta
+                nid = 1 if id == 0 else 0
 
-                reply = pos[nid][:]
-                print("Sending: " + reply)
+                reply = pos[nid][:]  # Pošleme pozíciu druhého klienta
+                print(f"Sending: {reply}")
 
             conn.sendall(str.encode(reply))
         except:
@@ -52,8 +63,10 @@ def threaded_client(conn):
     print("Connection Closed")
     conn.close()
 
+
 while True:
     conn, addr = s.accept()
-    print("Connected to: ", addr)
+    print("Connected to:", addr)
 
+    # Spustenie nového vlákna pre každý klienta
     start_new_thread(threaded_client, (conn,))
