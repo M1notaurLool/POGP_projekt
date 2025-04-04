@@ -85,11 +85,11 @@ class Okno(QtWidgets.QMainWindow):
             "font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color:none; border-radius: 5px; ")
 
         # Tlačidlo na uloženie IP
-        self._btn_save = QtWidgets.QPushButton("MULTY PLAYER", self)
-        self._btn_save.clicked.connect(self.multy)
-        self._btn_save.setGeometry(200, 300, 300, 50)
-        self._btn_save.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS';  border-radius: 5px; background-color: red; opacity: 0;")
+        self._btn_multy = QtWidgets.QPushButton("MULTY PLAYER", self)
+        self._btn_multy.clicked.connect(self.multy)
+        self._btn_multy.setGeometry(200, 300, 300, 50)
+        self._btn_multy.setStyleSheet(
+            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color: none; border-radius: 5px;")
 
         # Tlačidlo na uloženie IP
         self._btn_exit = QtWidgets.QPushButton("Exit", self)
@@ -98,7 +98,7 @@ class Okno(QtWidgets.QMainWindow):
         self._btn_exit.setStyleSheet(
             "font-size: 20px; font-family: 'Comic Sans MS'; border: none; border-radius: 5px;")
 
-        self._btn_save.show()
+        self._btn_multy.show()
         self._btn_start.show()
         self._btn_exit.show()
 
