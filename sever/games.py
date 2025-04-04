@@ -15,10 +15,6 @@ class Game:
         self.canvas = Canvas(self.width, self.height, "Triskáč Blast")
         self.last_received_data = "0,0"
 
-
-
-
-
     def run(self):
         run = True
         frame_counter = 0
@@ -44,11 +40,11 @@ class Game:
             # Aktualizujeme strely
             self.player.update_bullets()
 
-            # Posielanie údajov na server len každých 10 snímkov
+            # Posielame údaje na server
             if frame_counter % 10 == 0:
                 self.last_received_data = self.send_data()
 
-            # Aktualizujeme hráča 2 len z posledných platných dát
+            # Aktualizujeme pozíciu hráča 2 len z posledných platných dát
             print("Received data:", self.last_received_data)
             self.player2.x, self.player2.y = self.parse_data(self.last_received_data)
             print("Updated player2 position:", self.player2.x, self.player2.y)
@@ -69,14 +65,20 @@ class Game:
         reply = self.net.send(data)
         return reply
 
-    @staticmethod
-    def parse_data(data):
+
+    def parse_data(self, data):
         """Spracuje dáta od servera."""
+        """Spracuje dáta od servera a vráti súradnice druhého hráča."""
         try:
-            d = data.split(":")[1].split(",")
-            return float(d[0]), float(d[1])
+            players = data.split(";")  # Ak je viac hráčov, oddelíme ich stredníkom
+            for p in players:
+                player_id, coords = p.split(":")  # Rozdelíme ID a súradnice
+                if int(player_id) != self.net.id:  # Ak to NIE SOM JA, uložím to ako súpera
+                    x, y = map(float, coords.split(","))
+                    return x, y
+            return self.player2.x, self.player2.y  # Ak nič nenašlo, vráť staré súradnice
         except:
-            return 0, 0
+            return self.player2.x, self.player2.y  # Ak je chyba, zachovaj predchádzajúcu hodnotu
 
 
 class Canvas:
