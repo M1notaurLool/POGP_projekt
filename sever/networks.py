@@ -20,7 +20,6 @@ class Network:
     def connect(self):
         try:
             self.client.connect(self.addr)
-            print(f"Pripojený k: {self.addr}")
             return self.client.recv(2048).decode()
         except:
             from games import Game
@@ -35,12 +34,8 @@ class Network:
         :return: str
         """
         try:
-            #odoslanie dat cez soket
             self.client.send(str.encode(data))
-            #prijatie odpocede od servera
             reply = self.client.recv(2048).decode()
-            #vrati odpoved sercera
             return reply
         except socket.error as e:
-            #Ak nastane chyba vrati spravu o chybe
             return str(e)
