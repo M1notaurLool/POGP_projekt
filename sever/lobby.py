@@ -1,4 +1,5 @@
 import socket
+import sys
 
 import pygame
 from PyQt6 import QtWidgets, QtCore
@@ -12,26 +13,13 @@ class Okno(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Triskáč blast")
-        self.resize(700, 600)
+        self.setFixedSize(700, 600)
 
         #nastavenie pozadia
         self.setStyleSheet("background-image: url('Obrazok/wellcome.png');")
+        self.main_windov()
 
 
-        # Tlačidlo na spustenie hry
-        self._btn_start = QtWidgets.QPushButton("ŠTART", self)
-        self._btn_start.clicked.connect(self.start)
-        self._btn_start.setGeometry(540, 540, 150, 50)
-        self._btn_start.setStyleSheet("font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color:none; border-radius: 5px; ")
-
-
-
-        # Tlačidlo na uloženie IP
-        self._btn_nastavenia = QtWidgets.QPushButton("Nastavenia", self)
-        self._btn_nastavenia.clicked.connect(self.options)
-        self._btn_nastavenia.setGeometry(300, 400, 150, 50)
-        self._btn_nastavenia.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; border-radius: 5px;")
 
 
         # Timer pre periodické kontroly správ
@@ -44,6 +32,13 @@ class Okno(QtWidgets.QMainWindow):
         self._sock.bind(('0.0.0.0', PORT))  # Počúva na všetkých sieťových rozhraniach
 
         self.show()
+
+
+
+
+
+
+
 
     #funkcia ked stlacim tlacidlo ulozi z riadku v pyqt do premennej hodnoty
     def button_pressed(self):
@@ -70,6 +65,15 @@ class Okno(QtWidgets.QMainWindow):
         for widget in self.findChildren(QtWidgets.QWidget):
             widget.hide()
 
+
+
+
+
+
+
+
+
+
     def main_windov(self):
         self.clear()
 
@@ -81,16 +85,36 @@ class Okno(QtWidgets.QMainWindow):
             "font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color:none; border-radius: 5px; ")
 
         # Tlačidlo na uloženie IP
-        self._btn_save = QtWidgets.QPushButton("Nastavenia", self)
-        self._btn_save.clicked.connect(self.options)
-        self._btn_save.setGeometry(300, 400, 150, 50)
+        self._btn_save = QtWidgets.QPushButton("MULTY PLAYER", self)
+        self._btn_save.clicked.connect(self.multy)
+        self._btn_save.setGeometry(200, 300, 300, 50)
         self._btn_save.setStyleSheet(
+            "font-size: 20px; font-family: 'Comic Sans MS';  border-radius: 5px; background-color: red; opacity: 0;")
+
+        # Tlačidlo na uloženie IP
+        self._btn_exit = QtWidgets.QPushButton("Exit", self)
+        self._btn_exit.clicked.connect(self.exit)
+        self._btn_exit.setGeometry(200, 400, 300, 50)
+        self._btn_exit.setStyleSheet(
             "font-size: 20px; font-family: 'Comic Sans MS'; border: none; border-radius: 5px;")
 
         self._btn_save.show()
         self._btn_start.show()
+        self._btn_exit.show()
 
-    def options(self):
+
+
+    def exit(self):
+        sys.exit()
+
+
+
+
+
+
+
+
+    def multy(self):
         self.clear()
 
         # Pole pre nastavenie IP adresy
