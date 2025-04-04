@@ -118,7 +118,7 @@ class Okno(QtWidgets.QMainWindow):
         self.clear()
 
         # Pole pre nastavenie IP adresy
-        self._address = QtWidgets.QLineEdit("127.0.0.1", self)
+        self._address = QtWidgets.QLineEdit("192.168.88.11", self)
         self._address.setGeometry(10, 540, 150, 50)
         self._address.setStyleSheet(
                 "font-size: 20px; font-family: 'Comic Sans MS'; border: none; padding-left: 10px;")
