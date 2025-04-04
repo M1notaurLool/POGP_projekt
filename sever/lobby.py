@@ -6,8 +6,6 @@ from PyQt6 import QtWidgets, QtCore
 import games
 from networks import Network
 
-
-
 PORT = 5555
 
 
@@ -91,7 +89,8 @@ class Okno(QtWidgets.QMainWindow):
         self._btn_multy.clicked.connect(self.multy)
         self._btn_multy.setGeometry(200, 300, 300, 50)
         self._btn_multy.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color: none; border-radius: 5px;")
+            "font-size: 20px; font-family: 'Comic Sans MS'; "
+    "border-radius: 5px; background-color: black; color: white; opacity: 1;")
 
         # Tlačidlo na uloženie IP
         self._btn_exit = QtWidgets.QPushButton("Exit", self)
@@ -120,7 +119,7 @@ class Okno(QtWidgets.QMainWindow):
         self.clear()
 
         # Pole pre nastavenie IP adresy
-        self._address = QtWidgets.QLineEdit("192.168.88.11", self)
+        self._address = QtWidgets.QLineEdit("127.0.0.1", self)
         self._address.setGeometry(10, 540, 150, 50)
         self._address.setStyleSheet(
                 "font-size: 20px; font-family: 'Comic Sans MS'; border: none; padding-left: 10px;")
@@ -145,7 +144,7 @@ class Okno(QtWidgets.QMainWindow):
             "font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color:none; border-radius: 5px; ")
 
         # Uložená IP adresa a port
-        self._saved_address = "172.20.10.2"  # Defaultná IP adresa
+        self._saved_address = "127.0.0.1"  # Defaultná IP adresa
         self._saved_port = 11000
 
             # 4️⃣ Zobrazenie nových prvkov
@@ -157,9 +156,16 @@ class Okno(QtWidgets.QMainWindow):
 
 
     def start(self):
-        network = Network(self)
-        g = games.Game(500, 500, self)
-        g.run()
+        """Spustí hru a pripojí sa na server."""
+        print("Spúšťam hru")
+        try:
+            # Vytvorte objekt Network až po stlačení tlačidla
+            network = Network(self)  # Odovzdáme Okno inštanciu
+            print(f"Pripojenie na server: {self.get_saved_address()}:{self.get_saved_port()}")
+            g = games.Game(1000, 1000, self)  # Očakávame, že trieda Game existuje v games.py
+            g.run()  # Spustíme hru
+        except Exception as e:
+            print(f"Chyba pri spúšťaní hry: {e}")
 
     def periodic(self):
         """Periodicky kontroluje prijaté správy zo socketu."""
