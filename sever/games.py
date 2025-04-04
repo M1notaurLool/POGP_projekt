@@ -49,7 +49,9 @@ class Game:
                 self.last_received_data = self.send_data()
 
             # Aktualizujeme hráča 2 len z posledných platných dát
+            print("Received data:", self.last_received_data)
             self.player2.x, self.player2.y = self.parse_data(self.last_received_data)
+            print("Updated player2 position:", self.player2.x, self.player2.y)
 
             # Kreslenie
             self.canvas.draw_background()
