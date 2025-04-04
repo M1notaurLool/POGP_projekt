@@ -15,16 +15,9 @@ class Game:
         self.canvas = Canvas(self.width, self.height, "Triskáč Blast")
         self.last_received_data = "0,0"
 
-        threading.Thread(target=self.send_data_thread, daemon=True).start()
 
-    def send_data_thread(self):
-        """Beží na pozadí a neustále posiela dáta na server bez blokovania hry."""
-        while True:
-            data = f"{self.net.id}:{self.player.x},{self.player.y}"
-            reply = self.net.send(data)
-            if reply:
-                self.last_received_data = reply
-            time.sleep(0.05)
+
+
 
     def run(self):
         run = True
