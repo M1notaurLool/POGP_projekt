@@ -1,8 +1,10 @@
 import pygame
 from network import Network
 
-
 from player import Player
+
+
+
 
 class Game:
 
@@ -11,14 +13,14 @@ class Game:
         self.width = w
         self.height = h
         self.player = Player(50, 50)
-        self.player2 = Player(100, 100)
+        self.player2 = Player(100,100)
         self.canvas = Canvas(self.width, self.height, "Testing...")
 
     def run(self):
         clock = pygame.time.Clock()
         run = True
         while run:
-            dt = clock.tick(60) / 1000  # Získanie časového rozdielu medzi snímkami v sekundách
+            clock.tick(60)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -31,19 +33,19 @@ class Game:
 
             if keys[pygame.K_RIGHT]:
                 if self.player.x <= self.width - self.player.velocity:
-                    self.player.move(0, dt)  # Odovzdaj dt
+                    self.player.move(0)
 
             if keys[pygame.K_LEFT]:
                 if self.player.x >= self.player.velocity:
-                    self.player.move(1, dt)  # Odovzdaj dt
+                    self.player.move(1)
 
             if keys[pygame.K_UP]:
                 if self.player.y >= self.player.velocity:
-                    self.player.move(2, dt)  # Odovzdaj dt
+                    self.player.move(2)
 
             if keys[pygame.K_DOWN]:
                 if self.player.y <= self.height - self.player.velocity:
-                    self.player.move(3, dt)  # Odovzdaj dt
+                    self.player.move(3)
 
             # Send Network Stuff
             self.player2.x, self.player2.y = self.parse_data(self.send_data())
@@ -55,7 +57,6 @@ class Game:
             self.canvas.update()
 
         pygame.quit()
-
 
     def send_data(self):
         """
