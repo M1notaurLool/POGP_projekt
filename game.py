@@ -8,8 +8,8 @@ from player import Player
 
 class Game:
 
-    def __init__(self, w, h):
-        self.net = Network()
+    def __init__(self, w, h, okno_instance):
+        self.net = Network(okno_instance)
         self.width = w
         self.height = h
         self.player = Player(50, 50)
