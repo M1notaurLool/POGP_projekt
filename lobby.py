@@ -1,7 +1,7 @@
 import socket
 import sys
 
-import pygame
+
 from PyQt6 import QtWidgets, QtCore
 import game
 from network import Network
