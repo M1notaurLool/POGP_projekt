@@ -176,3 +176,5 @@ class Okno(QtWidgets.QMainWindow):
 app = QtWidgets.QApplication([])
 win = Okno()  # Vytvoríme GUI okno
 app.exec()  # Spustíme aplikáciu
+
+
