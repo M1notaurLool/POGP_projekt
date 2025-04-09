@@ -3,7 +3,7 @@ import socket
 # Vytvorenie UDP socketu
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-server = '127.0.0.1'
+server = '192.168.48.190'
 port = 11000
 
 try:
