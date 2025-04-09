@@ -7,7 +7,7 @@ class Network:
         self.host = okno_instance.get_saved_address()
         self.port = okno_instance.get_saved_port()
         self.addr = (self.host, self.port)
-        self.id = self.connect()  # Získaj svoje ID od servera
+        self.id = self.get_id()
 
     def connect(self):
         # Implementuj logiku pripojenia, prípadne jednoducho zavolaj metódu get_id()
