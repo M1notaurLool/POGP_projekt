@@ -1,12 +1,17 @@
 import socket
 
 class Network:
-    def __init__(self):
+    def __init__(self, okno_instance):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.host = "192.168.88.11"  # IP adresa servera
-        self.port = 11000
+        # Inicializácia host hodnotou z okna
+        self.host = okno_instance.get_saved_address()
+        self.port = okno_instance.get_saved_port()
         self.addr = (self.host, self.port)
-        self.id = self.get_id()  # Získaj svoje ID od servera
+        self.id = self.connect()  # Získaj svoje ID od servera
+
+    def connect(self):
+        # Implementuj logiku pripojenia, prípadne jednoducho zavolaj metódu get_id()
+        return self.get_id()
 
     def get_id(self):
         """Získaj ID od servera pri prvom spojení."""
