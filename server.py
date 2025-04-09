@@ -18,12 +18,12 @@ except socket.error as e:
 s.listen(2)
 print("Waiting for a connection")
 
-currentId = "0"
+currentId = 0
 pos = ["0:50,50", "1:100,100"]
 def threaded_client(conn):
     global currentId, pos
     conn.send(str.encode(currentId))
-    currentId = "1"
+    currentId =+1
     reply = ''
     while True:
         try:
