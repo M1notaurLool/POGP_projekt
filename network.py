@@ -3,7 +3,7 @@ import socket
 class Network:
     def __init__(self):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.host = "192.168.48.190"  # IP adresa servera
+        self.host = "192.168.88.11"  # IP adresa servera
         self.port = 11000
         self.addr = (self.host, self.port)
         self.id = self.get_id()  # Získaj svoje ID od servera

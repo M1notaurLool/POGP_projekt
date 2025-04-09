@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0e9ef748-f54a-411e-bde7-5a44ef0bf2c0" name="Changes" comment="#31 praca na multilayer">
-      <change beforePath="$PROJECT_DIR$/lobby.py" beforeDir="false" />
-    </list>
+    <list default="true" id="0e9ef748-f54a-411e-bde7-5a44ef0bf2c0" name="Changes" comment="#33 server prorobeny na UDP" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,11 +33,12 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Sebi/3.Ročník/master&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Sebi/3.Ročník/master/obrazok&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Sebi\3.Ročník\master\obrazok" />
       <recent name="C:\Sebi\3.Ročník\master" />
     </key>
   </component>
@@ -86,7 +85,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="player" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="network" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="master" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -98,7 +97,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/player.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/network.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -152,10 +151,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.run" />
-        <item itemvalue="Python.game" />
-        <item itemvalue="Python.lobby" />
         <item itemvalue="Python.server" />
-        <item itemvalue="Python.player" />
+        <item itemvalue="Python.lobby" />
+        <item itemvalue="Python.network" />
+        <item itemvalue="Python.game" />
       </list>
     </recent_temporary>
   </component>
@@ -248,7 +247,71 @@
       <option name="project" value="LOCAL" />
       <updated>1744186113977</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="#31 praca na multilayer">
+      <option name="closed" value="true" />
+      <created>1744187122385</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1744187122385</updated>
+    </task>
+    <task id="LOCAL-00012" summary="#31 praca na multilayer">
+      <option name="closed" value="true" />
+      <created>1744187756089</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1744187756089</updated>
+    </task>
+    <task id="LOCAL-00013" summary="# funkcny multyplayer snapshto pred dynamickym lobby">
+      <option name="closed" value="true" />
+      <created>1744187816169</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1744187816169</updated>
+    </task>
+    <task id="LOCAL-00014" summary="obrazok">
+      <option name="closed" value="true" />
+      <created>1744189541209</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1744189541209</updated>
+    </task>
+    <task id="LOCAL-00015" summary="obrazok">
+      <option name="closed" value="true" />
+      <created>1744189635807</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1744189635807</updated>
+    </task>
+    <task id="LOCAL-00016" summary="obrazok">
+      <option name="closed" value="true" />
+      <created>1744191172449</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1744191172449</updated>
+    </task>
+    <task id="LOCAL-00017" summary="#33 server prorobeny na UDP">
+      <option name="closed" value="true" />
+      <created>1744191947487</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1744191947487</updated>
+    </task>
+    <task id="LOCAL-00018" summary="#33 server prorobeny na UDP">
+      <option name="closed" value="true" />
+      <created>1744192446140</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1744192446140</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -292,6 +355,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="oprava" />
     <MESSAGE value="#31 praca na multilayer" />
-    <option name="LAST_COMMIT_MESSAGE" value="#31 praca na multilayer" />
+    <MESSAGE value="# funkcny multyplayer snapshto pred dynamickym lobby" />
+    <MESSAGE value="obrazok" />
+    <MESSAGE value="#33 server prorobeny na UDP" />
+    <option name="LAST_COMMIT_MESSAGE" value="#33 server prorobeny na UDP" />
   </component>
 </project>
