@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
   <component name="ChangeListManager">
     <list default="true" id="9ef7ac2f-b01e-4f64-97e5-df85e3daa0c4" name="Changes" comment="zmena">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0e9ef748-f54a-411e-bde7-5a44ef0bf2c0" name="Changes" comment="#31 praca na multilayer">
+      <change beforePath="$PROJECT_DIR$/lobby.py" beforeDir="false" />
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< HEAD
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -17,16 +27,49 @@
   </component>
   <component name="ProjectId" id="2vRXH3Z21Zx6A4FGbFk12tk6lTU" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+=======
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2vPOJqTGNxuNoBdmfGLkW9m8esi" />
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "last_opened_file_path": "C:/Users/mirko/master"
   }
 }]]></component>
   <component name="RunManager" selected="Python.lobby">
+=======
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Sebi/3.Ročník/master&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Sebi\3.Ročník\master" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.run">
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
     <configuration name="game" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="master" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -69,7 +112,11 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+<<<<<<< HEAD
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+=======
+    <configuration name="player" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
       <module name="master" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -81,6 +128,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+<<<<<<< HEAD
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -103,6 +151,9 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/network.py" />
+=======
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/player.py" />
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -155,17 +206,26 @@
     </configuration>
     <recent_temporary>
       <list>
+<<<<<<< HEAD
         <item itemvalue="Python.lobby" />
         <item itemvalue="Python.server" />
         <item itemvalue="Python.run" />
         <item itemvalue="Python.network" />
         <item itemvalue="Python.game" />
+=======
+        <item itemvalue="Python.run" />
+        <item itemvalue="Python.game" />
+        <item itemvalue="Python.lobby" />
+        <item itemvalue="Python.server" />
+        <item itemvalue="Python.player" />
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< HEAD
       <changelist id="9ef7ac2f-b01e-4f64-97e5-df85e3daa0c4" name="Changes" comment="" />
       <created>1744108769396</created>
       <option name="number" value="Default" />
@@ -241,23 +301,150 @@
       <option name="presentableId" value="LOCAL-00010" />
       <option name="project" value="LOCAL" />
       <updated>1744187758845</updated>
+=======
+      <changelist id="0e9ef748-f54a-411e-bde7-5a44ef0bf2c0" name="Changes" comment="" />
+      <created>1744043173423</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744043173423</updated>
+    </task>
+    <task id="LOCAL-00001" summary="oprava">
+      <option name="closed" value="true" />
+      <created>1744046442165</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1744046442165</updated>
+    </task>
+    <task id="LOCAL-00002" summary="oprava">
+      <option name="closed" value="true" />
+      <created>1744047048814</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1744047048814</updated>
+    </task>
+    <task id="LOCAL-00003" summary="#31 praca na multilayer">
+      <option name="closed" value="true" />
+      <created>1744108438370</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1744108438370</updated>
+    </task>
+    <task id="LOCAL-00004" summary="#31 praca na multilayer">
+      <option name="closed" value="true" />
+      <created>1744110263992</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1744110263992</updated>
+    </task>
+    <task id="LOCAL-00005" summary="#31 praca na multilayer">
+      <option name="closed" value="true" />
+      <created>1744110757423</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1744110757423</updated>
+    </task>
+    <task id="LOCAL-00006" summary="#31 praca na multilayer">
+      <option name="closed" value="true" />
+      <created>1744122341531</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1744122341531</updated>
+    </task>
+    <task id="LOCAL-00007" summary="#31 praca na multilayer">
+      <option name="closed" value="true" />
+      <created>1744122634966</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1744122634966</updated>
+    </task>
+    <task id="LOCAL-00008" summary="#31 praca na multilayer">
+      <option name="closed" value="true" />
+      <created>1744124115267</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1744124115267</updated>
+    </task>
+    <task id="LOCAL-00009" summary="#31 praca na multilayer">
+      <option name="closed" value="true" />
+      <created>1744185112538</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1744185112538</updated>
+    </task>
+    <task id="LOCAL-00010" summary="#31 praca na multilayer">
+      <option name="closed" value="true" />
+      <created>1744186113977</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1744186113977</updated>
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
     </task>
     <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+<<<<<<< HEAD
+=======
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="master" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
+<<<<<<< HEAD
             <State />
+=======
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+<<<<<<< HEAD
     <MESSAGE value="zmena" />
     <option name="LAST_COMMIT_MESSAGE" value="zmena" />
+=======
+    <MESSAGE value="oprava" />
+    <MESSAGE value="#31 praca na multilayer" />
+    <option name="LAST_COMMIT_MESSAGE" value="#31 praca na multilayer" />
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
   </component>
 </project>

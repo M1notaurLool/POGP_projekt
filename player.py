@@ -23,6 +23,7 @@ class Player():
         # Otočenie obrázka podľa uhla rakety
         rotated_image = pygame.transform.rotate(self.image, self.angle)
 
+
         # Nájdeme stred obrázka po otočení
         rect = rotated_image.get_rect(center=(self.x, self.y))
 
