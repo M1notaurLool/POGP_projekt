@@ -144,7 +144,7 @@ class Okno(QtWidgets.QMainWindow):
             "font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color:none; border-radius: 5px; ")
 
         # Uložená IP adresa a port
-        self._saved_address = "127.0.0.1"  # Defaultná IP adresa
+        self._saved_address = "172.20.10.4"  # Defaultná IP adresa
         self._saved_port = 11000
 
             # 4️⃣ Zobrazenie nových prvkov

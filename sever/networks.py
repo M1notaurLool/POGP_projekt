@@ -7,10 +7,9 @@ class Network:
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         #nacitanie IP address zadanej v PyQt
-        self.host = okno_instance.get_saved_address()
+        self.host = "172.20.10.4"
 
-
-        self.port = okno_instance.get_saved_port()
+        self.port = 11000
 
         self.addr = (self.host, self.port)
         self.id = self.connect()
