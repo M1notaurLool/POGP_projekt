@@ -85,7 +85,7 @@ class Okno(QtWidgets.QMainWindow):
             "font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color:none; border-radius: 5px; ")
 
         # Tlačidlo na uloženie IP
-        self._btn_multy = QtWidgets.QPushButton("MULTY PLAYER", self)
+        self._btn_multy = QtWidgets.QPushButton("MULTIPLAYER", self)
         self._btn_multy.clicked.connect(self.multy)
         self._btn_multy.setGeometry(200, 300, 300, 50)
         self._btn_multy.setStyleSheet(
