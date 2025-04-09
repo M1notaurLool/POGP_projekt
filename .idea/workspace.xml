@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9ef7ac2f-b01e-4f64-97e5-df85e3daa0c4" name="Changes" comment="zmena" />
+    <list default="true" id="9ef7ac2f-b01e-4f64-97e5-df85e3daa0c4" name="Changes" comment="zmena">
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,7 +26,7 @@
     "last_opened_file_path": "C:/Users/mirko/Programovanie"
   }
 }]]></component>
-  <component name="RunManager" selected="Python.run">
+  <component name="RunManager" selected="Python.lobby">
     <configuration name="game" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="master" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -153,9 +155,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.run" />
-        <item itemvalue="Python.server" />
         <item itemvalue="Python.lobby" />
+        <item itemvalue="Python.server" />
+        <item itemvalue="Python.run" />
         <item itemvalue="Python.network" />
         <item itemvalue="Python.game" />
       </list>
@@ -226,7 +228,14 @@
       <option name="project" value="LOCAL" />
       <updated>1744187144088</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="zmena">
+      <created>1744187304265</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1744187304265</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

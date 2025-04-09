@@ -49,7 +49,7 @@ def threaded_client(conn):
             break
 
     print("Connection Closed")
-    conn.close()
+    sys.exit()
 
 while True:
     conn, addr = s.accept()
