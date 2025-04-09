@@ -16,7 +16,7 @@ class Okno(QtWidgets.QMainWindow):
         self.setFixedSize(700, 600)
 
         #nastavenie pozadia
-        self.setStyleSheet("background-image: url('Obrazok/wellcome.png');")
+        self.setStyleSheet("background-image: url('obrazok/wellcome.png');")
         self.main_windov()
 
 
