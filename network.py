@@ -4,8 +4,8 @@ class Network:
     def __init__(self, okno_instance):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         # Inicializácia host hodnotou z okna
-        self.host = okno_instance.get_saved_address()
-        self.port = okno_instance.get_saved_port()
+        self.host = "192.168.88.11"
+        self.port = 11000
         self.addr = (self.host, self.port)
         self.id = self.get_id()
 
