@@ -1,6 +1,5 @@
 import socket
 
-
 class Network:
     def __init__(self, host="192.168.88.11", port=11000):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

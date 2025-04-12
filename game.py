@@ -1,20 +1,31 @@
 import pygame
+import sys
 from network import Network
-from player import Player
 
 class Game:
-    def __init__(self, width, height, window):
+    def __init__(self, width, height, network):
         self.width = width
         self.height = height
-        self.window = window
+        self.net = network
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.clock = pygame.time.Clock()
 
-        # Pozície hráčov (číslo ID určuje hráča)
-        self.players = {
-            "0": pygame.Rect(50, 50, 50, 50),
-            "1": pygame.Rect(100, 100, 50, 50)
-        }
+        # Nastavenie ID hráča a súperovskej pozície podľa získaného ID
+        if self.net.id == "0":
+            self.my_id = "0"
+            self.enemy_id = "1"
+            # Moja postava a súper (predvolené pozície – môžu byť upravené)
+            self.players = {
+                "0": pygame.Rect(50, 50, 50, 50),
+                "1": pygame.Rect(100, 100, 50, 50)
+            }
+        else:
+            self.my_id = "1"
+            self.enemy_id = "0"
+            self.players = {
+                "1": pygame.Rect(50, 50, 50, 50),
+                "0": pygame.Rect(100, 100, 50, 50)
+            }
 
     def run(self):
         running = True
@@ -25,63 +36,58 @@ class Game:
                 if event.type == pygame.QUIT:
                     running = False
 
-            # Pohyb postavičky
+            # Spracovanie vstupu a pohyb mojej postavy.
             self.handle_player_movement()
 
-            # Zobraziť hráčov (na základe pozícií)
-            for player_id, player_rect in self.players.items():
+            # Odoslanie mojej pozície a prijatie pozície súperovej postavy.
+            reply = self.send_data()
+            if reply:
+                x, y = self.parse_data(reply)
+                # Aktualizácia pozície súperovej postavy.
+                self.players[self.enemy_id].x = x
+                self.players[self.enemy_id].y = y
+
+            # Vykreslenie oboch hráčov.
+            for player_rect in self.players.values():
                 pygame.draw.rect(self.screen, (255, 0, 0), player_rect)
 
             pygame.display.flip()
             self.clock.tick(60)
 
         pygame.quit()
+        sys.exit()
 
     def handle_player_movement(self):
-        """Získaj vstup od užívateľa a pohybuj postavičkami."""
+        """Spracuje vstup z klávesnice a pohne mojou postavou."""
         keys = pygame.key.get_pressed()
-
-        # Ak je stlačená šípka doľava, pohni postavičkou "0" doľava
         if keys[pygame.K_LEFT]:
-            self.players["0"].x -= 5
-        # Ak je stlačená šípka doprava, pohni postavičkou "0" doprava
+            self.players[self.my_id].x -= 5
         if keys[pygame.K_RIGHT]:
-            self.players["0"].x += 5
-        # Ak je stlačená šípka hore, pohni postavičkou "0" hore
+            self.players[self.my_id].x += 5
         if keys[pygame.K_UP]:
-            self.players["0"].y -= 5
-        # Ak je stlačená šípka dole, pohni postavičkou "0" dole
+            self.players[self.my_id].y -= 5
         if keys[pygame.K_DOWN]:
-            self.players["0"].y += 5
+            self.players[self.my_id].y += 5
 
     def send_data(self):
-        data = f"{self.net.id}:{self.player.x},{self.player.y}"
+        """Odošle moju aktuálnu pozíciu na server a vráti pozíciu súperovej postavy."""
+        rect = self.players[self.my_id]
+        data = f"{self.net.id}:{rect.x},{rect.y}"
         reply = self.net.send(data)
         return reply
 
     @staticmethod
     def parse_data(data):
+        """
+        Rozparsuje prijaté dáta zo servera.
+        Predpokladaný formát: "ID:x,y"
+        """
         try:
             if data == "no_data":
                 return 0, 0
-            d = data.split(":")[1].split(",")
-            return int(d[0]), int(d[1])
-        except:
+            parts = data.split(":")
+            coords = parts[1].split(",")
+            return int(coords[0]), int(coords[1])
+        except Exception as e:
+            print("Parsing error:", e)
             return 0, 0
-
-class Canvas:
-    def __init__(self, w, h, name="None"):
-        self.width = w
-        self.height = h
-        self.screen = pygame.display.set_mode((w, h))
-        pygame.display.set_caption(name)
-
-    @staticmethod
-    def update():
-        pygame.display.update()
-
-    def get_canvas(self):
-        return self.screen
-
-    def draw_background(self):
-        self.screen.fill((255, 255, 255))
