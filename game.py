@@ -1,51 +1,41 @@
+
 import pygame
 from network import Network
 from player import Player
 
 
 class Game:
+    def __init__(self, width, height, window):
+        self.width = width
+        self.height = height
+        self.window = window
+        self.screen = pygame.display.set_mode((self.width, self.height))
+        self.clock = pygame.time.Clock()
 
-    def __init__(self, w, h, window):
-        self.net = Network(window.get_saved_address(), window.get_saved_port())
-        self.width = w
-        self.height = h
-        self.player = Player(50, 50)
-        self.player2 = Player(100, 100)
-        self.canvas = Canvas(self.width, self.height, "Triskáč Blast")
+        # Pozície hráčov (číslo ID určuje hráča)
+        self.players = {
+            "0": pygame.Rect(50, 50, 50, 50),
+            "1": pygame.Rect(100, 100, 50, 50)
+        }
 
     def run(self):
-        clock = pygame.time.Clock()
-        run = True
-
-        while run:
-            clock.tick(60)
+        running = True
+        while running:
+            self.screen.fill((0, 0, 0))  # Vymaž obrazovku
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    run = False
+                    running = False
 
-            keys = pygame.key.get_pressed()
+            # Zobraziť hráčov (na základe pozícií)
+            for player_id, player_rect in self.players.items():
+                pygame.draw.rect(self.screen, (255, 0, 0), player_rect)
 
-            if keys[pygame.K_RIGHT] and self.player.x <= self.width - self.player.velocity:
-                self.player.move(0)
-            if keys[pygame.K_LEFT] and self.player.x >= self.player.velocity:
-                self.player.move(1)
-            if keys[pygame.K_UP] and self.player.y >= self.player.velocity:
-                self.player.move(2)
-            if keys[pygame.K_DOWN] and self.player.y <= self.height - self.player.velocity:
-                self.player.move(3)
-
-            # Odosielame pozíciu hráča, prijímame druhého
-            data = self.send_data()
-            self.player2.x, self.player2.y = self.parse_data(data)
-
-            # Vykreslenie
-            self.canvas.draw_background()
-            self.player.draw(self.canvas.get_canvas())
-            self.player2.draw(self.canvas.get_canvas())
-            self.canvas.update()
+            pygame.display.flip()
+            self.clock.tick(60)
 
         pygame.quit()
+
 
     def send_data(self):
         data = f"{self.net.id}:{self.player.x},{self.player.y}"

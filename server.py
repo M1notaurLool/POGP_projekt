@@ -1,6 +1,6 @@
 import socket
 
-server = '0.0.0.0'
+server = '192.168.88.11'
 port = 11000
 
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -12,6 +12,7 @@ except socket.error as e:
     print("[SERVER] Chyba:", str(e))
     exit()
 
+# Ukladanie pozícií hráčov
 pos = {
     "0": "0:50,50",
     "1": "1:100,100"
@@ -25,6 +26,7 @@ while True:
         data, addr = s.recvfrom(2048)
         msg = data.decode('utf-8')
 
+        # Ak je nový klient, priraď mu ID
         if addr not in addr_to_id:
             addr_to_id[addr] = str(next_id)
             print(f"[SERVER] Priradené ID {next_id} pre klienta {addr}")
@@ -32,19 +34,23 @@ while True:
 
         current_id = addr_to_id[addr]
 
+        # Ak klient požiada o svoje ID
         if msg == "get_id":
             s.sendto(current_id.encode(), addr)
             continue
 
+        # Aktualizácia pozície hráča na základe správy
         arr = msg.split(":")
         if len(arr) == 2:
             player_id = arr[0]
             pos[player_id] = msg
 
+        # Získaj pozíciu druhého hráča
         other_id = "1" if current_id == "0" else "0"
         reply = pos.get(other_id, "no_data")
 
-        print(f"[{addr}] {msg} -> {reply}")
+        # Debugging
+        print(f"[SERVER] Posielam hráčovi {current_id} pozíciu: {reply}")
         s.sendto(reply.encode(), addr)
 
     except Exception as e:
