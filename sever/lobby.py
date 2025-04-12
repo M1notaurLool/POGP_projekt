@@ -4,7 +4,7 @@ import sys
 import pygame
 from PyQt6 import QtWidgets, QtCore
 import games
-from networks import Network
+
 
 PORT = 5555
 
@@ -160,7 +160,7 @@ class Okno(QtWidgets.QMainWindow):
         print("Spúšťam hru")
         try:
             # Vytvorte objekt Network až po stlačení tlačidla
-            network = Network(self)  # Odovzdáme Okno inštanciu
+
             print(f"Pripojenie na server: {self.get_saved_address()}:{self.get_saved_port()}")
             g = games.Game(1000, 1000, self)  # Očakávame, že trieda Game existuje v games.py
             g.run()  # Spustíme hru

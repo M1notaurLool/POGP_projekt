@@ -1,45 +1,28 @@
 import socket
 
-
-import sys
 class Network:
-    def __init__(self, okno_instance):
-        self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-        #nacitanie IP address zadanej v PyQt
-        self.host = "172.20.10.4"
-
+    def __init__(self):
+        self.client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.host = "127.0.0.1"  # IP adresa servera
+        self.host = "192.168.48.190"  # IP adresa servera
         self.port = 11000
-
         self.addr = (self.host, self.port)
-        self.id = self.connect()
+        self.id = self.get_id()  # Získaj svoje ID od servera
 
-
-    #Funkcia ktora kontorluje ci je klient pripojeny alebo nie
-    def connect(self):
+    def get_id(self):
         try:
-            self.client.connect(self.addr)
-            print(f"Pripojený k: {self.addr}")
-            return self.client.recv(2048).decode()
-        except:
-            from games import Game
-            print(f"Pri pripajani nastala chyba skontrolujte udaje na pripojenie na server.")
-            Game.close_game()
-            return "ERROR"
-
+            self.client.sendto("get_id".encode(), self.addr)
+            data, _ = self.client.recvfrom(2048)
+            return data.decode()
+        except socket.error as e:
+            print(f"Chyba pri získavaní ID: {e}")
+            return None
 
     def send(self, data):
-        """
-        :param data: str
-        :return: str
-        """
+
         try:
-            #odoslanie dat cez soket
-            self.client.send(str.encode(data))
-            #prijatie odpocede od servera
-            reply = self.client.recv(2048).decode()
-            #vrati odpoved sercera
-            return reply
+            self.client.sendto(data.encode(), self.addr)
+            reply, _ = self.client.recvfrom(2048)
+            return reply.decode()
         except socket.error as e:
-            #Ak nastane chyba vrati spravu o chybe
             return str(e)
