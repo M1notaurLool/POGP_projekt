@@ -1,8 +1,6 @@
-
 import pygame
 from network import Network
 from player import Player
-
 
 class Game:
     def __init__(self, width, height, window):
@@ -27,6 +25,9 @@ class Game:
                 if event.type == pygame.QUIT:
                     running = False
 
+            # Pohyb postavičky
+            self.handle_player_movement()
+
             # Zobraziť hráčov (na základe pozícií)
             for player_id, player_rect in self.players.items():
                 pygame.draw.rect(self.screen, (255, 0, 0), player_rect)
@@ -36,6 +37,22 @@ class Game:
 
         pygame.quit()
 
+    def handle_player_movement(self):
+        """Získaj vstup od užívateľa a pohybuj postavičkami."""
+        keys = pygame.key.get_pressed()
+
+        # Ak je stlačená šípka doľava, pohni postavičkou "0" doľava
+        if keys[pygame.K_LEFT]:
+            self.players["0"].x -= 5
+        # Ak je stlačená šípka doprava, pohni postavičkou "0" doprava
+        if keys[pygame.K_RIGHT]:
+            self.players["0"].x += 5
+        # Ak je stlačená šípka hore, pohni postavičkou "0" hore
+        if keys[pygame.K_UP]:
+            self.players["0"].y -= 5
+        # Ak je stlačená šípka dole, pohni postavičkou "0" dole
+        if keys[pygame.K_DOWN]:
+            self.players["0"].y += 5
 
     def send_data(self):
         data = f"{self.net.id}:{self.player.x},{self.player.y}"
@@ -52,9 +69,7 @@ class Game:
         except:
             return 0, 0
 
-
 class Canvas:
-
     def __init__(self, w, h, name="None"):
         self.width = w
         self.height = h
