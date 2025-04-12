@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0e9ef748-f54a-411e-bde7-5a44ef0bf2c0" name="Changes" comment="#34 pripajanie cez lobby">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network.py" beforeDir="false" afterPath="$PROJECT_DIR$/network.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/player.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,7 +47,7 @@
       <recent name="C:\Sebi\3.Ročník\master" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.lobby">
+  <component name="RunManager" selected="Python.run">
     <configuration name="game" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="master" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -152,10 +155,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.lobby" />
-        <item itemvalue="Python.server" />
-        <item itemvalue="Python.network" />
         <item itemvalue="Python.run" />
+        <item itemvalue="Python.server" />
+        <item itemvalue="Python.lobby" />
+        <item itemvalue="Python.network" />
         <item itemvalue="Python.game" />
       </list>
     </recent_temporary>
@@ -385,7 +388,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744446842465</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="#34 pripajanie cez lobby">
+      <option name="closed" value="true" />
+      <created>1744447187053</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1744447187053</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

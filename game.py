@@ -1,98 +1,126 @@
 import pygame
-import sys
 from network import Network
-from player import Player
+
+
+class Player():
+    width = height = 50
+
+    def __init__(self, startx, starty, color=(255,0,0)):
+        self.x = startx
+        self.y = starty
+        self.velocity = 2
+        self.color = color
+
+    def draw(self, g):
+        pygame.draw.rect(g, self.color ,(self.x, self.y, self.width, self.height), 0)
+
+    def move(self, dirn):
+        """
+        :param dirn: 0 - 3 (right, left, up, down)
+        :return: None
+        """
+
+        if dirn == 0:
+            self.x += self.velocity
+        elif dirn == 1:
+            self.x -= self.velocity
+        elif dirn == 2:
+            self.y -= self.velocity
+        else:
+            self.y += self.velocity
+
 
 class Game:
-    def __init__(self, width, height, network):
-        # Inicializácia Pygame
-        pygame.init()
 
-        self.width = width
-        self.height = height
-        self.net = network
-        self.screen = pygame.display.set_mode((self.width, self.height))
-        self.clock = pygame.time.Clock()
-
-        # Nastavenie ID hráča a súperovej postavy podľa získaného ID
-        if self.net.id == "0":
-            self.my_id = "0"
-            self.enemy_id = "1"
-            self.players = {
-                "0": Player(50, 50),    # Moja postava
-                "1": Player(100, 100)   # Súperova postava
-            }
-        else:
-            self.my_id = "1"
-            self.enemy_id = "0"
-            self.players = {
-                "1": Player(50, 50),    # Moja postava
-                "0": Player(100, 100)   # Súperova postava
-            }
+    def __init__(self, w, h):
+        self.net = Network()
+        self.width = w
+        self.height = h
+        self.player = Player(50, 50)
+        self.player2 = Player(100,100)
+        self.canvas = Canvas(self.width, self.height, "Testing...")
 
     def run(self):
-        running = True
-        while running:
-            self.screen.fill((0, 0, 0))  # Vymažeme obrazovku
+        clock = pygame.time.Clock()
+        run = True
+        while run:
+            clock.tick(60)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    running = False
+                    run = False
 
-            # Spracovanie vstupu – pohyb mojej postavy
-            self.handle_player_movement()
+                if event.type == pygame.K_ESCAPE:
+                    run = False
 
-            # Odoslanie mojej pozície a prijatie pozície súperovej postavy zo servera
-            reply = self.send_data()
-            if reply:
-                x, y = self.parse_data(reply)
-                # Aktualizácia pozície súperovej postavy
-                self.players[self.enemy_id].rect.x = x
-                self.players[self.enemy_id].rect.y = y
+            keys = pygame.key.get_pressed()
 
-            # Vykreslenie oboch hráčov
-            for player in self.players.values():
-                player.draw(self.screen)
+            if keys[pygame.K_RIGHT]:
+                if self.player.x <= self.width - self.player.velocity:
+                    self.player.move(0)
 
-            pygame.display.flip()
-            self.clock.tick(60)
+            if keys[pygame.K_LEFT]:
+                if self.player.x >= self.player.velocity:
+                    self.player.move(1)
+
+            if keys[pygame.K_UP]:
+                if self.player.y >= self.player.velocity:
+                    self.player.move(2)
+
+            if keys[pygame.K_DOWN]:
+                if self.player.y <= self.height - self.player.velocity:
+                    self.player.move(3)
+
+            # Send Network Stuff
+            self.player2.x, self.player2.y = self.parse_data(self.send_data())
+
+            # Update Canvas
+            self.canvas.draw_background()
+            self.player.draw(self.canvas.get_canvas())
+            self.player2.draw(self.canvas.get_canvas())
+            self.canvas.update()
 
         pygame.quit()
-        sys.exit()
-
-    def handle_player_movement(self):
-        """Spracuje vstup z klávesnice a pohne mojou postavou."""
-        keys = pygame.key.get_pressed()
-        dx = dy = 0
-        if keys[pygame.K_LEFT]:
-            dx = -self.players[self.my_id].speed
-        if keys[pygame.K_RIGHT]:
-            dx = self.players[self.my_id].speed
-        if keys[pygame.K_UP]:
-            dy = -self.players[self.my_id].speed
-        if keys[pygame.K_DOWN]:
-            dy = self.players[self.my_id].speed
-        self.players[self.my_id].move(dx, dy)
 
     def send_data(self):
-        """Odošle aktuálnu pozíciu mojej postavy a vráti pozíciu súperovej postavy."""
-        rect = self.players[self.my_id].rect
-        data = f"{self.net.id}:{rect.x},{rect.y}"
+        """
+        Send position to server
+        :return: None
+        """
+        data = str(self.net.id) + ":" + str(self.player.x) + "," + str(self.player.y)
         reply = self.net.send(data)
         return reply
 
     @staticmethod
     def parse_data(data):
-        """
-        Rozparsuje prijaté dáta zo servera.
-        Predpokladaný formát: "ID:x,y"
-        """
         try:
-            if data == "no_data":
-                return 0, 0
-            parts = data.split(":")
-            coords = parts[1].split(",")
-            return int(coords[0]), int(coords[1])
-        except Exception as e:
-            print("Parsing error:", e)
-            return 0, 0
+            d = data.split(":")[1].split(",")
+            return int(d[0]), int(d[1])
+        except:
+            return 0,0
+
+
+class Canvas:
+
+    def __init__(self, w, h, name="None"):
+        self.width = w
+        self.height = h
+        self.screen = pygame.display.set_mode((w,h))
+        pygame.display.set_caption(name)
+
+    @staticmethod
+    def update():
+        pygame.display.update()
+
+    def draw_text(self, text, size, x, y):
+        pygame.font.init()
+        font = pygame.font.SysFont("comicsans", size)
+        render = font.render(text, 1, (0,0,0))
+
+        self.screen.draw(render, (x,y))
+
+    def get_canvas(self):
+        return self.screen
+
+    def draw_background(self):
+        self.screen.fill((255,255,255))
