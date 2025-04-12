@@ -140,7 +140,10 @@ class Okno(QtWidgets.QMainWindow):
 
     def start(self):
         try:
-            g = game.Game(1000, 1000, self)  # Pygame Game class
+            # Vytvorenie Network objektu s uloženou IP a portom
+            net = Network(self.get_saved_address(), self.get_saved_port())
+            # Teraz odovzdaj objekt net do Game
+            g = game.Game(1000, 1000, net)
             g.run()
         except Exception as e:
             print(f"Chyba pri spustení hry: {e}")
