@@ -1,25 +1,22 @@
 import socket
 
-# Vytvorenie UDP socketu
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
-server = '192.168.88.11'
+server = '0.0.0.0'
 port = 11000
+
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 try:
     s.bind((server, port))
-    print("UDP Server spustený na porte", port)
+    print("[SERVER] UDP Server spustený na porte", port)
 except socket.error as e:
-    print(str(e))
+    print("[SERVER] Chyba:", str(e))
     exit()
 
-# Počiatočné pozície hráčov
 pos = {
     "0": "0:50,50",
     "1": "1:100,100"
 }
 
-# Mapovanie adries na ID (voliteľné)
 addr_to_id = {}
 next_id = 0
 
@@ -28,26 +25,22 @@ while True:
         data, addr = s.recvfrom(2048)
         msg = data.decode('utf-8')
 
-        # Priradenie ID podľa adresy
         if addr not in addr_to_id:
             addr_to_id[addr] = str(next_id)
-            print(f"Priradené ID {next_id} pre klienta {addr}")
+            print(f"[SERVER] Priradené ID {next_id} pre klienta {addr}")
             next_id += 1
 
         current_id = addr_to_id[addr]
 
-        # Ak klient pošle len prázdnu správu, pošleme mu jeho ID
         if msg == "get_id":
             s.sendto(current_id.encode(), addr)
             continue
 
-        # Uloženie pozície klienta
         arr = msg.split(":")
         if len(arr) == 2:
             player_id = arr[0]
             pos[player_id] = msg
 
-        # Získaj ID druhého hráča
         other_id = "1" if current_id == "0" else "0"
         reply = pos.get(other_id, "no_data")
 
@@ -55,4 +48,4 @@ while True:
         s.sendto(reply.encode(), addr)
 
     except Exception as e:
-        print("Chyba:", e)
+        print("[SERVER] Chyba:", e)
