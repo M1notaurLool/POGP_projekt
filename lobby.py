@@ -3,6 +3,8 @@ import socket
 from PyQt6 import QtWidgets
 import game  # Predpokladám, že máte súbor `game.py` s triedou Game
 
+from shared_state import SharedState
+
 class Network:
     def __init__(self, host="192.168.88.11", port=11000):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -31,6 +33,7 @@ class Network:
             return str(e)
 
 class Okno(QtWidgets.QMainWindow):
+    _saved_address = "192.168.88.11"
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Triskáč blast")
@@ -38,11 +41,15 @@ class Okno(QtWidgets.QMainWindow):
         self.setStyleSheet("background-image: url('Obrazok/wellcome.png');")
 
         # Predvolené IP a port
-        self._saved_address = "127.0.0.1"
-        self._saved_port = 11000
+        SharedState.saved_address = "192.168.88.11"
+        SharedState._saved_port = 11000
 
         self.main_window()
         self.show()
+
+    @staticmethod
+    def get_saved_address():
+        return Okno._saved_address
 
     def button_pressed(self):
         """Uloží IP adresu zo vstupu do premennej."""
@@ -56,8 +63,6 @@ class Okno(QtWidgets.QMainWindow):
         except ValueError:
             print("Zadaj platný číselný port.")
 
-    def get_saved_address(self):
-        return self._saved_address
 
     def get_saved_port(self):
         return self._saved_port
@@ -139,14 +144,9 @@ class Okno(QtWidgets.QMainWindow):
         sys.exit()
 
     def start(self):
-        try:
-            # Vytvorenie Network objektu s uloženou IP a portom
-            net = Network(self.get_saved_address(), self.get_saved_port())
-            # Teraz odovzdaj objekt net do Game
-            g = game.Game(1000, 1000, net)
-            g.run()
-        except Exception as e:
-            print(f"Chyba pri spustení hry: {e}")
+        g = game.Game(1000, 1000)
+        g.run()
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
