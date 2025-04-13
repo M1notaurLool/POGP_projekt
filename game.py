@@ -108,9 +108,7 @@ class Canvas:
         self.screen = pygame.display.set_mode((w,h))
         pygame.display.set_caption(name)
 
-    @staticmethod
-    def update():
-        pygame.display.update()
+
 
     def draw_text(self, text, size, x, y):
         pygame.font.init()
@@ -121,6 +119,9 @@ class Canvas:
 
     def get_canvas(self):
         return self.screen
+
+    def update(self):
+        pygame.display.update()
 
     def draw_background(self):
         self.screen.fill((255,255,255))

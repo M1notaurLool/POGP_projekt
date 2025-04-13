@@ -1,7 +1,8 @@
 import sys
 import socket
 from PyQt6 import QtWidgets
-import game  # Predpokladám, že máte súbor `game.py` s triedou Game
+import game
+import share
 
 class Network:
     def __init__(self, host="192.168.88.11", port=11000):
@@ -45,13 +46,17 @@ class Okno(QtWidgets.QMainWindow):
         self.show()
 
     def button_pressed(self):
-        """Uloží IP adresu zo vstupu do premennej."""
+        """Uloží IP adresu a port zo vstupov do globálneho configu."""
         ip = self._address.text()
         port_text = self._port.text()
         try:
             port = int(port_text)
             self._saved_address = ip
             self._saved_port = port
+
+            share.Share.ip_add = ip
+            share.Share.port = port
+
             print(f"Uložená IP adresa: {ip}, PORT: {port}")
         except ValueError:
             print("Zadaj platný číselný port.")
