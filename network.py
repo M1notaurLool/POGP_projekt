@@ -6,19 +6,19 @@ from shared_state import SharedState
 class Network:
 
     def __init__(self):
+        self.ip = []
+        self.ip.append(SharedState.s)
+        print(self.ip)
 
-
-        s = SharedState.saved_address
-        print(s)
 
 
 
 
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-        self.host = SharedState.saved_address
+        self.host = SharedState.s
 
-        self.port = SharedState.saved_port
+        self.port = 11000
         self.addr = (self.host, self.port)
         self.id = self.connect()
 
