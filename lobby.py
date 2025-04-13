@@ -144,7 +144,6 @@ class Okno(QtWidgets.QMainWindow):
         sys.exit()
 
     def start(self):
-<<<<<<< HEAD
         g = game.Game(500, 500)  # Očakávame, že trieda Game existuje v games.py
         g.run()  # Spustíme hru
 
@@ -164,13 +163,11 @@ class Okno(QtWidgets.QMainWindow):
 app = QtWidgets.QApplication([])
 win = Okno()  # Vytvoríme GUI okno
 app.exec()  # Spustíme aplikáciu
-=======
-        g = game.Game(1000, 1000)
-        g.run()
+g = game.Game(1000, 1000)
+g.run()
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
     win = Okno()
     app.exec()
->>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426
