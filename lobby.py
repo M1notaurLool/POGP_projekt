@@ -1,162 +1,150 @@
-import socket
 import sys
-
-
-from PyQt6 import QtWidgets, QtCore
+import socket
+from PyQt6 import QtWidgets
 import game
-from network import Network
+import share
 
-PORT = 11000
+class Network:
+    def __init__(self, host="192.168.88.11", port=11000):
+        self.client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.host = host
+        self.port = port
+        self.addr = (self.host, self.port)
+        self.id = self.get_id()
 
+    def get_id(self):
+        """Získa ID od servera pri prvom spojení."""
+        try:
+            self.client.sendto("get_id".encode(), self.addr)
+            data, _ = self.client.recvfrom(2048)
+            return data.decode()
+        except socket.error as e:
+            print(f"Chyba pri získavaní ID: {e}")
+            return None
+
+    def send(self, data):
+        """Odošle dáta na server a prijme odpoveď."""
+        try:
+            self.client.sendto(data.encode(), self.addr)
+            reply, _ = self.client.recvfrom(2048)
+            return reply.decode()
+        except socket.error as e:
+            return str(e)
 
 class Okno(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Triskáč blast")
         self.setFixedSize(700, 600)
+        self.setStyleSheet("background-image: url('Obrazok/wellcome.png');")
 
-        #nastavenie pozadia
-        self.setStyleSheet("background-image: url('obrazok/wellcome.png');")
-        self.main_windov()
+        # Predvolené IP a port
+        self._saved_address = "127.0.0.1"
+        self._saved_port = 11000
 
-
-
-
-        # Timer pre periodické kontroly správ
-        self._timer = QtCore.QTimer(self)
-        self._timer.timeout.connect(self.periodic)
-        self._timer.start(1000)
-
-        # Socket na počúvanie správ
-        self._sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self._sock.bind(('0.0.0.0', PORT))  # Počúva na všetkých sieťových rozhraniach
-
+        self.main_window()
         self.show()
 
-
-
-
-
-
-
-
-    #funkcia ked stlacim tlacidlo ulozi z riadku v pyqt do premennej hodnoty
     def button_pressed(self):
-        """Uloží IP adresu zo vstupu do premennej."""
-        self._saved_address = self._address.text()
-        self._saved_port = int(self._port.text())
-        print(f"Uložená IP adresa: {self._saved_address}")
-        print(f"Uloženy PORT: {self._saved_port}")
+        """Uloží IP adresu a port zo vstupov do globálneho configu."""
+        ip = self._address.text()
+        port_text = self._port.text()
+        try:
+            port = int(port_text)
+            self._saved_address = ip
+            self._saved_port = port
 
-    #vracia hodnotu address
+            share.Share.ip_add = ip
+            share.Share.port = port
+
+            print(f"Uložená IP adresa: {ip}, PORT: {port}")
+        except ValueError:
+            print("Zadaj platný číselný port.")
+
     def get_saved_address(self):
-        """Vráti uloženú IP adresu."""
         return self._saved_address
 
-
-    #vracia hodnotu portu
     def get_saved_port(self):
-        """Vráti uložený port."""
         return self._saved_port
-
-    #zapinanie hry pygame a pripajanie na server
 
     def clear(self):
         for widget in self.findChildren(QtWidgets.QWidget):
             widget.hide()
 
-
-
-
-
-
-
-
-
-
-    def main_windov(self):
+    def main_window(self):
         self.clear()
 
-        # Tlačidlo na spustenie hry
+        # ŠTART tlačidlo
         self._btn_start = QtWidgets.QPushButton("ŠTART", self)
         self._btn_start.clicked.connect(self.start)
         self._btn_start.setGeometry(540, 540, 150, 50)
         self._btn_start.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color:none; border-radius: 5px; ")
+            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color:none; border-radius: 5px;"
+        )
 
-        # Tlačidlo na uloženie IP
-        self._btn_multy = QtWidgets.QPushButton("MULTIPLAYER", self)
+        # MULTY PLAYER tlačidlo
+        self._btn_multy = QtWidgets.QPushButton("MULTY PLAYER", self)
         self._btn_multy.clicked.connect(self.multy)
         self._btn_multy.setGeometry(200, 300, 300, 50)
         self._btn_multy.setStyleSheet(
             "font-size: 20px; font-family: 'Comic Sans MS'; "
-    "border-radius: 5px; background-color: black; color: white; opacity: 1;")
+            "border-radius: 5px; background-color: black; color: white;"
+        )
 
-        # Tlačidlo na uloženie IP
-        self._btn_exit = QtWidgets.QPushButton("Exit", self)
+        # EXIT tlačidlo
+        self._btn_exit = QtWidgets.QPushButton("EXIT", self)
         self._btn_exit.clicked.connect(self.exit)
         self._btn_exit.setGeometry(200, 400, 300, 50)
         self._btn_exit.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; border-radius: 5px;")
+            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; border-radius: 5px;"
+        )
 
-        self._btn_multy.show()
         self._btn_start.show()
+        self._btn_multy.show()
         self._btn_exit.show()
-
-
-
-    def exit(self):
-        sys.exit()
-
-
-
-
-
-
-
 
     def multy(self):
         self.clear()
 
-        # Pole pre nastavenie IP adresy
-        self._address = QtWidgets.QLineEdit("127.0.0.1", self)
+        # Vstupy pre IP a port
+        self._address = QtWidgets.QLineEdit(self._saved_address, self)
         self._address.setGeometry(10, 540, 150, 50)
         self._address.setStyleSheet(
-                "font-size: 20px; font-family: 'Comic Sans MS'; border: none; padding-left: 10px;")
+            "font-size: 20px; font-family: 'Comic Sans MS'; padding-left: 10px;"
+        )
 
-        self._port = QtWidgets.QLineEdit("11000", self)
+        self._port = QtWidgets.QLineEdit(str(self._saved_port), self)
         self._port.setGeometry(170, 540, 120, 50)
         self._port.setStyleSheet(
-                "font-size: 20px; font-family: 'Comic Sans MS'; border: none; padding-left: 10px;")
+            "font-size: 20px; font-family: 'Comic Sans MS'; padding-left: 10px;"
+        )
 
-            # Tlačidlo na uloženie IP
+        # ULOŽIŤ tlačidlo
         self._btn_save = QtWidgets.QPushButton("ULOŽIŤ", self)
         self._btn_save.clicked.connect(self.button_pressed)
         self._btn_save.setGeometry(300, 540, 150, 50)
         self._btn_save.setStyleSheet(
-                "font-size: 20px; font-family: 'Comic Sans MS'; border: none; border-radius: 5px;")
+            "font-size: 20px; font-family: 'Comic Sans MS'; border-radius: 5px;"
+        )
 
-        # Tlačidlo na vratenie do main
-        self._btn_back_main = QtWidgets.QPushButton("VRATIT SA", self)
-        self._btn_back_main.clicked.connect(self.main_windov)
+        # SPÄŤ tlačidlo
+        self._btn_back_main = QtWidgets.QPushButton("VRÁTIŤ SA", self)
+        self._btn_back_main.clicked.connect(self.main_window)
         self._btn_back_main.setGeometry(540, 540, 150, 50)
         self._btn_back_main.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color:none; border-radius: 5px; ")
+            "font-size: 20px; font-family: 'Comic Sans MS'; border-radius: 5px;"
+        )
 
-        # Uložená IP adresa a port
-        self._saved_address = "172.20.10.4"  # Defaultná IP adresa
-        self._saved_port = 11000
-
-            # 4️⃣ Zobrazenie nových prvkov
         self._address.show()
         self._port.show()
         self._btn_save.show()
         self._btn_back_main.show()
 
-
-
+    def exit(self):
+        sys.exit()
 
     def start(self):
+<<<<<<< HEAD
         g = game.Game(500, 500)  # Očakávame, že trieda Game existuje v games.py
         g.run()  # Spustíme hru
 
@@ -176,3 +164,13 @@ class Okno(QtWidgets.QMainWindow):
 app = QtWidgets.QApplication([])
 win = Okno()  # Vytvoríme GUI okno
 app.exec()  # Spustíme aplikáciu
+=======
+        g = game.Game(1000, 1000)
+        g.run()
+
+
+if __name__ == "__main__":
+    app = QtWidgets.QApplication([])
+    win = Okno()
+    app.exec()
+>>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426

@@ -9,9 +9,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="0e9ef748-f54a-411e-bde7-5a44ef0bf2c0" name="Changes" comment="#31 praca na multilayer">
       <change beforePath="$PROJECT_DIR$/lobby.py" beforeDir="false" />
 >>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
+=======
+    <list default="true" id="0e9ef748-f54a-411e-bde7-5a44ef0bf2c0" name="Changes" comment="#zaklad server klient">
+      <change afterPath="$PROJECT_DIR$/share.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lobby.py" beforeDir="false" afterPath="$PROJECT_DIR$/lobby.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network.py" beforeDir="false" afterPath="$PROJECT_DIR$/network.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared_state.py" beforeDir="false" />
+>>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,14 +70,16 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Sebi/3.Ročník/master&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Sebi/3.Ročník/master/obrazok&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Sebi\3.Ročník\master\obrazok" />
       <recent name="C:\Sebi\3.Ročník\master" />
     </key>
   </component>
+<<<<<<< HEAD
   <component name="RunManager" selected="Python.run">
 >>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
     <configuration name="game" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -91,6 +103,9 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+=======
+  <component name="RunManager" selected="Python.lobby">
+>>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426
     <configuration name="lobby" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="master" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -113,10 +128,14 @@
       <method v="2" />
     </configuration>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
 =======
     <configuration name="player" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
 >>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
+=======
+    <configuration name="network" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+>>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426
       <module name="master" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -128,6 +147,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+<<<<<<< HEAD
 <<<<<<< HEAD
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
@@ -154,6 +174,9 @@
 =======
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/player.py" />
 >>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
+=======
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/network.py" />
+>>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -204,8 +227,30 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="share" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="master" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/share.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+<<<<<<< HEAD
 <<<<<<< HEAD
         <item itemvalue="Python.lobby" />
         <item itemvalue="Python.server" />
@@ -219,6 +264,13 @@
         <item itemvalue="Python.server" />
         <item itemvalue="Python.player" />
 >>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
+=======
+        <item itemvalue="Python.lobby" />
+        <item itemvalue="Python.server" />
+        <item itemvalue="Python.run" />
+        <item itemvalue="Python.share" />
+        <item itemvalue="Python.network" />
+>>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426
       </list>
     </recent_temporary>
   </component>
@@ -389,7 +441,191 @@
       <updated>1744186113977</updated>
 >>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="#31 praca na multilayer">
+      <option name="closed" value="true" />
+      <created>1744187122385</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1744187122385</updated>
+    </task>
+    <task id="LOCAL-00012" summary="#31 praca na multilayer">
+      <option name="closed" value="true" />
+      <created>1744187756089</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1744187756089</updated>
+    </task>
+    <task id="LOCAL-00013" summary="# funkcny multyplayer snapshto pred dynamickym lobby">
+      <option name="closed" value="true" />
+      <created>1744187816169</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1744187816169</updated>
+    </task>
+    <task id="LOCAL-00014" summary="obrazok">
+      <option name="closed" value="true" />
+      <created>1744189541209</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1744189541209</updated>
+    </task>
+    <task id="LOCAL-00015" summary="obrazok">
+      <option name="closed" value="true" />
+      <created>1744189635807</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1744189635807</updated>
+    </task>
+    <task id="LOCAL-00016" summary="obrazok">
+      <option name="closed" value="true" />
+      <created>1744191172449</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1744191172449</updated>
+    </task>
+    <task id="LOCAL-00017" summary="#33 server prorobeny na UDP">
+      <option name="closed" value="true" />
+      <created>1744191947487</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1744191947487</updated>
+    </task>
+    <task id="LOCAL-00018" summary="#33 server prorobeny na UDP">
+      <option name="closed" value="true" />
+      <created>1744192446140</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1744192446140</updated>
+    </task>
+    <task id="LOCAL-00019" summary="#33 server prorobeny na UDP">
+      <option name="closed" value="true" />
+      <created>1744218769180</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1744218769180</updated>
+    </task>
+    <task id="LOCAL-00020" summary="#33 server prorobeny na UDP">
+      <option name="closed" value="true" />
+      <created>1744219072558</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1744219072558</updated>
+    </task>
+    <task id="LOCAL-00021" summary="#33 server prorobeny na UDP">
+      <option name="closed" value="true" />
+      <created>1744220479320</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1744220479320</updated>
+    </task>
+    <task id="LOCAL-00022" summary="#34 pripajanie cez lobby">
+      <option name="closed" value="true" />
+      <created>1744221101605</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1744221101605</updated>
+    </task>
+    <task id="LOCAL-00023" summary="#34 pripajanie cez lobby">
+      <option name="closed" value="true" />
+      <created>1744444748467</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1744444748467</updated>
+    </task>
+    <task id="LOCAL-00024" summary="#34 pripajanie cez lobby">
+      <option name="closed" value="true" />
+      <created>1744446043238</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1744446043238</updated>
+    </task>
+    <task id="LOCAL-00025" summary="#34 pripajanie cez lobby">
+      <option name="closed" value="true" />
+      <created>1744446458796</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1744446458797</updated>
+    </task>
+    <task id="LOCAL-00026" summary="#34 pripajanie cez lobby">
+      <option name="closed" value="true" />
+      <created>1744446564138</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1744446564138</updated>
+    </task>
+    <task id="LOCAL-00027" summary="#34 pripajanie cez lobby">
+      <option name="closed" value="true" />
+      <created>1744446842465</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1744446842465</updated>
+    </task>
+    <task id="LOCAL-00028" summary="#34 pripajanie cez lobby">
+      <option name="closed" value="true" />
+      <created>1744447187053</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1744447187053</updated>
+    </task>
+    <task id="LOCAL-00029" summary="#zaklad server klient">
+      <option name="closed" value="true" />
+      <created>1744448454345</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1744448454345</updated>
+    </task>
+    <task id="LOCAL-00030" summary="#zaklad server klient">
+      <option name="closed" value="true" />
+      <created>1744455224651</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1744455224651</updated>
+    </task>
+    <task id="LOCAL-00031" summary="#zaklad server klient">
+      <option name="closed" value="true" />
+      <created>1744537360518</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1744537360518</updated>
+    </task>
+    <task id="LOCAL-00032" summary="#zaklad server klient">
+      <option name="closed" value="true" />
+      <created>1744537752526</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1744537752526</updated>
+    </task>
+    <task id="LOCAL-00033" summary="#zaklad server klient">
+      <option name="closed" value="true" />
+      <created>1744538555527</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1744538555527</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -444,7 +680,16 @@
 =======
     <MESSAGE value="oprava" />
     <MESSAGE value="#31 praca na multilayer" />
+<<<<<<< HEAD
     <option name="LAST_COMMIT_MESSAGE" value="#31 praca na multilayer" />
 >>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
+=======
+    <MESSAGE value="# funkcny multyplayer snapshto pred dynamickym lobby" />
+    <MESSAGE value="obrazok" />
+    <MESSAGE value="#33 server prorobeny na UDP" />
+    <MESSAGE value="#34 pripajanie cez lobby" />
+    <MESSAGE value="#zaklad server klient" />
+    <option name="LAST_COMMIT_MESSAGE" value="#zaklad server klient" />
+>>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426
   </component>
 </project>
