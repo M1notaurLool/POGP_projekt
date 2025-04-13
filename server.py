@@ -17,7 +17,7 @@ except socket.error as e:
 
 s.listen(2)
 print("Waiting for a connection")
-<<<<<<< HEAD
+
 
 currentId = "0"
 pos = ["0:50,50", "1:100,100"]
@@ -53,8 +53,6 @@ def threaded_client(conn):
     print("Connection Closed")
     sys.exit()
 
-=======
-
 currentId = "0"
 pos = ["0:50,50", "1:100,100"]
 def threaded_client(conn):
@@ -87,14 +85,9 @@ def threaded_client(conn):
 
     print("Connection Closed")
     conn.close()
->>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426
 
 while True:
     conn, addr = s.accept()
     print("Connected to: ", addr)
-
-<<<<<<< HEAD
     start_new_thread(threaded_client, (conn,))
-=======
     start_new_thread(threaded_client, (conn,))
->>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426
