@@ -5,7 +5,7 @@ import game
 import share
 
 class Network:
-    def __init__(self, host="192.168.88.11", port=11000):
+    def __init__(self, host="0.0.0.0", port=11000):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.host = host
         self.port = port
@@ -144,8 +144,27 @@ class Okno(QtWidgets.QMainWindow):
         sys.exit()
 
     def start(self):
-        g = game.Game(1000, 1000)
-        g.run()
+        g = game.Game(500, 500)  # Očakávame, že trieda Game existuje v games.py
+        g.run()  # Spustíme hru
+
+
+    def periodic(self):
+        """Periodicky kontroluje prijaté správy zo socketu."""
+        try:
+            self._sock.settimeout(0.1)
+            data, addr = self._sock.recvfrom(1024)
+            message = data.decode()
+            self.add_message(addr[0], message)
+        except socket.timeout:
+            pass
+
+
+
+app = QtWidgets.QApplication([])
+win = Okno()  # Vytvoríme GUI okno
+app.exec()  # Spustíme aplikáciu
+g = game.Game(1000, 1000)
+g.run()
 
 
 if __name__ == "__main__":

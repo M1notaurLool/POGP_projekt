@@ -1,17 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
+  <component name="ChangeListManager">
+    <list default="true" id="9ef7ac2f-b01e-4f64-97e5-df85e3daa0c4" name="Changes" comment="zmena">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="0e9ef748-f54a-411e-bde7-5a44ef0bf2c0" name="Changes" comment="#34 Lobby IP PORT">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+<<<<<<< HEAD
+    <list default="true" id="0e9ef748-f54a-411e-bde7-5a44ef0bf2c0" name="Changes" comment="#31 praca na multilayer">
+      <change beforePath="$PROJECT_DIR$/lobby.py" beforeDir="false" />
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
+=======
+    <list default="true" id="0e9ef748-f54a-411e-bde7-5a44ef0bf2c0" name="Changes" comment="#zaklad server klient">
+      <change afterPath="$PROJECT_DIR$/share.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lobby.py" beforeDir="false" afterPath="$PROJECT_DIR$/lobby.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network.py" beforeDir="false" afterPath="$PROJECT_DIR$/network.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared_state.py" beforeDir="false" />
+>>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426
+>>>>>>> 39db7a026270a78144d404d21be0e70bcf4c0886
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< HEAD
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2vRXH3Z21Zx6A4FGbFk12tk6lTU" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+=======
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -26,10 +57,19 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2vPOJqTGNxuNoBdmfGLkW9m8esi" />
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "last_opened_file_path": "C:/Users/mirko/master"
+  }
+}]]></component>
+  <component name="RunManager" selected="Python.lobby">
+=======
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
@@ -44,7 +84,33 @@
       <recent name="C:\Sebi\3.Ročník\master" />
     </key>
   </component>
+<<<<<<< HEAD
+  <component name="RunManager" selected="Python.run">
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
+    <configuration name="game" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="master" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/game.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+=======
   <component name="RunManager" selected="Python.lobby">
+>>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426
     <configuration name="lobby" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="master" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -66,6 +132,37 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+<<<<<<< HEAD
+<<<<<<< HEAD
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+=======
+    <configuration name="player" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
+=======
+    <configuration name="network" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+>>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426
+      <module name="master" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+<<<<<<< HEAD
+<<<<<<< HEAD
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="network" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="master" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -79,6 +176,12 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/network.py" />
+=======
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/player.py" />
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
+=======
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/network.py" />
+>>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -152,17 +255,110 @@
     </configuration>
     <recent_temporary>
       <list>
+<<<<<<< HEAD
+<<<<<<< HEAD
+        <item itemvalue="Python.lobby" />
+        <item itemvalue="Python.server" />
+        <item itemvalue="Python.run" />
+        <item itemvalue="Python.network" />
+        <item itemvalue="Python.game" />
+=======
+        <item itemvalue="Python.run" />
+        <item itemvalue="Python.game" />
+        <item itemvalue="Python.lobby" />
+        <item itemvalue="Python.server" />
+        <item itemvalue="Python.player" />
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
+=======
         <item itemvalue="Python.lobby" />
         <item itemvalue="Python.server" />
         <item itemvalue="Python.run" />
         <item itemvalue="Python.share" />
         <item itemvalue="Python.network" />
+>>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< HEAD
+      <changelist id="9ef7ac2f-b01e-4f64-97e5-df85e3daa0c4" name="Changes" comment="" />
+      <created>1744108769396</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744108769396</updated>
+    </task>
+    <task id="LOCAL-00001" summary="zmena">
+      <created>1744110297363</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1744110297363</updated>
+    </task>
+    <task id="LOCAL-00002" summary="zmena">
+      <created>1744110311040</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1744110311040</updated>
+    </task>
+    <task id="LOCAL-00003" summary="zmena">
+      <created>1744110323991</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1744110323991</updated>
+    </task>
+    <task id="LOCAL-00004" summary="zmena">
+      <created>1744185159471</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1744185159471</updated>
+    </task>
+    <task id="LOCAL-00005" summary="zmena">
+      <created>1744185746254</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1744185746254</updated>
+    </task>
+    <task id="LOCAL-00006" summary="zmena">
+      <created>1744186116198</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1744186116198</updated>
+    </task>
+    <task id="LOCAL-00007" summary="zmena">
+      <created>1744187123100</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1744187123100</updated>
+    </task>
+    <task id="LOCAL-00008" summary="zmena">
+      <created>1744187144088</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1744187144088</updated>
+    </task>
+    <task id="LOCAL-00009" summary="zmena">
+      <created>1744187304265</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1744187304265</updated>
+    </task>
+    <task id="LOCAL-00010" summary="zmena">
+      <created>1744187758845</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1744187758845</updated>
+=======
       <changelist id="0e9ef748-f54a-411e-bde7-5a44ef0bf2c0" name="Changes" comment="" />
       <created>1744043173423</created>
       <option name="number" value="Default" />
@@ -248,6 +444,7 @@
       <option name="presentableId" value="LOCAL-00010" />
       <option name="project" value="LOCAL" />
       <updated>1744186113977</updated>
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
     </task>
     <task id="LOCAL-00011" summary="#31 praca na multilayer">
       <option name="closed" value="true" />
@@ -445,6 +642,8 @@
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+<<<<<<< HEAD
+=======
     <option name="RECENT_FILTERS">
       <map>
         <entry key="Branch">
@@ -460,10 +659,14 @@
         </entry>
       </map>
     </option>
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
+<<<<<<< HEAD
+            <State />
+=======
             <State>
               <option name="FILTERS">
                 <map>
@@ -477,20 +680,34 @@
                 </map>
               </option>
             </State>
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+<<<<<<< HEAD
+    <MESSAGE value="zmena" />
+    <option name="LAST_COMMIT_MESSAGE" value="zmena" />
+=======
     <MESSAGE value="oprava" />
     <MESSAGE value="#31 praca na multilayer" />
+<<<<<<< HEAD
+    <option name="LAST_COMMIT_MESSAGE" value="#31 praca na multilayer" />
+>>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
+=======
     <MESSAGE value="# funkcny multyplayer snapshto pred dynamickym lobby" />
     <MESSAGE value="obrazok" />
     <MESSAGE value="#33 server prorobeny na UDP" />
     <MESSAGE value="#34 pripajanie cez lobby" />
     <MESSAGE value="#zaklad server klient" />
+<<<<<<< HEAD
     <MESSAGE value="#34 Lobby IP PORT" />
     <option name="LAST_COMMIT_MESSAGE" value="#34 Lobby IP PORT" />
+=======
+    <option name="LAST_COMMIT_MESSAGE" value="#zaklad server klient" />
+>>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426
+>>>>>>> 39db7a026270a78144d404d21be0e70bcf4c0886
   </component>
 </project>
