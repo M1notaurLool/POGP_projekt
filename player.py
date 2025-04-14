@@ -1,10 +1,11 @@
 import pygame
 import math
+from bullet import Bullet
 
 class Player:
     WIDTH = HEIGHT = 50  # Veľkosť raketky
 
-    def __init__(self, x, y, image_path="RaketaPassive.png"):
+    def __init__(self, x, y, image_path="obrazok/RaketaPassive.png"):
         self.x = float(x)
         self.y = float(y)
         self.velocity = 3  # Rýchlosť pohybu
@@ -18,29 +19,29 @@ class Player:
         self.image = self.original_image  # Aktuálny obrázok, ktorý sa bude otáčať pri pohybe
 
 
-    def move(self, direction, dt):
+    def move(self, direction):
         """Posunie raketu podľa smeru a času"""
         if direction == "forward":  # Pohyb vpred
-            self.move_forward(dt)
+            self.move_forward()
         elif direction == "left":  # Otáčanie doľava
-            self.rotate_left(dt)
+            self.rotate_left()
         elif direction == "right":  # Otáčanie doprava
-            self.rotate_right(dt)
+            self.rotate_right()
 
-    def move_forward(self, dt):
+    def move_forward(self):
         """Pohyb vpred podľa uhla raketky"""
         radian_angle = math.radians(self.angle)
-        speed = self.velocity * dt * 60  # Normalizovaná rýchlosť
+        speed = self.velocity  # Normalizovaná rýchlosť
         self.x += speed * math.cos(radian_angle)
         self.y -= speed * math.sin(radian_angle)
 
-    def rotate_left(self, dt):
+    def rotate_left(self):
         """Otáčanie raketky doľava"""
-        self.angle += 3 * dt * 60  # Normalizované otáčanie doľava
+        self.angle += 3  # Normalizované otáčanie doľava
 
-    def rotate_right(self, dt):
+    def rotate_right(self):
         """Otáčanie raketky doprava"""
-        self.angle -= 3 * dt * 60  # Normalizované otáčanie doprava
+        self.angle -= 3  # Normalizované otáčanie doprava
 
     def shoot(self):
         """Vytvorí novú strelu v smere raketky."""
