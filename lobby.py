@@ -5,7 +5,7 @@ import game
 import share
 
 class Network:
-    def __init__(self, host="192.168.88.11", port=11000):
+    def __init__(self, host="0.0.0.0", port=11000):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.host = host
         self.port = port

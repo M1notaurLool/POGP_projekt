@@ -42,17 +42,6 @@ class Game:
             if keys[pygame.K_DOWN]:
                 if self.player.y <= self.height - self.player.velocity:
                     self.player.move(3)
-            if keys[pygame.K_RIGHT]:
-                self.player.move("right")
-            if keys[pygame.K_LEFT]:
-                self.player.move("left")
-            if keys[pygame.K_UP]:
-                self.player.move("forward")
-            if keys[pygame.K_SPACE]:  # Streľba
-                self.player.shoot()
-
-            # Aktualizujeme strely
-            self.player.update_bullets()
 
             # Send Network Stuff
             self.player2.x, self.player2.y = self.parse_data(self.send_data())
