@@ -10,6 +10,10 @@
   </component>
   <component name="ChangeListManager">
 <<<<<<< HEAD
+    <list default="true" id="0e9ef748-f54a-411e-bde7-5a44ef0bf2c0" name="Changes" comment="#34 Lobby IP PORT">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+<<<<<<< HEAD
     <list default="true" id="0e9ef748-f54a-411e-bde7-5a44ef0bf2c0" name="Changes" comment="#31 praca na multilayer">
       <change beforePath="$PROJECT_DIR$/lobby.py" beforeDir="false" />
 >>>>>>> 9af6092727b9f849f13400990fafaefb0652b7ea
@@ -22,6 +26,7 @@
       <change beforePath="$PROJECT_DIR$/network.py" beforeDir="false" afterPath="$PROJECT_DIR$/network.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shared_state.py" beforeDir="false" />
 >>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426
+>>>>>>> 39db7a026270a78144d404d21be0e70bcf4c0886
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -625,7 +630,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744538555527</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="#34 Lobby IP PORT">
+      <option name="closed" value="true" />
+      <created>1744540737483</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1744540737483</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -689,7 +702,12 @@
     <MESSAGE value="#33 server prorobeny na UDP" />
     <MESSAGE value="#34 pripajanie cez lobby" />
     <MESSAGE value="#zaklad server klient" />
+<<<<<<< HEAD
+    <MESSAGE value="#34 Lobby IP PORT" />
+    <option name="LAST_COMMIT_MESSAGE" value="#34 Lobby IP PORT" />
+=======
     <option name="LAST_COMMIT_MESSAGE" value="#zaklad server klient" />
 >>>>>>> d451e3b95c0f3a659a9a9ce88150745b58ea3426
+>>>>>>> 39db7a026270a78144d404d21be0e70bcf4c0886
   </component>
 </project>
