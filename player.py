@@ -14,6 +14,7 @@ class Player():
         self.bullets = []  # Zoznam vystrelených projektilov
 
         self.image = pygame.image.load("obrazok/RaketaPassive.png")
+        self.image = pygame.transform.rotate(self.image, -90)  # Otočenie o 90° doprava
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
     def draw(self, g):
