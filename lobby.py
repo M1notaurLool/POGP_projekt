@@ -35,8 +35,15 @@ class Okno(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Triskáč blast")
+        self.setObjectName("MainWindow")
         self.setFixedSize(700, 600)
-        self.setStyleSheet("background-image: url('Obrazok/wellcome.png');")
+        self.setStyleSheet("""
+            #MainWindow {
+                background-image: url('Obrazok/wellcome.png');
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+        """)
 
         # Predvolené IP a port
         self._saved_address = "192.168.88.11"
@@ -108,23 +115,23 @@ class Okno(QtWidgets.QMainWindow):
 
         # Vstupy pre IP a port
         self._address = QtWidgets.QLineEdit(self._saved_address, self)
-        self._address.setGeometry(10, 540, 150, 50)
+        self._address.setGeometry(200, 280, 300, 50)
         self._address.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS'; padding-left: 10px;"
+            "font-size: 20px; font-family: 'Comic Sans MS'; padding-left: 10px; background: black;"
         )
 
         self._port = QtWidgets.QLineEdit(str(self._saved_port), self)
-        self._port.setGeometry(170, 540, 120, 50)
+        self._port.setGeometry(200, 350, 300, 50)
         self._port.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS'; padding-left: 10px;"
+            "font-size: 20px; font-family: 'Comic Sans MS'; padding-left: 10px;background: black;"
         )
 
         # ULOŽIŤ tlačidlo
         self._btn_save = QtWidgets.QPushButton("ULOŽIŤ", self)
         self._btn_save.clicked.connect(self.button_pressed)
-        self._btn_save.setGeometry(300, 540, 150, 50)
+        self._btn_save.setGeometry(350, 420, 150, 50)
         self._btn_save.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS'; border-radius: 5px;"
+            "font-size: 20px; font-family: 'Comic Sans MS'; border-radius: 5px; background: color;"
         )
 
         # SPÄŤ tlačidlo
@@ -132,7 +139,7 @@ class Okno(QtWidgets.QMainWindow):
         self._btn_back_main.clicked.connect(self.main_window)
         self._btn_back_main.setGeometry(540, 540, 150, 50)
         self._btn_back_main.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS'; border-radius: 5px;"
+            "font-size: 20px; font-family: 'Comic Sans MS'; border-radius: 5px; background: color;"
         )
 
         self._address.show()
