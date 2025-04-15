@@ -58,7 +58,7 @@ class Okno(QtWidgets.QMainWindow):
         port_text = self._port.text()
         try:
             port = int(port_text)
-            self._saved_address = ip
+            self._saved_address =   ip
             self._saved_port = port
 
             share.Share.ip_add = ip

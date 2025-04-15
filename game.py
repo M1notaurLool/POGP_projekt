@@ -27,6 +27,8 @@ class Game:
 
             keys = pygame.key.get_pressed()
 
+
+
             if keys[pygame.K_RIGHT]:
                 if self.player.x <= self.width - self.player.velocity:
                     self.player.move(0)
@@ -42,6 +44,8 @@ class Game:
             if keys[pygame.K_DOWN]:
                 if self.player.y <= self.height - self.player.velocity:
                     self.player.move(3)
+
+
 
             # Send Network Stuff
             self.player2.x, self.player2.y = self.parse_data(self.send_data())
