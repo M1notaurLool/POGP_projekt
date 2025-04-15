@@ -9,8 +9,8 @@ class Game:
         self.width = w
         self.height = h
         self.player = Player(50, 50)
-        self.player2 = Player(100,100)
-        self.canvas = Canvas(self.width, self.height, "Testing...")
+        self.player2 = Player(100, 100)
+        self.canvas = Canvas(self.width, self.height, "Triskáč Blast")
 
     def run(self):
         clock = pygame.time.Clock()
@@ -22,37 +22,25 @@ class Game:
                 if event.type == pygame.QUIT:
                     run = False
 
-                if event.type == pygame.K_ESCAPE:
-                    run = False
-
             keys = pygame.key.get_pressed()
 
-
-
-            if keys[pygame.K_RIGHT]:
-                if self.player.x <= self.width - self.player.velocity:
-                    self.player.move(0)
-            if keys[pygame.K_LEFT]:
-                if self.player.x >= self.player.velocity:
-                    self.player.move(1)
+            # OVLÁDANIE RAKETY
             if keys[pygame.K_UP]:
-                if self.player.y >= self.player.velocity:
-                    self.player.move(2)
-
-            if keys[pygame.K_DOWN]:
-                if self.player.y <= self.height - self.player.velocity:
-                    self.player.move(3)
-
-            if keys[pygame.K_SPACE]:  # Streľba
+                self.player.move_forward()
+            if keys[pygame.K_LEFT]:
+                self.player.rotate_left()
+            if keys[pygame.K_RIGHT]:
+                self.player.rotate_right()
+            if keys[pygame.K_SPACE]:
                 self.player.shoot()
 
-            # Aktualizujeme strely
+            # Strely
             self.player.update_bullets()
 
-            # Send Network Stuff
-            self.player2.x, self.player2.y = self.parse_data(self.send_data())
+            # Synchronizácia s druhým hráčom cez server
+            self.player2.x, self.player2.y, self.player2.angle = self.parse_data(self.send_data())
 
-            # Update Canvas
+            # Kreslenie
             self.canvas.draw_background()
             self.player.draw(self.canvas.get_canvas())
             self.player2.draw(self.canvas.get_canvas())
@@ -62,10 +50,9 @@ class Game:
 
     def send_data(self):
         """
-        Send position to server
-        :return: None
+        Odošle pozíciu a uhol hráča na server
         """
-        data = str(self.net.id) + ":" + str(self.player.x) + "," + str(self.player.y)
+        data = f"{self.net.id}:{self.player.x},{self.player.y},{self.player.angle}"
         reply = self.net.send(data)
         return reply
 
@@ -73,9 +60,9 @@ class Game:
     def parse_data(data):
         try:
             d = data.split(":")[1].split(",")
-            return int(d[0]), int(d[1])
+            return float(d[0]), float(d[1]), float(d[2])
         except:
-            return 0,0
+            return 0, 0, 0
 
 
 class Canvas:
@@ -83,17 +70,14 @@ class Canvas:
     def __init__(self, w, h, name="None"):
         self.width = w
         self.height = h
-        self.screen = pygame.display.set_mode((w,h))
+        self.screen = pygame.display.set_mode((w, h))
         pygame.display.set_caption(name)
-
-
 
     def draw_text(self, text, size, x, y):
         pygame.font.init()
         font = pygame.font.SysFont("comicsans", size)
-        render = font.render(text, 1, (0,0,0))
-
-        self.screen.draw(render, (x,y))
+        render = font.render(text, 1, (0, 0, 0))
+        self.screen.blit(render, (x, y))
 
     def get_canvas(self):
         return self.screen
@@ -102,4 +86,4 @@ class Canvas:
         pygame.display.update()
 
     def draw_background(self):
-        self.screen.fill((255,255,255))
+        self.screen.fill((255, 255, 255))
