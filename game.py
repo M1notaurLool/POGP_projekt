@@ -1,6 +1,10 @@
 import pygame
+
+
 from network import Network
 from player import Player
+
+import lobby
 
 class Game:
 
@@ -21,6 +25,9 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
+
+
+
 
                 if event.type == pygame.K_ESCAPE:
                     run = False
@@ -52,7 +59,7 @@ class Game:
             self.player2.draw(self.canvas.get_canvas())
             self.canvas.update()
 
-        pygame.quit()
+
 
     def send_data(self):
         """

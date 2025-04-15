@@ -1,10 +1,11 @@
+import os
 import socket
 from _thread import *
 import sys
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-server = "172.20.10.2"
+server = "172.20.10.6"
 port = 11000
 
 server_ip = socket.gethostbyname(server)
@@ -85,6 +86,9 @@ def threaded_client(conn):
 
     print("Connection Closed")
     conn.close()
+
+
+
 
 while True:
     conn, addr = s.accept()

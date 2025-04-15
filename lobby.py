@@ -46,7 +46,7 @@ class Okno(QtWidgets.QMainWindow):
         """)
 
         # Predvolené IP a port
-        self._saved_address = "192.168.88.11"
+        self._saved_address = "172.20.10.6"
         self._saved_port = 11000
 
         self.main_window()
@@ -86,7 +86,7 @@ class Okno(QtWidgets.QMainWindow):
         self._btn_start.clicked.connect(self.start)
         self._btn_start.setGeometry(540, 540, 150, 50)
         self._btn_start.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color:none; border-radius: 5px;"
+            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; background-color:black; border-radius: 5px;"
         )
 
         # MULTY PLAYER tlačidlo
@@ -101,9 +101,9 @@ class Okno(QtWidgets.QMainWindow):
         # EXIT tlačidlo
         self._btn_exit = QtWidgets.QPushButton("EXIT", self)
         self._btn_exit.clicked.connect(self.exit)
-        self._btn_exit.setGeometry(200, 400, 300, 50)
+        self._btn_exit.setGeometry(200, 370, 300, 50)
         self._btn_exit.setStyleSheet(
-            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; border-radius: 5px;"
+            "font-size: 20px; font-family: 'Comic Sans MS'; border: none; border-radius: 5px; background: black;"
         )
 
         self._btn_start.show()
@@ -151,6 +151,7 @@ class Okno(QtWidgets.QMainWindow):
         sys.exit()
 
     def start(self):
+        self.close()
         g = game.Game(500, 500)  # Očakávame, že trieda Game existuje v games.py
         g.run()  # Spustíme hru
 
@@ -170,8 +171,7 @@ class Okno(QtWidgets.QMainWindow):
 app = QtWidgets.QApplication([])
 win = Okno()  # Vytvoríme GUI okno
 app.exec()  # Spustíme aplikáciu
-g = game.Game(1000, 1000)
-g.run()
+
 
 
 if __name__ == "__main__":
