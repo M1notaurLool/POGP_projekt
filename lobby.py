@@ -151,7 +151,7 @@ class Okno(QtWidgets.QMainWindow):
         sys.exit()
 
     def start(self):
-        self.close()
+
         g = game.Game(500, 500)  # Očakávame, že trieda Game existuje v games.py
         g.run()  # Spustíme hru
 

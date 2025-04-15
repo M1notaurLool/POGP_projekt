@@ -5,11 +5,9 @@ import sys
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-<<<<<<< HEAD
+
 server = "172.20.10.6"
-=======
-server = "172.20.10.5"
->>>>>>> 854a18872a4d62e5edc2e4a63a35314b017ca106
+
 port = 11000
 
 server_ip = socket.gethostbyname(server)
