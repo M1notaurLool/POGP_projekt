@@ -46,7 +46,7 @@ class Okno(QtWidgets.QMainWindow):
         """)
 
         # Predvolené IP a port
-        self._saved_address = "172.20.10.6"
+        self._saved_address = "192.168.88.11"
         self._saved_port = 11000
 
         self.main_window()
@@ -174,7 +174,3 @@ app.exec()  # Spustíme aplikáciu
 
 
 
-if __name__ == "__main__":
-    app = QtWidgets.QApplication([])
-    win = Okno()
-    app.exec()
