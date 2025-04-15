@@ -1,15 +1,10 @@
 import pygame
-<<<<<<< HEAD
-from network import Network
-=======
 import math
->>>>>>> bd2f44ca5500cef19fd26d9d92e395464780e367
 
 
 class Player():
     width = height = 50
 
-<<<<<<< HEAD
     def __init__(self, startx, starty, color=(255,0,0)):
         self.x = startx
         self.y = starty
@@ -25,7 +20,6 @@ class Player():
         :return: None
         """
 
-=======
     def __init__(self, startx, starty, color=(255,0,0), image_path="player.png"):
         self.x = startx
         self.y = starty
@@ -62,16 +56,11 @@ class Player():
         :param dirn: 0 - 3 (right, left, up, down)
         :return: None
         """
->>>>>>> bd2f44ca5500cef19fd26d9d92e395464780e367
         if dirn == 0:
             self.x += self.velocity
         elif dirn == 1:
             self.x -= self.velocity
         elif dirn == 2:
             self.y -= self.velocity
-<<<<<<< HEAD
         else:
             self.y += self.velocity
-=======
-
->>>>>>> bd2f44ca5500cef19fd26d9d92e395464780e367
