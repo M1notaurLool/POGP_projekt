@@ -3,8 +3,6 @@ import math
 from bullet import Bullet
 
 class Player():
-    width = height = 50
-
     def __init__(self, startx, starty, color=(255,0,0)):
         self.x = startx
         self.y = starty
@@ -15,7 +13,7 @@ class Player():
 
         self.image = pygame.image.load("obrazok/RaketaPassive.png")
         self.image = pygame.transform.rotate(self.image, -90)  # Otočenie o 90° doprava
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        self.image = pygame.transform.scale(self.image, (self.image.get_width()/12, self.image.get_height()/12)) #nastavenie velkosti raketky podla rozmerov zmensena 12x
 
     def draw(self, g):
         rotated_image = pygame.transform.rotate(self.image, self.angle)
