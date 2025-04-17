@@ -11,9 +11,9 @@ class Player():
         self.color = color
         self.bullets = []  # Zoznam vystrelených projektilov
 
-        self.image = pygame.image.load("obrazok/RaketaPassive.png")
+        self.image = pygame.image.load("obrazok/raketa_green.png")
         self.image = pygame.transform.rotate(self.image, -90)  # Otočenie o 90° doprava
-        self.image = pygame.transform.scale(self.image, (self.image.get_width()/12, self.image.get_height()/12)) #nastavenie velkosti raketky podla rozmerov zmensena 12x
+        self.image = pygame.transform.scale(self.image, (self.image.get_width()/10, self.image.get_height()/10)) #nastavenie velkosti raketky podla rozmerov zmensena 10x
 
     def draw(self, g):
         rotated_image = pygame.transform.rotate(self.image, self.angle)
