@@ -6,17 +6,18 @@ class Player():
     def __init__(self, startx, starty, color=(255,0,0)):
         self.x = startx
         self.y = starty
-        self.velocity = 2
+        self.velocity = 8
         self.angle = 0
         self.color = color
         self.bullets = []  # Zoznam vystrelených projektilov
 
-        self.image = pygame.image.load("obrazok/raketa_green.png")
+        self.image = pygame.image.load("obrazok/raketa_green.png").convert_alpha()
         self.image = pygame.transform.rotate(self.image, -90)  # Otočenie o 90° doprava
-        self.image = pygame.transform.scale(self.image, (self.image.get_width()/10, self.image.get_height()/10)) #nastavenie velkosti raketky podla rozmerov zmensena 10x
+        #nastavenie velkosti raketky podla rozmerov zmensena 10x
+        self.image = pygame.transform.smoothscale(self.image, (self.image.get_width()/10, self.image.get_height()/10))
 
     def draw(self, g):
-        rotated_image = pygame.transform.rotate(self.image, self.angle)
+        rotated_image = pygame.transform.rotozoom(self.image, self.angle, 1.0)
         rect = rotated_image.get_rect(center=(self.x, self.y))
         g.blit(rotated_image, rect.topleft)
 
