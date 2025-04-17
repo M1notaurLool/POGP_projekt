@@ -53,8 +53,8 @@ class Player():
         """Vytvorí novú strelu v smere raketky."""
         bullet_speed = 7  # Rýchlosť strely
         radian_angle = math.radians(self.angle)
-        bullet_x = self.x + (self.width // 2) * math.cos(radian_angle)
-        bullet_y = self.y - (self.height // 2) * math.sin(radian_angle)
+        bullet_x = self.x + (self.image.get_width()/10 // 2) * math.cos(radian_angle)
+        bullet_y = self.y - (self.image.get_height()/10 // 2) * math.sin(radian_angle)
 
         self.bullets.append(Bullet(bullet_x, bullet_y, self.angle, bullet_speed))
 
