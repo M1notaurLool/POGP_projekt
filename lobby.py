@@ -1,10 +1,8 @@
-import os
 import sys
 import socket
-import subprocess
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QHBoxLayout, QVBoxLayout
+from PyQt6.QtWidgets import QVBoxLayout
 
 import game
 import share

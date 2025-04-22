@@ -1,4 +1,3 @@
-import os
 import sys
 
 import pygame
@@ -22,13 +21,10 @@ class Game:
         run = True
         while run:
             clock.tick(60)
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     subprocess.Popen([sys.executable, "lobby.py"]) #zapne lobby ked vypinam hru
-
-
 
             keys = pygame.key.get_pressed()
 
@@ -58,19 +54,18 @@ class Game:
 
     def send_data(self):
         """
-        Odošle pozíciu a uhol hráča na server
+        Odošle pozíciu, uhol aj strely hráča na server
         """
-        data = f"{self.net.id}:{self.player.x},{self.player.y},{self.player.angle}"
+        data = self.player.serialize(self.net.id)
         reply = self.net.send(data)
         return reply
 
-    @staticmethod
-    def parse_data(data):
-        try:
-            d = data.split(":")[1].split(",")
-            return float(d[0]), float(d[1]), float(d[2])
-        except:
-            return 0, 0, 0
+    def parse_data(self,data):
+        """
+        Získaj info o druhom hráčovi a aktualizuj jeho pozíciu + strely
+        """
+        self.player2.deserialize(data)
+        return self.player2.x, self.player2.y, self.player2.angle
 
 
 class Canvas:

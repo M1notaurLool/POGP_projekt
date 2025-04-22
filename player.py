@@ -65,3 +65,27 @@ class Player():
             bullet.move()
             if not (0 <= bullet.x <= 1000 and 0 <= bullet.y <= 1000):  # Predpokladaná veľkosť mapy
                 self.bullets.remove(bullet)
+    def serialize(self, id):
+        # Získame pozíciu a uhol + strely ako zoznam x,y
+        base = f"{id}:{int(self.x)},{int(self.y)},{int(self.angle)}"
+        if self.bullets:
+            bullets_str = "|".join([f"{int(b.x)},{int(b.y)}" for b in self.bullets])
+            return f"{base}|{bullets_str}"
+        return f"{base}|"
+
+    def deserialize(self, data):
+        # Očakáva formát: id:x,y,angle|x1,y1|x2,y2|...
+        try:
+            parts = data.split(":")[1].split("|")
+            pos_parts = parts[0].split(",")
+            self.x = int(pos_parts[0])
+            self.y = int(pos_parts[1])
+            self.angle = int(pos_parts[2])
+            self.bullets = []
+            for bullet_data in parts[1:]:
+                if bullet_data:
+                    bx, by = bullet_data.split(",")
+                    from bullet import Bullet
+                    self.bullets.append(Bullet(int(bx), int(by), self.angle, speed=0))
+        except:
+            pass
