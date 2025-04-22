@@ -11,14 +11,20 @@ class Player():
         self.velocity = 2
         self.angle = 0
         self.color = color
+        self.bullets = []  # Zoznam vystrelených projektilov
 
         self.image = pygame.image.load("obrazok/RaketaPassive.png")
+        self.image = pygame.transform.rotate(self.image, -90)  # Otočenie o 90° doprava
         self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
     def draw(self, g):
         rotated_image = pygame.transform.rotate(self.image, self.angle)
         rect = rotated_image.get_rect(center=(self.x, self.y))
         g.blit(rotated_image, rect.topleft)
+
+        # Nakreslenie striel
+        for bullet in self.bullets:
+            bullet.draw(g)
 
     def move_forward(self):
         """Pohyb vpred podľa uhla raketky"""
@@ -44,3 +50,19 @@ class Player():
             self.y -= self.velocity
         else:
             self.y += self.velocity
+
+    def shoot(self):
+        """Vytvorí novú strelu v smere raketky."""
+        bullet_speed = 7  # Rýchlosť strely
+        radian_angle = math.radians(self.angle)
+        bullet_x = self.x + (self.width // 2) * math.cos(radian_angle)
+        bullet_y = self.y - (self.height // 2) * math.sin(radian_angle)
+
+        self.bullets.append(Bullet(bullet_x, bullet_y, self.angle, bullet_speed))
+
+    def update_bullets(self):
+        """Aktualizuje polohu striel a odstráni tie, ktoré sú mimo obrazovky."""
+        for bullet in self.bullets[:]:
+            bullet.move()
+            if not (0 <= bullet.x <= 1000 and 0 <= bullet.y <= 1000):  # Predpokladaná veľkosť mapy
+                self.bullets.remove(bullet)

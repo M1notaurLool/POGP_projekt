@@ -6,7 +6,7 @@ import sys
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 
-server = "192.168.88.11"
+server = "172.20.10.6"
 
 port = 11000
 
