@@ -1,6 +1,10 @@
+import os
+import sys
+
 import pygame
 from network import Network
 from player import Player
+import subprocess
 
 class Game:
 
@@ -21,7 +25,10 @@ class Game:
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    run = False
+                    pygame.quit()
+                    subprocess.Popen([sys.executable, "lobby.py"]) #zapne lobby ked vypinam hru
+
+
 
             keys = pygame.key.get_pressed()
 

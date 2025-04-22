@@ -1,5 +1,7 @@
+import os
 import sys
 import socket
+import subprocess
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QHBoxLayout, QVBoxLayout
@@ -11,7 +13,7 @@ BUTTON_STYLE = """
 QPushButton {
     font-size: 20px;
     font-family: 'Comic Sans MS';
-    border: 1px solid white;
+    border: 1dpx solid white;
     color: white;
     padding: 15px 20px;
     width: 300px;
@@ -91,7 +93,7 @@ class Okno(QtWidgets.QMainWindow):
         """)
 
         # Predvolené IP a port
-        self._saved_address = "172.20.10.6"
+        self._saved_address = "127.0.0.1"
         self._saved_port = 11000
 
         self.main_window()
@@ -169,6 +171,7 @@ class Okno(QtWidgets.QMainWindow):
         self.setCentralWidget(central_widget)  # <- required if you're in QMainWindow
 
     def multy(self):
+
         self.clear()
 
         # Vstupy pre IP a port
@@ -209,7 +212,12 @@ class Okno(QtWidgets.QMainWindow):
     def exit(self):
         sys.exit()
 
+     # Spustí nový proces
+
+
     def start(self):
+
+        self.close()#zatvorenie okna lobby
         g = game.Game(800, 800)  # Očakávame, že trieda Game existuje v games.py
         g.run()  # Spustíme hru
 
