@@ -10,6 +10,7 @@ class Player():
         self.angle = 0
         self.color = color
         self.bullets = []  # Zoznam vystrelených projektilov
+        self.hits = 0  # <= Tu sledujeme počet zásahov
 
         self.image = pygame.image.load("obrazok/raketa_green.png").convert_alpha()
         self.image = pygame.transform.rotate(self.image, -90)  # Otočenie o 90° doprava
@@ -70,8 +71,8 @@ class Player():
         base = f"{id}:{int(self.x)},{int(self.y)},{int(self.angle)}"
         if self.bullets:
             bullets_str = "|".join([f"{int(b.x)},{int(b.y)}" for b in self.bullets])
-            return f"{base}|{bullets_str}"
-        return f"{base}|"
+            return f"{base}|{bullets_str}|{self.hits}"  # Počet hitov na konci
+        return f"{base}||{self.hits}"
 
     def deserialize(self, data):
         # Očakáva formát: id:x,y,angle|x1,y1|x2,y2|...
@@ -82,10 +83,28 @@ class Player():
             self.y = int(pos_parts[1])
             self.angle = int(pos_parts[2])
             self.bullets = []
-            for bullet_data in parts[1:]:
+            for bullet_data in parts[1:-1]:
                 if bullet_data:
                     bx, by = bullet_data.split(",")
                     from bullet import Bullet
                     self.bullets.append(Bullet(int(bx), int(by), self.angle, speed=0))
+            self.hits = int(parts[-1])  # <- tu sa získa hit count
         except:
             pass
+
+    def get_rect(self):
+        rotated_image = pygame.transform.rotozoom(self.image, self.angle, 1.0)
+        return rotated_image.get_rect(center=(self.x, self.y))
+
+    def check_hit(self, other_player):
+        """
+        Skontroluje zásahy do druhého hráča a vymaže strely.
+        """
+        other_rect = other_player.get_rect()
+
+        for bullet in self.bullets[:]:
+            bullet_rect = pygame.Rect(bullet.x - 5, bullet.y - 5, 10, 10)  # jednoduchý "hitbox"
+            if bullet_rect.colliderect(other_rect):
+                self.bullets.remove(bullet)
+                self.hits += 1
+                print(f"Zásah! Hráč má {self.hits} hitov.")

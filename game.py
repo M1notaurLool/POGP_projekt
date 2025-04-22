@@ -41,6 +41,10 @@ class Game:
             # Strely
             self.player.update_bullets()
 
+            # Po update_bullets() a pred kreslením
+            self.player.check_hit(self.player2)
+            self.player2.check_hit(self.player)
+
             # Synchronizácia s druhým hráčom cez server
             self.player2.x, self.player2.y, self.player2.angle = self.parse_data(self.send_data())
 
@@ -48,6 +52,8 @@ class Game:
             self.canvas.draw_background()
             self.player.draw(self.canvas.get_canvas())
             self.player2.draw(self.canvas.get_canvas())
+            self.canvas.draw_text(f"Hráč 1 hity: {self.player.hits}", 30, 10, 10)
+            self.canvas.draw_text(f"Hráč 2 hity: {self.player2.hits}", 30, 10, 40)
             self.canvas.update()
 
         pygame.quit()
@@ -79,7 +85,7 @@ class Canvas:
     def draw_text(self, text, size, x, y):
         pygame.font.init()
         font = pygame.font.SysFont("comicsans", size)
-        render = font.render(text, 1, (0, 0, 0))
+        render = font.render(text, 1, (255, 255, 255))
         self.screen.blit(render, (x, y))
 
     def get_canvas(self):
