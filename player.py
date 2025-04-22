@@ -3,22 +3,21 @@ import math
 from bullet import Bullet
 
 class Player():
-    width = height = 50
-
     def __init__(self, startx, starty, color=(255,0,0)):
         self.x = startx
         self.y = starty
-        self.velocity = 2
+        self.velocity = 8
         self.angle = 0
         self.color = color
         self.bullets = []  # Zoznam vystrelených projektilov
 
-        self.image = pygame.image.load("obrazok/RaketaPassive.png")
+        self.image = pygame.image.load("obrazok/raketa_green.png").convert_alpha()
         self.image = pygame.transform.rotate(self.image, -90)  # Otočenie o 90° doprava
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        #nastavenie velkosti raketky podla rozmerov zmensena 10x
+        self.image = pygame.transform.smoothscale(self.image, (self.image.get_width()/10, self.image.get_height()/10))
 
     def draw(self, g):
-        rotated_image = pygame.transform.rotate(self.image, self.angle)
+        rotated_image = pygame.transform.rotozoom(self.image, self.angle, 1.0)
         rect = rotated_image.get_rect(center=(self.x, self.y))
         g.blit(rotated_image, rect.topleft)
 
@@ -55,8 +54,8 @@ class Player():
         """Vytvorí novú strelu v smere raketky."""
         bullet_speed = 7  # Rýchlosť strely
         radian_angle = math.radians(self.angle)
-        bullet_x = self.x + (self.width // 2) * math.cos(radian_angle)
-        bullet_y = self.y - (self.height // 2) * math.sin(radian_angle)
+        bullet_x = self.x + (self.image.get_width()/10 // 2) * math.cos(radian_angle)
+        bullet_y = self.y - (self.image.get_height()/10 // 2) * math.sin(radian_angle)
 
         self.bullets.append(Bullet(bullet_x, bullet_y, self.angle, bullet_speed))
 

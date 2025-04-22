@@ -8,9 +8,10 @@ class Game:
         self.net = Network()
         self.width = w
         self.height = h
+        self.canvas = Canvas(self.width, self.height, "Space Blast")
         self.player = Player(50, 50)
         self.player2 = Player(100, 100)
-        self.canvas = Canvas(self.width, self.height, "Triskáč Blast")
+
 
     def run(self):
         clock = pygame.time.Clock()
@@ -86,4 +87,4 @@ class Canvas:
         pygame.display.update()
 
     def draw_background(self):
-        self.screen.fill((255, 255, 255))
+        self.screen.fill((0, 0, 0))
