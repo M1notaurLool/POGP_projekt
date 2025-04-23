@@ -67,7 +67,7 @@ class Player():
         """Aktualizuje polohu striel a odstráni tie, ktoré sú mimo obrazovky."""
         for bullet in self.bullets[:]:
             bullet.move()
-            if not (0 <= bullet.x <= 1000 and 0 <= bullet.y <= 1000):  # Predpokladaná veľkosť mapy
+            if not (0 <= bullet.x <= pygame.display.get_surface().get_width() and 0 <= bullet.y <= pygame.display.get_surface().get_height()):  #veľkosť mapy
                 self.bullets.remove(bullet)
     def serialize(self, id):
         # Získame pozíciu a uhol + strely ako zoznam x,y
