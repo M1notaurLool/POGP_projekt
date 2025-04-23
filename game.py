@@ -79,7 +79,7 @@ class Canvas:
     def __init__(self, w, h, name="None"):
         self.width = w
         self.height = h
-        self.screen = pygame.display.set_mode((w, h))
+        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
         pygame.display.set_caption(name)
 
     def draw_text(self, text, size, x, y):
