@@ -7,6 +7,7 @@ class Player():
         self.x = startx
         self.y = starty
         self.velocity = 8
+        self.SCALE = 6          #velkost raket (realna velkost/SCALE)
         self.angle = 0
         self.color = color
         self.bullets = []  # Zoznam vystrelených projektilov
@@ -15,10 +16,12 @@ class Player():
         self.image = pygame.image.load("obrazok/raketa_green.png").convert_alpha()
         self.image = pygame.transform.rotate(self.image, -90)  # Otočenie o 90° doprava
         #nastavenie velkosti raketky podla rozmerov zmensena 10x
-        self.image = pygame.transform.smoothscale(self.image, (self.image.get_width()/10, self.image.get_height()/10))
+        self.image = pygame.transform.smoothscale(self.image, (self.image.get_width()/self.SCALE, self.image.get_height()/self.SCALE))
+        self.mask = pygame.mask.from_surface(self.image) #vytvorenie masky pre hitbox
 
     def draw(self, g):
         rotated_image = pygame.transform.rotozoom(self.image, self.angle, 1.0)
+        self.mask = pygame.mask.from_surface(rotated_image) #otacanie hitboxa podla rakety
         rect = rotated_image.get_rect(center=(self.x, self.y))
         g.blit(rotated_image, rect.topleft)
 
@@ -55,8 +58,8 @@ class Player():
         """Vytvorí novú strelu v smere raketky."""
         bullet_speed = 7  # Rýchlosť strely
         radian_angle = math.radians(self.angle)
-        bullet_x = self.x + (self.image.get_width()/10 // 2) * math.cos(radian_angle)
-        bullet_y = self.y - (self.image.get_height()/10 // 2) * math.sin(radian_angle)
+        bullet_x = self.x + (self.image.get_width()/self.SCALE // 2) * math.cos(radian_angle)
+        bullet_y = self.y - (self.image.get_height()/self.SCALE // 2) * math.sin(radian_angle)
 
         self.bullets.append(Bullet(bullet_x, bullet_y, self.angle, bullet_speed))
 
@@ -101,10 +104,13 @@ class Player():
         Skontroluje zásahy do druhého hráča a vymaže strely.
         """
         other_rect = other_player.get_rect()
+        other_mask = other_player.mask
 
         for bullet in self.bullets[:]:
-            bullet_rect = pygame.Rect(bullet.x - 5, bullet.y - 5, 10, 10)  # jednoduchý "hitbox"
-            if bullet_rect.colliderect(other_rect):
+            bullet_rect = pygame.Rect(bullet.x - 5, bullet.y - 5, 10, 10)               #hitbox
+            offset = (bullet_rect.x - other_rect.x, bullet_rect.y - other_rect.y)
+
+            if other_mask.overlap(pygame.mask.Mask((10, 10), fill=True), offset):
                 self.bullets.remove(bullet)
                 self.hits += 1
                 print(f"Zásah! Hráč má {self.hits} hitov.")
