@@ -1,3 +1,5 @@
+import time
+
 import pygame
 import math
 from bullet import Bullet
@@ -12,6 +14,8 @@ class Player():
         self.color = color
         self.bullets = []  # Zoznam vystrelených projektilov
         self.hits = 0  # <= Tu sledujeme počet zásahov
+        self.last_shot_time = 0  # posledný čas streľby
+        self.shoot_cooldown = 1  # sekundy medzi výstrelmi
 
         self.image = pygame.image.load("obrazok/raketa_green.png").convert_alpha()
         self.image = pygame.transform.rotate(self.image, -90)  # Otočenie o 90° doprava
@@ -33,9 +37,20 @@ class Player():
         """Pohyb vpred podľa uhla raketky"""
         radian_angle = math.radians(self.angle)
         speed = self.velocity  # Normalizovaná rýchlosť
-        self.x += speed * math.cos(radian_angle)
-        self.y -= speed * math.sin(radian_angle)
+        new_x = self.x + speed * math.cos(radian_angle)
+        new_y = self.y - speed * math.sin(radian_angle)
 
+        # Veľkosť obrazovky (hardcoded – môžeš nahradiť za argument)
+        screen_width = 800
+        screen_height = 800
+        image_width = self.image.get_width() // 2
+        image_height = self.image.get_height() // 2
+
+        # Orez pozície aby nevyliezla von
+        if image_width <= new_x <= screen_width - image_width:
+            self.x = new_x
+        if image_height <= new_y <= screen_height - image_height:
+            self.y = new_y
     def rotate_left(self):
         """Otáčanie raketky doľava"""
         self.angle += 3  # Normalizované otáčanie doľava
@@ -56,13 +71,15 @@ class Player():
 
     def shoot(self):
         """Vytvorí novú strelu v smere raketky."""
-        bullet_speed = 7  # Rýchlosť strely
-        radian_angle = math.radians(self.angle)
-        bullet_x = self.x + (self.image.get_width()/self.SCALE // 2) * math.cos(radian_angle)
-        bullet_y = self.y - (self.image.get_height()/self.SCALE // 2) * math.sin(radian_angle)
+        current_time = time.time()
+        if current_time - self.last_shot_time >= self.shoot_cooldown:
+            bullet_speed = 7
+            radian_angle = math.radians(self.angle)
+            bullet_x = self.x + (self.image.get_width()/10 // 2) * math.cos(radian_angle)
+            bullet_y = self.y - (self.image.get_height()/10 // 2) * math.sin(radian_angle)
 
-        self.bullets.append(Bullet(bullet_x, bullet_y, self.angle, bullet_speed))
-
+            self.bullets.append(Bullet(bullet_x, bullet_y, self.angle, bullet_speed))
+            self.last_shot_time = current_time  # aktualizuj čas poslednej strely
     def update_bullets(self):
         """Aktualizuje polohu striel a odstráni tie, ktoré sú mimo obrazovky."""
         for bullet in self.bullets[:]:
