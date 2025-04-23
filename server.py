@@ -1,5 +1,6 @@
 import socket
 from _thread import *
+from share import Share
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 

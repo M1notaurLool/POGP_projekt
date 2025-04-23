@@ -3,6 +3,7 @@ import socket
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QVBoxLayout
+import subprocess
 
 import game
 import share
@@ -10,7 +11,8 @@ import share
 BUTTON_STYLE = """
 QPushButton {
     font-size: 20px;
-    font-family: 'Comic Sans MS';
+    font-family: 'Poppins';
+    font-weight: bold;
     border: 1px solid white;
     color: white;
     padding: 15px 20px;
@@ -30,7 +32,8 @@ QPushButton:pressed {
 INPUT = """
 QLineEdit {
     font-size: 20px;
-    font-family: 'Comic Sans MS';
+    font-family: 'Poppins';
+    font-weight: bold;
     border: 1px solid white;
     background-color: transparent;
     color: white;
@@ -143,11 +146,21 @@ class Okno(QtWidgets.QMainWindow):
         # MULTI PLAYER tlačidlo
         self._btn_multy_settings = QtWidgets.QPushButton("SETTINGS", self)
         self._btn_multy_settings.clicked.connect(self.multy)
-        self._btn_multy_settings.setStyleSheet(BUTTON_STYLE +
+        self._btn_multy_settings.setStyleSheet(BUTTON_STYLE)
+
+        self._btn_server = QtWidgets.QPushButton("SERVER", self)
+        self._btn_server.clicked.connect(self.server)
+        self._btn_server.setStyleSheet(BUTTON_STYLE +
                                                "QPushButton {"
                                                "margin-bottom: 50px;"
                                                "}"
                                                )
+
+
+
+
+
+
 
         # EXIT tlačidlo
         self._btn_exit = QtWidgets.QPushButton("EXIT", self)
@@ -160,13 +173,82 @@ class Okno(QtWidgets.QMainWindow):
         main_layout.addSpacing(30)
         main_layout.addWidget(self._btn_start, alignment=Qt.AlignmentFlag.AlignCenter)
         main_layout.addWidget(self._btn_multy_settings, alignment=Qt.AlignmentFlag.AlignCenter)
+        main_layout.addWidget(self._btn_server, alignment=Qt.AlignmentFlag.AlignCenter)
         main_layout.addWidget(self._btn_exit, alignment=Qt.AlignmentFlag.AlignCenter)
+
         main_layout.addStretch()
 
         # Použije layout na celé okno
         central_widget = QtWidgets.QWidget(self)
         central_widget.setLayout(main_layout)
         self.setCentralWidget(central_widget)  # <- required if you're in QMainWindow
+
+
+
+    def server_pressed(self):
+
+        ip = self.s_address.text()
+        port_text = self.s_port.text()
+        try:
+            port = int(port_text)
+            self._saved_address = ip
+            self._saved_port = port
+
+            share.Share.s_ip = ip
+            share.Share.s_port = port
+
+            print(f"Uložená IP adresa: {ip}, PORT: {port}")
+        except ValueError:
+            print("Zadaj platný číselný port.")
+
+
+    def run_server(self):
+        subprocess.Popen([sys.executable, "server.py"])
+
+    def server(self):
+        self.clear()
+
+        # Vstupy pre IP a port
+        self.s_address = QtWidgets.QLineEdit(self._saved_address, self)
+        self.s_address.setStyleSheet(INPUT)
+
+        self.s_port = QtWidgets.QLineEdit(str(self._saved_port), self)
+        self.s_port.setStyleSheet(INPUT)
+
+        # ULOŽIŤ tlačidlo
+        self._btn_save = QtWidgets.QPushButton("ULOŽIŤ", self)
+        self._btn_save.clicked.connect(self.server_pressed)
+        self._btn_save.setStyleSheet(BUTTON_STYLE)
+
+        self._btn_spusti_server = QtWidgets.QPushButton("SPUSTIŤ SERVER", self)
+        self._btn_spusti_server.clicked.connect(self.run_server)
+        self._btn_spusti_server.setStyleSheet(BUTTON_STYLE +
+                                     "QPushButton {"
+                                     "margin-bottom: 50px;"
+                                     "}"
+                                     )
+
+        # SPÄŤ tlačidlo
+        self._btn_back_main = QtWidgets.QPushButton("VRÁTIŤ SA", self)
+        self._btn_back_main.clicked.connect(self.main_window)
+        self._btn_back_main.setStyleSheet(BUTTON_STYLE)
+
+        server = QVBoxLayout()
+        server.addStretch()
+        server.addSpacing(30)
+        server.addWidget(self.s_address, alignment=Qt.AlignmentFlag.AlignCenter)
+        server.addWidget(self.s_port, alignment=Qt.AlignmentFlag.AlignCenter)
+        server.addWidget(self._btn_save, alignment=Qt.AlignmentFlag.AlignCenter)
+        server.addWidget(self._btn_spusti_server, alignment=Qt.AlignmentFlag.AlignCenter)
+        server.addWidget(self._btn_back_main, alignment=Qt.AlignmentFlag.AlignCenter)
+        server.addStretch()
+
+        central_widget = QtWidgets.QWidget(self)
+        central_widget.setLayout(server)
+        self.setCentralWidget(central_widget)
+
+
+
 
     def multy(self):
 
