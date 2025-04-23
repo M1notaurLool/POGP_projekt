@@ -11,7 +11,7 @@ BUTTON_STYLE = """
 QPushButton {
     font-size: 20px;
     font-family: 'Comic Sans MS';
-    border: 1dpx solid white;
+    border: 1px solid white;
     color: white;
     padding: 15px 20px;
     width: 300px;
