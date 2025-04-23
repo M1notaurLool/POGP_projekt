@@ -36,17 +36,15 @@ class Player():
     def move_forward(self):
         """Pohyb vpred podľa uhla raketky"""
         radian_angle = math.radians(self.angle)
-        speed = self.velocity  # Normalizovaná rýchlosť
+        speed = self.velocity
         new_x = self.x + speed * math.cos(radian_angle)
         new_y = self.y - speed * math.sin(radian_angle)
 
-        # Veľkosť obrazovky (hardcoded – môžeš nahradiť za argument)
-        screen_width = 800
-        screen_height = 800
+        screen_width = pygame.display.get_surface().get_width()
+        screen_height = pygame.display.get_surface().get_height()
         image_width = self.image.get_width() // 2
         image_height = self.image.get_height() // 2
 
-        # Orez pozície aby nevyliezla von
         if image_width <= new_x <= screen_width - image_width:
             self.x = new_x
         if image_height <= new_y <= screen_height - image_height:
@@ -82,6 +80,8 @@ class Player():
             self.last_shot_time = current_time  # aktualizuj čas poslednej strely
     def update_bullets(self):
         """Aktualizuje polohu striel a odstráni tie, ktoré sú mimo obrazovky."""
+        screen_width = pygame.display.get_surface().get_width()
+        screen_height = pygame.display.get_surface().get_height()
         for bullet in self.bullets[:]:
             bullet.move()
             if not (0 <= bullet.x <= pygame.display.get_surface().get_width() and 0 <= bullet.y <= pygame.display.get_surface().get_height()):  #veľkosť mapy
