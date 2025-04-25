@@ -11,8 +11,6 @@ class Game:
         self.net = Network()
         self.width = w
         self.height = h
-        #self.info = pygame.display.Info()
-        #self.b_width, self.b_height = self.info.current_w, self.info.current_h
         self.canvas = Canvas(self.width, self.height, "Space Blast")
         self.player = Player(50, 50)
         self.player2 = Player(100, 100)
