@@ -11,6 +11,8 @@ class Game:
         self.net = Network()
         self.width = w
         self.height = h
+        #self.info = pygame.display.Info()
+        #self.b_width, self.b_height = self.info.current_w, self.info.current_h
         self.canvas = Canvas(self.width, self.height, "Space Blast")
         self.player = Player(50, 50)
         self.player2 = Player(100, 100)
@@ -19,6 +21,10 @@ class Game:
     def run(self):
         clock = pygame.time.Clock()
         run = True
+
+        background_image = pygame.image.load('obrazok/pozadie_hra.jpg')
+        background_image = pygame.transform.scale(background_image, (1920, 1080))
+
         while run:
             clock.tick(60)
             for event in pygame.event.get():
@@ -49,7 +55,7 @@ class Game:
             self.player2.x, self.player2.y, self.player2.angle = self.parse_data(self.send_data())
 
             # Kreslenie
-            self.canvas.draw_background()
+            self.canvas.draw_background(background_image)
             self.player.draw(self.canvas.get_canvas())
             self.player2.draw(self.canvas.get_canvas())
             self.canvas.draw_text(f"Hráč 1 hity: {self.player.hits}", 30, 10, 10)
@@ -94,5 +100,5 @@ class Canvas:
     def update(self):
         pygame.display.update()
 
-    def draw_background(self):
-        self.screen.fill((0, 0, 0))
+    def draw_background(self, image):
+        self.screen.blit(image,(0, 0))
