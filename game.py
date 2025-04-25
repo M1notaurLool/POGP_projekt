@@ -29,18 +29,19 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     subprocess.Popen([sys.executable, "lobby.py"]) #zapne lobby ked vypinam hru
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self.player.shoot()
 
             keys = pygame.key.get_pressed()
 
             # OVLÁDANIE RAKETY
-            if keys[pygame.K_UP]:
+            if keys[pygame.K_UP] or keys[pygame.K_w]:
                 self.player.move_forward()
-            if keys[pygame.K_LEFT]:
+            if keys[pygame.K_LEFT] or keys[pygame.K_a]:
                 self.player.rotate_left()
-            if keys[pygame.K_RIGHT]:
+            if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
                 self.player.rotate_right()
-            if keys[pygame.K_SPACE]:
-                self.player.shoot()
 
             # Strely
             self.player.update_bullets()

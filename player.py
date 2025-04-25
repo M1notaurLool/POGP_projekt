@@ -15,7 +15,6 @@ class Player():
         self.bullets = []  # Zoznam vystrelených projektilov
         self.hits = 0  # <= Tu sledujeme počet zásahov
         self.last_shot_time = 0  # posledný čas streľby
-        self.shoot_cooldown = 1  # sekundy medzi výstrelmi
 
         self.image = pygame.image.load("obrazok/raketa_green.png").convert_alpha()
         self.image = pygame.transform.rotate(self.image, -90)  # Otočenie o 90° doprava
@@ -70,14 +69,13 @@ class Player():
     def shoot(self):
         """Vytvorí novú strelu v smere raketky."""
         current_time = time.time()
-        if current_time - self.last_shot_time >= self.shoot_cooldown:
-            bullet_speed = 7
-            radian_angle = math.radians(self.angle)
-            bullet_x = self.x + (self.image.get_width()/10 // 2) * math.cos(radian_angle)
-            bullet_y = self.y - (self.image.get_height()/10 // 2) * math.sin(radian_angle)
+        bullet_speed = 12
+        radian_angle = math.radians(self.angle)
+        bullet_x = self.x + (self.image.get_width()/10 // 2) * math.cos(radian_angle)
+        bullet_y = self.y - (self.image.get_height()/10 // 2) * math.sin(radian_angle)
 
-            self.bullets.append(Bullet(bullet_x, bullet_y, self.angle, bullet_speed))
-            self.last_shot_time = current_time  # aktualizuj čas poslednej strely
+        self.bullets.append(Bullet(bullet_x, bullet_y, self.angle, bullet_speed))
+        self.last_shot_time = current_time  # aktualizuj čas poslednej strely
     def update_bullets(self):
         """Aktualizuje polohu striel a odstráni tie, ktoré sú mimo obrazovky."""
         screen_width = pygame.display.get_surface().get_width()
