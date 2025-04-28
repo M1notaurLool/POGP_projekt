@@ -50,8 +50,16 @@ class Game:
             self.player.check_hit(self.player2)
             self.player2.check_hit(self.player)
 
+            if self.player.hits <= 0:
+                print("Vyhráva Hráč 2!")
+                pygame.quit()
+
+            if self.player2.hits <= 0:
+                print("Vyhráva Hráč 1!")
+                pygame.quit()
+
             # Synchronizácia s druhým hráčom cez server
-            self.player2.x, self.player2.y, self.player2.angle = self.parse_data(self.send_data())
+            self.parse_data(self.send_data())
 
             # Kreslenie
             self.canvas.draw_background(background_image)
@@ -61,7 +69,7 @@ class Game:
             self.canvas.draw_text(f"Hráč 2 hity: {self.player2.hits}", 30, 10, 40)
             self.canvas.update()
 
-        pygame.quit()
+
 
     def send_data(self):
         """

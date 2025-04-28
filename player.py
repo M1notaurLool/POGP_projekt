@@ -13,7 +13,7 @@ class Player():
         self.angle = 0
         self.color = color
         self.bullets = []  # Zoznam vystrelených projektilov
-        self.hits = 0  # <= Tu sledujeme počet zásahov
+        self.hits = 50  # <= Tu sledujeme počet zásahov/životov
         self.last_shot_time = 0  # posledný čas streľby
 
         self.image = pygame.image.load("obrazok/raketa_green.png").convert_alpha()
@@ -106,7 +106,6 @@ class Player():
                     bx, by = bullet_data.split(",")
                     from bullet import Bullet
                     self.bullets.append(Bullet(int(bx), int(by), self.angle, speed=0))
-            self.hits = int(parts[-1])  # <- tu sa získa hit count
         except:
             pass
 
@@ -116,16 +115,21 @@ class Player():
 
     def check_hit(self, other_player):
         """
-        Skontroluje zásahy do druhého hráča a vymaže strely.
+        Skontroluje zásahy do druhého hráča a upraví životy.
         """
         other_rect = other_player.get_rect()
         other_mask = other_player.mask
 
         for bullet in self.bullets[:]:
-            bullet_rect = pygame.Rect(bullet.x - 5, bullet.y - 5, 10, 10)               #hitbox
+            bullet_rect = pygame.Rect(bullet.x - 5, bullet.y - 5, 10, 10)  # hitbox
             offset = (bullet_rect.x - other_rect.x, bullet_rect.y - other_rect.y)
 
             if other_mask.overlap(pygame.mask.Mask((10, 10), fill=True), offset):
                 self.bullets.remove(bullet)
+
+                # Tu upravujeme zdravie/hity
                 self.hits += 1
-                print(f"Zásah! Hráč má {self.hits} hitov.")
+                other_player.hits -= 1
+
+                print(f"Zásah! Moje životy: {self.hits}, súperove životy: {other_player.hits}")
+
