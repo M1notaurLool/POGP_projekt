@@ -4,6 +4,10 @@ import pygame
 from network import Network
 from player import Player
 import subprocess
+import random
+from heal_boost import HealBoost
+from shield_boost import Shield
+from turbo_boost import TurboBoost
 
 class Game:
 
@@ -14,6 +18,16 @@ class Game:
         self.canvas = Canvas(self.width, self.height, "Space Blast")
         self.player = Player(50, 50)
         self.player2 = Player(100, 100)
+        self.boosts = []  # budú sa prijímať zo servera
+
+        # === BOOSTY ===
+        self.boosts = [
+            HealBoost("obrazok/heal.png", 600, 300),
+            Shield("obrazok/shield.png", 800, 500),
+            TurboBoost("obrazok/turbo.png", 1000, 400)
+        ]
+
+
 
 
     def run(self):
@@ -46,6 +60,13 @@ class Game:
             # Strely
             self.player.update_bullets()
 
+              # BOOST TRVANIE
+            current_time = pygame.time.get_ticks()
+            if self.player.shield_active and current_time - self.player.shield_timer > 5000:
+                self.player.shield_active = False
+            if hasattr(self.player, "boost_timer") and current_time - self.player.boost_timer > 3000:
+                self.player.velocity = 8
+
             # Po update_bullets() a pred kreslením
             self.player.check_hit(self.player2)
             self.player2.check_hit(self.player)
@@ -63,6 +84,26 @@ class Game:
 
             # Kreslenie
             self.canvas.draw_background(background_image)
+
+            # === BOOSTY ===
+            for boost in self.boosts[:]:
+                if boost.check_collision(self.player):
+                    self.boosts.remove(boost)
+                else:
+                    boost.draw(self.canvas.get_canvas())
+
+            # Respawn boostov po čase
+            if len(self.boosts) < 3:  # Napr. max 3 boosty
+                if random.randint(0, 100) == 1:  # Malá šanca každý frame
+                    boost_type = random.choice([HealBoost, Shield, TurboBoost])
+                    image_path = {
+                        HealBoost: "obrazok/heal.png",
+                        Shield: "obrazok/shield.png",
+                        TurboBoost: "obrazok/turbo.png"
+                    }[boost_type]
+                    new_boost = boost_type(image_path, random.randint(100, 1800), random.randint(100, 900))
+                    self.boosts.append(new_boost)
+
             self.player.draw(self.canvas.get_canvas())
             self.player2.draw(self.canvas.get_canvas())
             self.canvas.draw_text(f"Hráč 1 hity: {self.player.hits}", 30, 10, 10)
