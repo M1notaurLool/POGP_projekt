@@ -128,7 +128,6 @@ class Player():
                 self.bullets.remove(bullet)
 
                 # Tu upravujeme zdravie/hity
-                self.hits += 1
                 other_player.hits -= 1
 
                 print(f"Zásah! Moje životy: {self.hits}, súperove životy: {other_player.hits}")
