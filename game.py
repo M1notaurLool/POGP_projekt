@@ -1,17 +1,9 @@
 import sys
+
 import pygame
 from network import Network
 from player import Player
 import subprocess
-import json
-import random
-
-# Sem si vložíš importy boostov
-from heal_boost import HealBoost
-from shield_boost import Shield
-from turbo_boost import TurboBoost
-# alebo ak chceš mať všetko v tomto súbore, môžeme ich pridať sem
-
 
 class Game:
 
@@ -22,14 +14,6 @@ class Game:
         self.canvas = Canvas(self.width, self.height, "Space Blast")
         self.player = Player(50, 50)
         self.player2 = Player(100, 100)
-        self.boosts = []  # budú sa prijímať zo servera
-
-        # === BOOSTY ===
-        self.boosts = [
-            HealBoost("obrazok/heal.png", 600, 300),
-            Shield("obrazok/shield.png", 800, 500),
-            TurboBoost("obrazok/turbo.png", 1000, 400)
-        ]
 
 
     def run(self):
@@ -44,7 +28,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    subprocess.Popen([sys.executable, "lobby.py"])
+                    subprocess.Popen([sys.executable, "lobby.py"]) #zapne lobby ked vypinam hru
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         self.player.shoot()
@@ -62,13 +46,7 @@ class Game:
             # Strely
             self.player.update_bullets()
 
-            # BOOST TRVANIE
-            current_time = pygame.time.get_ticks()
-            if self.player.shield_active and current_time - self.player.shield_timer > 5000:
-                self.player.shield_active = False
-            if hasattr(self.player, "boost_timer") and current_time - self.player.boost_timer > 3000:
-                self.player.velocity = 8
-
+            # Po update_bullets() a pred kreslením
             self.player.check_hit(self.player2)
             self.player2.check_hit(self.player)
 
@@ -80,42 +58,31 @@ class Game:
                 print("Vyhráva Hráč 1!")
                 pygame.quit()
 
+            # Synchronizácia s druhým hráčom cez server
             self.parse_data(self.send_data())
 
-            # Vykreslenie pozadia
+            # Kreslenie
             self.canvas.draw_background(background_image)
-
-            # === BOOSTY ===
-            for boost in self.boosts[:]:
-                if boost.check_collision(self.player):
-                    self.boosts.remove(boost)
-                else:
-                    boost.draw(self.canvas.get_canvas())
-
-            # Respawn boostov po čase
-            if len(self.boosts) < 50:  # Napr. max 3 boosty
-                if random.randint(0, 100) == 1:  # Malá šanca každý frame
-                    boost_type = random.choice([HealBoost, Shield, TurboBoost])
-                    image_path = {
-                        HealBoost: "obrazok/heal.png",
-                        Shield: "obrazok/shield.png",
-                        TurboBoost: "obrazok/turbo.png"
-                    }[boost_type]
-                    new_boost = boost_type(image_path, random.randint(100, 1800), random.randint(100, 900))
-                    self.boosts.append(new_boost)
-
             self.player.draw(self.canvas.get_canvas())
             self.player2.draw(self.canvas.get_canvas())
             self.canvas.draw_text(f"Hráč 1 hity: {self.player.hits}", 30, 10, 10)
             self.canvas.draw_text(f"Hráč 2 hity: {self.player2.hits}", 30, 10, 40)
             self.canvas.update()
 
+
+
     def send_data(self):
+        """
+        Odošle pozíciu, uhol aj strely hráča na server
+        """
         data = self.player.serialize(self.net.id)
         reply = self.net.send(data)
         return reply
 
-    def parse_data(self, data):
+    def parse_data(self,data):
+        """
+        Získaj info o druhom hráčovi a aktualizuj jeho pozíciu + strely
+        """
         self.player2.deserialize(data)
         return self.player2.x, self.player2.y, self.player2.angle
 
@@ -125,7 +92,7 @@ class Canvas:
     def __init__(self, w, h, name="None"):
         self.width = w
         self.height = h
-        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
         pygame.display.set_caption(name)
 
     def draw_text(self, text, size, x, y):
@@ -141,4 +108,4 @@ class Canvas:
         pygame.display.update()
 
     def draw_background(self, image):
-        self.screen.blit(image, (0, 0))
+        self.screen.blit(image,(0, 0))
