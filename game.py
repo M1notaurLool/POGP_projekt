@@ -14,6 +14,7 @@ class Game:
         self.canvas = Canvas(self.width, self.height, "Space Blast")
         self.player = Player(50, 50)
         self.player2 = Player(100, 100)
+        print(self.width,self.height)
 
 
     def run(self):
@@ -21,7 +22,7 @@ class Game:
         run = True
 
         background_image = pygame.image.load('obrazok/pozadie_hra.jpg')
-        background_image = pygame.transform.scale(background_image, (1920, 1080))
+        background_image = pygame.transform.scale(background_image, (self.width, self.height))
 
         while run:
             clock.tick(60)
@@ -65,8 +66,8 @@ class Game:
             self.canvas.draw_background(background_image)
             self.player.draw(self.canvas.get_canvas())
             self.player2.draw(self.canvas.get_canvas())
-            self.canvas.draw_text(f"Hráč 1 hity: {self.player.hits}", 30, 10, 10)
-            self.canvas.draw_text(f"Hráč 2 hity: {self.player2.hits}", 30, 10, 40)
+            self.canvas.draw_player_info("Hráč 1", self.player.hits, max_hits=50, align="left", y_offset=10, color=(0, 200, 255), bar_color=(0, 200, 255))
+            self.canvas.draw_player_info("Hráč 2", self.player2.hits, max_hits=50, align="right", y_offset=10,color=(255, 100, 100), bar_color=(255, 100, 100))
             self.canvas.update()
 
 
@@ -95,11 +96,14 @@ class Canvas:
         self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
         pygame.display.set_caption(name)
 
-    def draw_text(self, text, size, x, y):
+    def draw_text(self, text, size, x, y, color=(255, 255, 255)):
         pygame.font.init()
         font = pygame.font.SysFont("comicsans", size)
-        render = font.render(text, 1, (255, 255, 255))
+        render = font.render(text, 1, color)
         self.screen.blit(render, (x, y))
+
+    def draw_background(self, image):
+        self.screen.blit(image, (0, 0))
 
     def get_canvas(self):
         return self.screen
@@ -107,5 +111,49 @@ class Canvas:
     def update(self):
         pygame.display.update()
 
-    def draw_background(self, image):
-        self.screen.blit(image,(0, 0))
+    def draw_player_info(self, label, hits, max_hits, align="left", y_offset=10, color=(255, 255, 255), bar_color=(0, 200, 255)):
+        pygame.font.init()
+        font = pygame.font.SysFont("Poppins", 30, bold=True)
+        text = f"{label}: {hits}"
+        render = font.render(text, True, color)
+        text_width, text_height = font.size(text)
+
+        bar_width = 400
+        bar_height = 20
+        bar_padding = 5
+
+        # Zarovnanie
+        if align == "left":
+            x_text = y_offset
+            x_bar = y_offset
+        elif align == "right":
+            x_text = self.width - text_width - y_offset
+            x_bar = self.width - bar_width - y_offset
+        else:
+            x_text = (self.width - text_width) // 2
+            x_bar = (self.width - bar_width) // 2
+
+        y_text = y_offset
+        y_bar = y_text + text_height + bar_padding
+
+        # Text
+        self.screen.blit(render, (x_text, y_text))
+
+        # Progress bar background (frame)
+
+
+        # Výpočet dĺžky zaplnenej časti
+        fill_width = int((hits / max_hits) * bar_width)
+
+        # Výplň barov
+        if align == "right":
+            # Výplň sprava doľava
+            fill_x = x_bar + (bar_width - fill_width)
+        else:
+            # Výplň zľava doprava
+            fill_x = x_bar
+
+        pygame.draw.rect(self.screen, bar_color, (fill_x, y_bar, fill_width, bar_height))
+        pygame.draw.rect(self.screen, (255, 255, 255), (x_bar, y_bar, bar_width, bar_height), 2)
+
+
