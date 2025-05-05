@@ -4,7 +4,7 @@ from share import Share
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-server = "172.20.10.5"
+server = "192.168.88.11"
 
 port = 11000
 
