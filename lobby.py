@@ -4,6 +4,7 @@ from PyQt6 import QtWidgets
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QVBoxLayout
 import subprocess
+import tkinter as tk
 
 import game
 import share
@@ -296,9 +297,13 @@ class Okno(QtWidgets.QMainWindow):
 
 
     def start(self):
+        root = tk.Tk()
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight()
+        root.destroy()
 
         self.close()#zatvorenie okna lobby
-        g = game.Game(800, 800)  # Očakávame, že trieda Game existuje v games.py
+        g = game.Game(screen_width, screen_height)  # Očakávame, že trieda Game existuje v games.py
         g.run()  # Spustíme hru
 
 
@@ -316,6 +321,7 @@ class Okno(QtWidgets.QMainWindow):
 
 app = QtWidgets.QApplication([])
 win = Okno()  # Vytvoríme GUI okno
+win.show()
 app.exec()  # Spustíme aplikáciu
 
 

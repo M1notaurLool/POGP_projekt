@@ -13,9 +13,11 @@ class Player():
         self.angle = 0
         self.color = color
         self.bullets = []  # Zoznam vystrelených projektilov
-        self.hits = 0  # <= Tu sledujeme počet zásahov
+        self.hits = 50  # <= Tu sledujeme počet zásahov/životov
         self.last_shot_time = 0  # posledný čas streľby
-        self.shoot_cooldown = 1  # sekundy medzi výstrelmi
+        self.shield_active = False
+        self.shield_timer = 0
+        self.boost_timer = 0
 
         self.image = pygame.image.load("obrazok/raketa_green.png").convert_alpha()
         self.image = pygame.transform.rotate(self.image, -90)  # Otočenie o 90° doprava
@@ -28,6 +30,10 @@ class Player():
         self.mask = pygame.mask.from_surface(rotated_image) #otacanie hitboxa podla rakety
         rect = rotated_image.get_rect(center=(self.x, self.y))
         g.blit(rotated_image, rect.topleft)
+
+         # ✨ Vizualizácia aktívneho štítu
+        if self.shield_active:
+            pygame.draw.circle(g, (0, 150, 255), (int(self.x), int(self.y)), self.image.get_width() // 2 + 10, 3)
 
         # Nakreslenie striel
         for bullet in self.bullets:
@@ -70,14 +76,13 @@ class Player():
     def shoot(self):
         """Vytvorí novú strelu v smere raketky."""
         current_time = time.time()
-        if current_time - self.last_shot_time >= self.shoot_cooldown:
-            bullet_speed = 7
-            radian_angle = math.radians(self.angle)
-            bullet_x = self.x + (self.image.get_width()/10 // 2) * math.cos(radian_angle)
-            bullet_y = self.y - (self.image.get_height()/10 // 2) * math.sin(radian_angle)
+        bullet_speed = 12
+        radian_angle = math.radians(self.angle)
+        bullet_x = self.x + (self.image.get_width()/10 // 2) * math.cos(radian_angle)
+        bullet_y = self.y - (self.image.get_height()/10 // 2) * math.sin(radian_angle)
 
-            self.bullets.append(Bullet(bullet_x, bullet_y, self.angle, bullet_speed))
-            self.last_shot_time = current_time  # aktualizuj čas poslednej strely
+        self.bullets.append(Bullet(bullet_x, bullet_y, self.angle, bullet_speed))
+        self.last_shot_time = current_time  # aktualizuj čas poslednej strely
     def update_bullets(self):
         """Aktualizuje polohu striel a odstráni tie, ktoré sú mimo obrazovky."""
         screen_width = pygame.display.get_surface().get_width()
@@ -108,7 +113,6 @@ class Player():
                     bx, by = bullet_data.split(",")
                     from bullet import Bullet
                     self.bullets.append(Bullet(int(bx), int(by), self.angle, speed=0))
-            self.hits = int(parts[-1])  # <- tu sa získa hit count
         except:
             pass
 
@@ -118,16 +122,28 @@ class Player():
 
     def check_hit(self, other_player):
         """
-        Skontroluje zásahy do druhého hráča a vymaže strely.
+        Skontroluje zásahy do druhého hráča a upraví životy.
         """
         other_rect = other_player.get_rect()
         other_mask = other_player.mask
 
         for bullet in self.bullets[:]:
-            bullet_rect = pygame.Rect(bullet.x - 5, bullet.y - 5, 10, 10)               #hitbox
+            bullet_rect = pygame.Rect(bullet.x - 5, bullet.y - 5, 10, 10)  # hitbox
             offset = (bullet_rect.x - other_rect.x, bullet_rect.y - other_rect.y)
 
             if other_mask.overlap(pygame.mask.Mask((10, 10), fill=True), offset):
                 self.bullets.remove(bullet)
-                self.hits += 1
-                print(f"Zásah! Hráč má {self.hits} hitov.")
+
+                # Tu upravujeme zdravie/hity
+                other_player.hits -= 1
+
+                print(f"Zásah! Moje životy: {self.hits}, súperove životy: {other_player.hits}")
+    def activate_shield(self):
+        self.shield_active = True
+        self.shield_timer = pygame.time.get_ticks()
+        print("Štít aktivovaný")
+
+    def activate_speed_boost(self):
+        self.velocity += 5
+        self.boost_timer = pygame.time.get_ticks()
+        print("Rýchlostný boost aktivovaný")
