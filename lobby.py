@@ -275,7 +275,7 @@ class Okno(QtWidgets.QMainWindow):
         self._btn_back_main = QtWidgets.QPushButton("VRÁTIŤ SA", self)
         self._btn_back_main.clicked.connect(self.main_window)
         self._btn_back_main.setStyleSheet(BUTTON_STYLE)
-
+ 
         multy = QVBoxLayout()
         multy.addStretch()
         multy.addSpacing(30)
