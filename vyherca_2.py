@@ -28,7 +28,7 @@ class Okno(QtWidgets.QMainWindow):
         vbox.addWidget(label)
 
         # 3) Podnadpis
-        label2 = QLabel("Hru vyhral hráč číslo 2!", self)
+        label2 = QLabel("Hru vyhral protihrac!", self)
         label2.setAlignment(Qt.AlignmentFlag.AlignCenter)
         label2.setStyleSheet("color: white; font-size: 20px; font-weight: bold;")
         vbox.addWidget(label2)

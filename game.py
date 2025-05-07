@@ -64,6 +64,10 @@ class Game:
             if hasattr(self.player, "boost_timer") and current_time - self.player.boost_timer > 3000:
                 self.player.velocity = 8
 
+
+            # Synchronizácia s druhým hráčom cez server
+            self.parse_data(self.send_data())
+
             # Po update_bullets() a pred kreslením
             self.player.check_hit(self.player2)
             self.player2.check_hit(self.player)
@@ -78,8 +82,7 @@ class Game:
                 pygame.quit()
                 subprocess.Popen([sys.executable, "vyherca_1.py"])
 
-            # Synchronizácia s druhým hráčom cez server
-            self.parse_data(self.send_data())
+
 
             # Kreslenie
             self.canvas.draw_background(background_image)

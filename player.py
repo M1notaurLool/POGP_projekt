@@ -113,6 +113,7 @@ class Player():
                     bx, by = bullet_data.split(",")
                     from bullet import Bullet
                     self.bullets.append(Bullet(int(bx), int(by), self.angle, speed=0))
+            self.hits = int(parts[-1])
         except:
             pass
 
