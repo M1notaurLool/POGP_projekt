@@ -43,7 +43,7 @@ class Okno(QtWidgets.QMainWindow):
 
     def return_to_lobby(self):
         self.hide()
-        subprocess.Popen([sys.executable, os.path.join(os.path.dirname(__file__), "lobby.py")])
+        subprocess.Popen([sys.executable, "lobby.py"])
 
     def closeEvent(self, event):
         # debug výpisy...
