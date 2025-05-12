@@ -75,12 +75,12 @@ class Game:
             if self.player.hits <= 0:
                 print("Vyhráva Hráč 2!")
                 pygame.quit()
-                subprocess.Popen([sys.executable, "vyherca_2.py"])
+                subprocess.Popen([sys.executable, "prehra.py"])
 
             if self.player2.hits <= 0:
                 print("Vyhráva Hráč 1!")
                 pygame.quit()
-                subprocess.Popen([sys.executable, "vyherca_1.py"])
+                subprocess.Popen([sys.executable, "vyhra.py"])
 
 
 
