@@ -5,7 +5,7 @@ from share import Share
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 
-server = "172.20.10.6"
+server = "192.168.88.11"
 
 
 

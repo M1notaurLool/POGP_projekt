@@ -3,14 +3,14 @@ import random
 
 class Boost:
     def __init__(self, image_path, x, y):
+        self.scale = 60
         self.image = pygame.image.load(image_path).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (40, 40))
+        self.image = pygame.transform.smoothscale(self.image, (self.scale, self.scale))
         self.rect = self.image.get_rect(center=(x, y))
         self.mask = pygame.mask.from_surface(self.image)
 
     def draw(self, screen):
         screen.blit(self.image, self.rect.topleft)
-        pygame.draw.circle(screen, (0, 255, 0), self.rect.center, 5)  # Debug kruh
 
     def check_collision(self, player):
         offset = (int(self.rect.x - player.get_rect().x), int(self.rect.y - player.get_rect().y))
