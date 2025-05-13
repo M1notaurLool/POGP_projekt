@@ -9,44 +9,64 @@ class Okno(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Triskáč blast")
-        self.setFixedSize(600, 600)
+        self.showFullScreen()
         self.init_ui()
 
+        # Globálny štýl pre QMainWindow a QPushButton
+        self.setStyleSheet("""
+            QMainWindow {
+                background-image: url('Obrazok/wellcome.png');
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+            }
+
+            QPushButton {
+                background-color: white;
+                color: black;
+                font-size: 20px;
+                font-weight: bold;
+                border-radius: 10px;
+                padding: 10px;
+            }
+
+            QPushButton:hover {
+                background-color: lightgray;
+            }
+        """)
+
     def init_ui(self):
-        # 1) Centrálny widget a layout
+        # Centrálny widget a layout
         central = QWidget(self)
         self.setCentralWidget(central)
         vbox = QVBoxLayout(central)
         vbox.setContentsMargins(0, 0, 0, 0)
         vbox.setSpacing(20)
 
-        # 2) "Výherca!" label
-        label = QLabel("Výherca!", self)
+        # Nadpis
+        label = QLabel("PREHRA!", self)
         label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        label.setStyleSheet("color: white; font-size: 60px; font-weight: bold;")
-        vbox.addStretch()  # odsadenie hore
+        label.setStyleSheet("""
+            color: white;
+            font-size: 100px;
+            font-weight: bold;
+            background-color: transparent;
+        """)
+        vbox.addStretch()
         vbox.addWidget(label)
 
-        # 3) Podnadpis
-        label2 = QLabel("Hru vyhral protihrac!", self)
-        label2.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        label2.setStyleSheet("color: white; font-size: 20px; font-weight: bold;")
-        vbox.addWidget(label2)
-
-        # 4) Tlačidlo vrátania
+        # Tlačidlo na návrat do menu
         btn = QPushButton("Vrátiť do hlavného menu", self)
         btn.setFixedSize(300, 50)
         btn.clicked.connect(self.return_to_lobby)
         vbox.addWidget(btn, alignment=Qt.AlignmentFlag.AlignCenter)
-
-        vbox.addStretch()  # odsadenie dole
+        vbox.addStretch()
 
     def return_to_lobby(self):
         self.hide()
-        subprocess.Popen([sys.executable, os.path.join(os.path.dirname(__file__), "lobby.py")])
+        subprocess.Popen([sys.executable, "lobby.py"])
 
     def closeEvent(self, event):
-        # debug výpisy...
         path_to_lobby = os.path.join(os.path.dirname(__file__), "lobby.py")
         if os.path.isfile(path_to_lobby):
             subprocess.Popen([sys.executable, path_to_lobby])
