@@ -88,3 +88,6 @@ if __name__ == "__main__":
     okno = Okno()
     okno.show()
     app.exec()
+    # Po zatvorení okna spusti lobby
+    subprocess.Popen([sys.executable, "lobby.py"])
+    sys.exit()
