@@ -8,8 +8,7 @@ class Boost:
         self.rect = self.image.get_rect(center=(x, y))
         self.mask = pygame.mask.from_surface(self.image)
 
-        # Pridanie pohybu
-        self.dx = random.choice([-1, 1]) * 0.5  # Pomalý pohyb
+        self.dx = random.choice([-1, 1]) * 0.5
         self.dy = random.choice([-1, 1]) * 0.5
         self.change_direction_timer = pygame.time.get_ticks()
 
@@ -17,11 +16,9 @@ class Boost:
         screen.blit(self.image, self.rect.topleft)
 
     def update(self):
-        # Pohyb boostu
         self.rect.x += self.dx
         self.rect.y += self.dy
 
-        # Okraj obrazovky
         screen_width = pygame.display.get_surface().get_width()
         screen_height = pygame.display.get_surface().get_height()
 
@@ -30,7 +27,6 @@ class Boost:
         if self.rect.top <= 0 or self.rect.bottom >= screen_height:
             self.dy *= -1
 
-        # Zmena smeru každé 3 sekundy
         if pygame.time.get_ticks() - self.change_direction_timer > 3000:
             self.dx = random.choice([-1, 1]) * 0.5
             self.dy = random.choice([-1, 1]) * 0.5
@@ -44,4 +40,20 @@ class Boost:
         return False
 
     def apply_to_player(self, player):
-        pass  # Implementujú podtriedy
+        # Tento boost napríklad aktivuje štít
+        player.activate_shield()
+
+    def serialize(self):
+        # Vráti string: "x,y,dx,dy"
+        return f"{int(self.rect.centerx)},{int(self.rect.centery)},{self.dx},{self.dy}"
+
+    @staticmethod
+    def deserialize(data_str):
+        try:
+            x, y, dx, dy = map(float, data_str.split(","))
+            boost = Boost("assets/boost.png", x, y)
+            boost.dx = dx
+            boost.dy = dy
+            return boost
+        except:
+            return None
