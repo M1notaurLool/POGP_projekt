@@ -31,6 +31,13 @@ class Game:
         clock = pygame.time.Clock()
         run = True
 
+        pygame.mixer.init()
+        pygame.mixer.music.load("soundFx/lobby_music.mp3")
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.5)
+        shot_sound = pygame.mixer.Sound("soundFx/zasahkratsi.mp3")
+        shot_sound.set_volume(0.5)
+
         background_image = pygame.image.load('obrazok/pozadie_hra.jpg')
         background_image = pygame.transform.scale(background_image, (self.width, self.height))
 
@@ -43,6 +50,7 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         self.player.shoot()
+                        shot_sound.play()
 
             keys = pygame.key.get_pressed()
 
