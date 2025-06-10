@@ -5,63 +5,100 @@ import math
 from bullet import Bullet
 
 class Player():
-    def __init__(self, startx, starty, color=(255,0,0)):
+    def __init__(self, startx, starty, color=(255,0,0), image_path="obrazok/raketa_blue.png"):
         self.x = startx
         self.y = starty
         self.velocity = 8
-        self.SCALE = 6          #velkost raket (realna velkost/SCALE)
+        self.SCALE = 6
         self.angle = 0
         self.color = color
-        self.bullets = []  # Zoznam vystrelených projektilov
-        self.hits = 50  # <= Tu sledujeme počet zásahov/životov
-        self.last_shot_time = 0  # posledný čas streľby
+        self.bullets = []
+        self.hits = 50
+        self.last_shot_time = 0
         self.shield_active = False
         self.shield_timer = 0
         self.boost_timer = 0
+        self.vel_x = 0
+        self.vel_y = 0
+        self.acceleration = 0.3
+        self.max_speed = 6
+        self.friction = 0.05
 
-        self.image = pygame.image.load("obrazok/raketa_green.png").convert_alpha()
-        self.image = pygame.transform.rotate(self.image, -90)  # Otočenie o 90° doprava
-        #nastavenie velkosti raketky podla rozmerov zmensena 10x
-        self.image = pygame.transform.smoothscale(self.image, (self.image.get_width()/self.SCALE, self.image.get_height()/self.SCALE))
-        self.mask = pygame.mask.from_surface(self.image) #vytvorenie masky pre hitbox
+        self.image = pygame.image.load(image_path).convert_alpha()
+        self.image = pygame.transform.rotate(self.image, -90)
+        self.image = pygame.transform.smoothscale(
+            self.image,
+            (self.image.get_width() // self.SCALE, self.image.get_height() // self.SCALE)
+        )
+        self.mask = pygame.mask.from_surface(self.image)
 
     def draw(self, g):
+        # Otočenie rakety
         rotated_image = pygame.transform.rotozoom(self.image, self.angle, 1.0)
-        self.mask = pygame.mask.from_surface(rotated_image) #otacanie hitboxa podla rakety
+        self.mask = pygame.mask.from_surface(rotated_image)
         rect = rotated_image.get_rect(center=(self.x, self.y))
         g.blit(rotated_image, rect.topleft)
 
-         # ✨ Vizualizácia aktívneho štítu
+        # ✅ Vizualizácia štítu
         if self.shield_active:
-            pygame.draw.circle(g, (0, 150, 255), (int(self.x), int(self.y)), self.image.get_width() // 2 + 10, 3)
+            pygame.draw.circle(g, (0, 100, 255), (int(self.x), int(self.y)), self.image.get_width() // 2 + 10, 3)
 
         # Nakreslenie striel
         for bullet in self.bullets:
             bullet.draw(g)
 
     def move_forward(self):
-        """Pohyb vpred podľa uhla raketky"""
         radian_angle = math.radians(self.angle)
-        speed = self.velocity
-        new_x = self.x + speed * math.cos(radian_angle)
-        new_y = self.y - speed * math.sin(radian_angle)
+        self.vel_x += self.acceleration * math.cos(radian_angle)
+        self.vel_y -= self.acceleration * math.sin(radian_angle)
 
+        # Orezanie na maximálnu rýchlosť
+        speed = math.hypot(self.vel_x, self.vel_y)
+        if speed > self.max_speed:
+            scale = self.max_speed / speed
+            self.vel_x *= scale
+            self.vel_y *= scale
+
+    def apply_friction_and_move(self):
+        # Aplikuj trenie
+        if self.vel_x > 0:
+            self.vel_x -= self.friction
+            if self.vel_x < 0:
+                self.vel_x = 0
+        elif self.vel_x < 0:
+            self.vel_x += self.friction
+            if self.vel_x > 0:
+                self.vel_x = 0
+
+        if self.vel_y > 0:
+            self.vel_y -= self.friction
+            if self.vel_y < 0:
+                self.vel_y = 0
+        elif self.vel_y < 0:
+            self.vel_y += self.friction
+            if self.vel_y > 0:
+                self.vel_y = 0
+
+        # Posun hráča
+        self.x += self.vel_x
+        self.y += self.vel_y
+
+        # Udržiavaj hráča v rámci obrazovky
         screen_width = pygame.display.get_surface().get_width()
         screen_height = pygame.display.get_surface().get_height()
         image_width = self.image.get_width() // 2
         image_height = self.image.get_height() // 2
 
-        if image_width <= new_x <= screen_width - image_width:
-            self.x = new_x
-        if image_height <= new_y <= screen_height - image_height:
-            self.y = new_y
+        self.x = max(image_width, min(self.x, screen_width - image_width))
+        self.y = max(image_height, min(self.y, screen_height - image_height))
+
     def rotate_left(self):
         """Otáčanie raketky doľava"""
-        self.angle += 3  # Normalizované otáčanie doľava
+        self.angle += 4  # Normalizované otáčanie doľava
 
     def rotate_right(self):
         """Otáčanie raketky doprava"""
-        self.angle -= 3
+        self.angle -= 4
 
     def move(self, dirn):
         if dirn == 0:
@@ -76,7 +113,7 @@ class Player():
     def shoot(self):
         """Vytvorí novú strelu v smere raketky."""
         current_time = time.time()
-        bullet_speed = 12
+        bullet_speed = self.max_speed + 6
         radian_angle = math.radians(self.angle)
         bullet_x = self.x + (self.image.get_width()/10 // 2) * math.cos(radian_angle)
         bullet_y = self.y - (self.image.get_height()/10 // 2) * math.sin(radian_angle)
@@ -92,30 +129,34 @@ class Player():
             if not (0 <= bullet.x <= pygame.display.get_surface().get_width() and 0 <= bullet.y <= pygame.display.get_surface().get_height()):  #veľkosť mapy
                 self.bullets.remove(bullet)
     def serialize(self, id):
-        # Získame pozíciu a uhol + strely ako zoznam x,y
+        # Formát: id:x,y,angle|x1,y1|x2,y2|...|hits|shield
         base = f"{id}:{int(self.x)},{int(self.y)},{int(self.angle)}"
-        if self.bullets:
-            bullets_str = "|".join([f"{int(b.x)},{int(b.y)}" for b in self.bullets])
-            return f"{base}|{bullets_str}|{self.hits}"  # Počet hitov na konci
-        return f"{base}||{self.hits}"
+        bullets_str = "|".join([f"{int(b.x)},{int(b.y)}" for b in self.bullets])
+        shield_flag = "1" if self.shield_active else "0"
+        if bullets_str:
+            return f"{base}|{bullets_str}|{self.hits}|{shield_flag}"
+        return f"{base}||{self.hits}|{shield_flag}"
 
     def deserialize(self, data):
-        # Očakáva formát: id:x,y,angle|x1,y1|x2,y2|...
         try:
             parts = data.split(":")[1].split("|")
             pos_parts = parts[0].split(",")
             self.x = int(pos_parts[0])
             self.y = int(pos_parts[1])
             self.angle = int(pos_parts[2])
+
             self.bullets = []
-            for bullet_data in parts[1:-1]:
+            # Strely sú medzi pozíciou a hits
+            for bullet_data in parts[1:-2]:
                 if bullet_data:
                     bx, by = bullet_data.split(",")
                     from bullet import Bullet
                     self.bullets.append(Bullet(int(bx), int(by), self.angle, speed=0))
-            self.hits = int(parts[-1])
-        except:
-            pass
+
+            self.hits = int(parts[-2])
+            self.shield_active = parts[-1] == "1"
+        except Exception as e:
+            print("Deserialization error:", e)
 
     def get_rect(self):
         rotated_image = pygame.transform.rotozoom(self.image, self.angle, 1.0)
@@ -148,6 +189,18 @@ class Player():
         print("Štít aktivovaný")
 
     def activate_speed_boost(self):
-        self.velocity += 5
+        self.max_speed += 5
         self.boost_timer = pygame.time.get_ticks()
         print("Rýchlostný boost aktivovaný")
+
+    def update(self):
+        # Vypnutie štítu a boostu
+        if self.shield_active and pygame.time.get_ticks() - self.shield_timer > 3000:
+            self.shield_active = False
+
+        if self.max_speed > 6 and pygame.time.get_ticks() - self.boost_timer > 5000:
+            self.max_speed = 6
+
+        # 💠 Fyzika pohybu
+        self.apply_friction_and_move()
+

@@ -1,12 +1,15 @@
 import sys
 import socket
 from PyQt6 import QtWidgets
-from PyQt6.QtCore  import Qt
+
+from PyQt6.QtCore import Qt, QUrl
+from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer
+
 from PyQt6.QtWidgets import QVBoxLayout
 import subprocess
 import tkinter as tk
 
-import game     
+import game
 import share
 
 BUTTON_STYLE = """
@@ -277,7 +280,7 @@ class Okno(QtWidgets.QMainWindow):
         self._btn_back_main = QtWidgets.QPushButton("VRÁTIŤ SA", self)
         self._btn_back_main.clicked.connect(self.main_window)
         self._btn_back_main.setStyleSheet(BUTTON_STYLE)
- 
+
         multy = QVBoxLayout()
         multy.addStretch()
         multy.addSpacing(30)
@@ -303,7 +306,7 @@ class Okno(QtWidgets.QMainWindow):
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight()
         root.destroy()
-
+        player.stop()
         self.close()#zatvorenie okna lobby
         g = game.Game(screen_width, screen_height)  # Očakávame, že trieda Game existuje v games.py
         g.run()  # Spustíme hru
@@ -322,6 +325,21 @@ class Okno(QtWidgets.QMainWindow):
 
 
 app = QtWidgets.QApplication([])
+
+audio_output = QAudioOutput()
+player = QMediaPlayer()
+player.setAudioOutput(audio_output)
+
+# Load the MP3 file
+player.setSource(QUrl.fromLocalFile("soundFx/lobby_music.mp3"))
+audio_output.setVolume(0.4)
+
+# Loop forever
+player.setLoops(QMediaPlayer.Loops.Infinite)
+
+# Play the music
+player.play()
+
 win = Okno()  # Vytvoríme GUI okno
 win.show()
 app.exec()  # Spustíme aplikáciu

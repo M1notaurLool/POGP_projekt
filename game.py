@@ -16,20 +16,35 @@ class Game:
         self.width = w
         self.height = h
         self.canvas = Canvas(self.width, self.height, "Space Blast")
-        self.player = Player(50, 50)
-        self.player2 = Player(100, 100)
+        self.player = Player(self.canvas.percent_x(10), self.canvas.percent_y(10))   # 10 % zľava, 10 % zhora
+        self.player2 = Player(self.canvas.percent_x(90), self.canvas.percent_y(10))
         self.boosts = []  # budú sa prijímať zo servera
 
         # === BOOSTY ===
         self.boosts = [
-            HealBoost("obrazok/heal.png", 600, 300),
-            Shield("obrazok/shield.png", 800, 500),
-            TurboBoost("obrazok/turbo.png", 1000, 400)
+            HealBoost("obrazok/heal.png", self.canvas.percent_x(30), self.canvas.percent_y(30)),
+            Shield("obrazok/shield.png", self.canvas.percent_x(50), self.canvas.percent_y(50)),
+            TurboBoost("obrazok/turbo.png", self.canvas.percent_x(70), self.canvas.percent_y(40))
         ]
+        if self.net.id == "0":
+            # Host (hráč 0) – bude modrý
+            self.player = Player(50, 50, image_path="obrazok/raketa_blue.png")
+            self.player2 = Player(100, 100, image_path="obrazok/raketa_red.png")
+        else:
+            # Klient (hráč 1) – tiež modrý pre seba
+            self.player = Player(100, 100, image_path="obrazok/raketa_blue.png")
+            self.player2 = Player(50, 50, image_path="obrazok/raketa_red.png")
 
     def run(self):
         clock = pygame.time.Clock()
         run = True
+
+        pygame.mixer.init()
+        pygame.mixer.music.load("soundFx/lobby_music.mp3")
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.5)
+        shot_sound = pygame.mixer.Sound("soundFx/zasahkratsi.mp3")
+        shot_sound.set_volume(0.5)
 
         background_image = pygame.image.load('obrazok/pozadie_hra.jpg')
         background_image = pygame.transform.scale(background_image, (self.width, self.height))
@@ -43,6 +58,7 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         self.player.shoot()
+                        shot_sound.play()
 
             keys = pygame.key.get_pressed()
 
@@ -58,11 +74,8 @@ class Game:
             self.player.update_bullets()
 
               # BOOST TRVANIE
-            current_time = pygame.time.get_ticks()
-            if self.player.shield_active and current_time - self.player.shield_timer > 5000:
-                self.player.shield_active = False
-            if hasattr(self.player, "boost_timer") and current_time - self.player.boost_timer > 3000:
-                self.player.velocity = 8
+            self.player.update()
+            self.player2.update()
 
 
             # Synchronizácia s druhým hráčom cez server
@@ -88,6 +101,8 @@ class Game:
             # === BOOSTY ===
             for boost in self.boosts[:]:
                 boost.update()
+                if not boost.active:
+                    self.boosts.remove(boost)
                 if boost.check_collision(self.player):
                     self.boosts.remove(boost)
                 else:
@@ -102,7 +117,11 @@ class Game:
                         Shield: "obrazok/shield.png",
                         TurboBoost: "obrazok/turbo.png"
                     }[boost_type]
-                    new_boost = boost_type(image_path, random.randint(100, 1800), random.randint(100, 900))
+                    new_boost = boost_type(
+                        image_path,
+                        self.canvas.percent_x(random.randint(5, 90)),
+                        self.canvas.percent_y(random.randint(10, 80))
+                    )
                     self.boosts.append(new_boost)
 
             self.player.draw(self.canvas.get_canvas())
@@ -130,8 +149,14 @@ class Canvas:
     def __init__(self, w, h, name="None"):
         self.width = w
         self.height = h
-        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
+        self.screen = pygame.display.set_mode((0,0), pygame.NOFRAME)
         pygame.display.set_caption(name)
+
+    def percent_x(self, percent):
+        return int((percent / 100) * self.width)
+
+    def percent_y(self, percent):
+        return int((percent / 100) * self.height)
 
     def draw_text(self, text, size, x, y, color=(255, 255, 255)):
         pygame.font.init()
