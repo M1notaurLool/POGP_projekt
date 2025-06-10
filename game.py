@@ -82,13 +82,12 @@ class Game:
                 pygame.quit()
                 subprocess.Popen([sys.executable, "vyhra.py"])
 
-
-
             # Kreslenie
             self.canvas.draw_background(background_image)
 
             # === BOOSTY ===
             for boost in self.boosts[:]:
+                boost.update()
                 if boost.check_collision(self.player):
                     self.boosts.remove(boost)
                 else:
@@ -112,8 +111,6 @@ class Game:
             self.canvas.draw_player_info("Hráč 2", self.player2.hits, max_hits=50, align="right", y_offset=10,color=(255, 100, 100), bar_color=(255, 100, 100))
             self.canvas.update()
 
-
-
     def send_data(self):
         """
         Odošle pozíciu, uhol aj strely hráča na server
@@ -129,9 +126,7 @@ class Game:
         self.player2.deserialize(data)
         return self.player2.x, self.player2.y, self.player2.angle
 
-
 class Canvas:
-
     def __init__(self, w, h, name="None"):
         self.width = w
         self.height = h

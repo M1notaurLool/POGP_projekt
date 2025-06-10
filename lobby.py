@@ -1,17 +1,19 @@
 import sys
 import socket
 from PyQt6 import QtWidgets
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore  import Qt
 from PyQt6.QtWidgets import QVBoxLayout
 import subprocess
 import tkinter as tk
 
-import game
+import game     
 import share
 
 BUTTON_STYLE = """
 QPushButton {
     font-size: 20px;
+    
+    
     font-family: 'Poppins';
     font-weight: bold;
     border: 1px solid white;

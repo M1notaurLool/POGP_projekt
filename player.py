@@ -128,6 +128,9 @@ class Player():
         other_rect = other_player.get_rect()
         other_mask = other_player.mask
 
+        if other_player.shield_active:
+            return  # ignoruj hity ak je shield aktívny
+
         for bullet in self.bullets[:]:
             bullet_rect = pygame.Rect(bullet.x - 5, bullet.y - 5, 10, 10)  # hitbox
             offset = (bullet_rect.x - other_rect.x, bullet_rect.y - other_rect.y)
