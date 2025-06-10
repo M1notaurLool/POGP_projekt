@@ -4,6 +4,11 @@ import pygame
 import math
 from bullet import Bullet
 
+pygame.mixer.init()
+hit_channel = pygame.mixer.Channel(1)
+hit_sound = pygame.mixer.Sound("soundFx/hit.mp3")
+hit_sound.set_volume(0.3)
+
 class Player():
     def __init__(self, startx, starty, color=(255,0,0), image_path="obrazok/raketa_blue.png"):
         self.x = startx
@@ -23,6 +28,7 @@ class Player():
         self.acceleration = 0.3
         self.max_speed = 6
         self.friction = 0.05
+        self.thrusting = False
 
         self.image = pygame.image.load(image_path).convert_alpha()
         self.image = pygame.transform.rotate(self.image, -90)
@@ -32,7 +38,22 @@ class Player():
         )
         self.mask = pygame.mask.from_surface(self.image)
 
+        self.flame_image = pygame.image.load("obrazok/flames.png").convert_alpha()
+        self.flame_image = pygame.transform.smoothscale(self.flame_image, (20, 40))
+
     def draw(self, g):
+        if abs(self.vel_x) > 0.1 or abs(self.vel_y) > 0.1:
+            rotated_flame = pygame.transform.rotozoom(self.flame_image, self.angle-90, 1.0)
+
+            # Získaj zadnú časť rakety (stred + opačný smer)
+            rad_angle = math.radians(self.angle)
+            offset_x = -math.cos(rad_angle) * (self.image.get_height() // 2 + 10)
+            offset_y = math.sin(rad_angle) * (self.image.get_height() // 2 + 10)
+
+            flame_pos = (self.x + offset_x - rotated_flame.get_width() // 2,
+                         self.y + offset_y - rotated_flame.get_height() // 2)
+
+            g.blit(rotated_flame, flame_pos)
         # Otočenie rakety
         rotated_image = pygame.transform.rotozoom(self.image, self.angle, 1.0)
         self.mask = pygame.mask.from_surface(rotated_image)
@@ -58,6 +79,8 @@ class Player():
             scale = self.max_speed / speed
             self.vel_x *= scale
             self.vel_y *= scale
+    def plamen(self):
+        self.thrusting = True
 
     def apply_friction_and_move(self):
         # Aplikuj trenie
@@ -181,6 +204,7 @@ class Player():
 
                 # Tu upravujeme zdravie/hity
                 other_player.hits -= 1
+                hit_channel.play(hit_sound)
 
                 print(f"Zásah! Moje životy: {self.hits}, súperove životy: {other_player.hits}")
     def activate_shield(self):
@@ -194,6 +218,7 @@ class Player():
         print("Rýchlostný boost aktivovaný")
 
     def update(self):
+        self.thrusting = False
         # Vypnutie štítu a boostu
         if self.shield_active and pygame.time.get_ticks() - self.shield_timer > 3000:
             self.shield_active = False
@@ -203,4 +228,6 @@ class Player():
 
         # 💠 Fyzika pohybu
         self.apply_friction_and_move()
+          # Resetujeme po každom update frame
+
 
