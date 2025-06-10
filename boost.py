@@ -11,6 +11,7 @@ class Boost:
         self.dx = random.choice([-1, 1]) * 0.5
         self.dy = random.choice([-1, 1]) * 0.5
         self.change_direction_timer = pygame.time.get_ticks()
+        self.active = True
 
     def draw(self, screen):
         screen.blit(self.image, self.rect.topleft)
@@ -23,9 +24,9 @@ class Boost:
         screen_height = pygame.display.get_surface().get_height()
 
         if self.rect.left <= 0 or self.rect.right >= screen_width:
-            self.dx *= -1
+            self.active = False
         if self.rect.top <= 0 or self.rect.bottom >= screen_height:
-            self.dy *= -1
+            self.active = False
 
         if pygame.time.get_ticks() - self.change_direction_timer > 3000:
             self.dx = random.choice([-1, 1]) * 0.5

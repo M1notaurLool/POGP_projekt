@@ -101,6 +101,8 @@ class Game:
             # === BOOSTY ===
             for boost in self.boosts[:]:
                 boost.update()
+                if not boost.active:
+                    self.boosts.remove(boost)
                 if boost.check_collision(self.player):
                     self.boosts.remove(boost)
                 else:
