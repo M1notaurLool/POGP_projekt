@@ -18,6 +18,11 @@ class Player():
         self.shield_active = False
         self.shield_timer = 0
         self.boost_timer = 0
+        self.vel_x = 0
+        self.vel_y = 0
+        self.acceleration = 0.3
+        self.max_speed = 6
+        self.friction = 0.05
 
         self.image = pygame.image.load(image_path).convert_alpha()
         self.image = pygame.transform.rotate(self.image, -90)
@@ -36,35 +41,64 @@ class Player():
 
         # ✅ Vizualizácia štítu
         if self.shield_active:
-            pygame.draw.circle(g, (0, 150, 255), (int(self.x), int(self.y)), self.image.get_width() // 2 + 10, 3)
+            pygame.draw.circle(g, (0, 100, 255), (int(self.x), int(self.y)), self.image.get_width() // 2 + 10, 3)
 
         # Nakreslenie striel
         for bullet in self.bullets:
             bullet.draw(g)
 
     def move_forward(self):
-        """Pohyb vpred podľa uhla raketky"""
         radian_angle = math.radians(self.angle)
-        speed = self.velocity
-        new_x = self.x + speed * math.cos(radian_angle)
-        new_y = self.y - speed * math.sin(radian_angle)
+        self.vel_x += self.acceleration * math.cos(radian_angle)
+        self.vel_y -= self.acceleration * math.sin(radian_angle)
 
+        # Orezanie na maximálnu rýchlosť
+        speed = math.hypot(self.vel_x, self.vel_y)
+        if speed > self.max_speed:
+            scale = self.max_speed / speed
+            self.vel_x *= scale
+            self.vel_y *= scale
+
+    def apply_friction_and_move(self):
+        # Aplikuj trenie
+        if self.vel_x > 0:
+            self.vel_x -= self.friction
+            if self.vel_x < 0:
+                self.vel_x = 0
+        elif self.vel_x < 0:
+            self.vel_x += self.friction
+            if self.vel_x > 0:
+                self.vel_x = 0
+
+        if self.vel_y > 0:
+            self.vel_y -= self.friction
+            if self.vel_y < 0:
+                self.vel_y = 0
+        elif self.vel_y < 0:
+            self.vel_y += self.friction
+            if self.vel_y > 0:
+                self.vel_y = 0
+
+        # Posun hráča
+        self.x += self.vel_x
+        self.y += self.vel_y
+
+        # Udržiavaj hráča v rámci obrazovky
         screen_width = pygame.display.get_surface().get_width()
         screen_height = pygame.display.get_surface().get_height()
         image_width = self.image.get_width() // 2
         image_height = self.image.get_height() // 2
 
-        if image_width <= new_x <= screen_width - image_width:
-            self.x = new_x
-        if image_height <= new_y <= screen_height - image_height:
-            self.y = new_y
+        self.x = max(image_width, min(self.x, screen_width - image_width))
+        self.y = max(image_height, min(self.y, screen_height - image_height))
+
     def rotate_left(self):
         """Otáčanie raketky doľava"""
-        self.angle += 3  # Normalizované otáčanie doľava
+        self.angle += 4  # Normalizované otáčanie doľava
 
     def rotate_right(self):
         """Otáčanie raketky doprava"""
-        self.angle -= 3
+        self.angle -= 4
 
     def move(self, dirn):
         if dirn == 0:
@@ -79,7 +113,7 @@ class Player():
     def shoot(self):
         """Vytvorí novú strelu v smere raketky."""
         current_time = time.time()
-        bullet_speed = 12
+        bullet_speed = self.max_speed + 6
         radian_angle = math.radians(self.angle)
         bullet_x = self.x + (self.image.get_width()/10 // 2) * math.cos(radian_angle)
         bullet_y = self.y - (self.image.get_height()/10 // 2) * math.sin(radian_angle)
@@ -155,15 +189,18 @@ class Player():
         print("Štít aktivovaný")
 
     def activate_speed_boost(self):
-        self.velocity += 5
+        self.max_speed += 5
         self.boost_timer = pygame.time.get_ticks()
         print("Rýchlostný boost aktivovaný")
 
     def update(self):
-        # 💠 Automatické vypnutie štítu po 3 sekundách
+        # Vypnutie štítu a boostu
         if self.shield_active and pygame.time.get_ticks() - self.shield_timer > 3000:
             self.shield_active = False
 
-        # 💠 Automatické vypnutie rýchlostného boostu po 5 sekundách
-        if self.velocity > 8 and pygame.time.get_ticks() - self.boost_timer > 5000:
-            self.velocity = 8
+        if self.max_speed > 6 and pygame.time.get_ticks() - self.boost_timer > 5000:
+            self.max_speed = 6
+
+        # 💠 Fyzika pohybu
+        self.apply_friction_and_move()
+
