@@ -9,13 +9,13 @@ from PyQt6.QtCore import Qt
 class Okno(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        self.return_to_lobby_requested = False  # kontrolný príznak
+        self.return_to_lobby_requested = False
 
-        self.setWindowTitle("Triskáč blast")
+        self.setWindowTitle("Triskáč blast - Prehra")
         self.showFullScreen()
         self.init_ui()
 
-        # 🔊 Spusti prehrávanie hudby
+        # 🎵 Prehra hudba
         pygame.mixer.init()
         pygame.mixer.music.load("soundFx/lose.mp3")
         pygame.mixer.music.play(-1)
@@ -50,7 +50,7 @@ class Okno(QtWidgets.QMainWindow):
         vbox.setContentsMargins(0, 0, 0, 0)
         vbox.setSpacing(20)
 
-        label = QLabel("VÝHRA!", self)
+        label = QLabel("PREHRA!", self)
         label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         label.setStyleSheet("""
             color: white;
@@ -68,13 +68,13 @@ class Okno(QtWidgets.QMainWindow):
         vbox.addStretch()
 
     def return_to_lobby(self):
-        self.return_to_lobby_requested = True  # nastav príznak
+        self.return_to_lobby_requested = True
         pygame.mixer.music.stop()
         self.close()
 
     def closeEvent(self, event):
         pygame.mixer.music.stop()
-        event.accept()  # len akceptuj — neštartuj lobby tu!
+        event.accept()  # Len akceptuj zatvorenie — lobby sa spúšťa mimo okna
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -82,6 +82,7 @@ if __name__ == "__main__":
     okno.show()
     app.exec()
 
+    # Spustenie lobby, ak používateľ klikol na tlačidlo
     if okno.return_to_lobby_requested:
         path_to_lobby = os.path.join(os.path.dirname(__file__), "lobby.py")
         if os.path.isfile(path_to_lobby):

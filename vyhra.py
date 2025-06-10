@@ -68,13 +68,14 @@ class Okno(QtWidgets.QMainWindow):
         vbox.addStretch()
 
     def return_to_lobby(self):
-        self.return_to_lobby_requested = True  # nastav príznak
+        self.return_to_lobby_requested = True
         pygame.mixer.music.stop()
         self.close()
 
     def closeEvent(self, event):
         pygame.mixer.music.stop()
-        event.accept()  # len akceptuj — neštartuj lobby tu!
+        self.return_to_lobby_requested = True  # Zabezpečí, že lobby sa otvorí aj pri X-ku
+        event.accept()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -82,6 +83,7 @@ if __name__ == "__main__":
     okno.show()
     app.exec()
 
+    # 🔁 Spusti lobby po zatvorení okna
     if okno.return_to_lobby_requested:
         path_to_lobby = os.path.join(os.path.dirname(__file__), "lobby.py")
         if os.path.isfile(path_to_lobby):
