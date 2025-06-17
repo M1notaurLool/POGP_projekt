@@ -1,12 +1,19 @@
 import socket
 from _thread import *
-import time
+import sys
+
+# Get IP and port from command-line arguments
+if len(sys.argv) != 3:
+    print("Usage: server.py <ip> <port>")
+    sys.exit(1)
+
+server = sys.argv[1]
+port = int(sys.argv[2])
 
 # Boost management
-boosts = []  # Shared boost positions and types
-taken_boost_ids = set()  # To keep track of used boosts
+boosts = []
+taken_boost_ids = set()
 
-# Add this if using custom boost sync
 def generate_boosts():
     return [
         "heal:600,300",
@@ -14,18 +21,17 @@ def generate_boosts():
         "turbo:1000,400"
     ]
 
+# Create and bind socket
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server = "192.168.10.53"
-port = 11000
-server_ip = socket.gethostbyname(server)
 
 try:
     s.bind((server, port))
 except socket.error as e:
-    print(str(e))
+    print(f"Bind failed: {e}")
+    sys.exit(1)
 
 s.listen(2)
-print("Waiting for a connection")
+print(f"Server started at {server}:{port}, waiting for connection...")
 
 currentId = "0"
 pos = ["0:50,50,0||50", "1:100,100,0||50"]
@@ -34,7 +40,6 @@ def threaded_client(conn, player_id):
     global currentId, pos, boosts, taken_boost_ids
 
     conn.send(str.encode(str(player_id)))
-    reply = ''
     while True:
         try:
             data = conn.recv(2048)
@@ -60,7 +65,6 @@ def threaded_client(conn, player_id):
     print("Connection Closed")
     conn.close()
 
-# Prepare shared boost data before game starts
 boosts = generate_boosts()
 
 while True:

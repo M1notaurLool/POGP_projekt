@@ -1,10 +1,8 @@
 import sys
 import socket
 from PyQt6 import QtWidgets
-
 from PyQt6.QtCore import Qt, QUrl
 from PyQt6.QtMultimedia import QAudioOutput, QMediaPlayer
-
 from PyQt6.QtWidgets import QVBoxLayout
 import subprocess
 import tkinter as tk
@@ -15,8 +13,6 @@ import share
 BUTTON_STYLE = """
 QPushButton {
     font-size: 20px;
-    
-    
     font-family: 'Poppins';
     font-weight: bold;
     border: 1px solid white;
@@ -50,13 +46,11 @@ QLineEdit:hover {
     background-color: #333333;
     cursor: pointer;
 }
-
 QLineEdit:focus {
     background-color: #333333;
     border: 4px solid white;
 }
 """
-
 
 class Network:
     def __init__(self, host="0.0.0.0", port=11000):
@@ -67,17 +61,15 @@ class Network:
         self.id = self.get_id()
 
     def get_id(self):
-        """Získa ID od servera pri prvom spojení."""
         try:
             self.client.sendto("get_id".encode(), self.addr)
             data, _ = self.client.recvfrom(2048)
             return data.decode()
         except socket.error as e:
-            print(f"Chyba pri získavaní ID: {e}")
+            print(f"Error getting ID: {e}")
             return None
 
     def send(self, data):
-        """Odošle dáta na server a prijme odpoveď."""
         try:
             self.client.sendto(data.encode(), self.addr)
             reply, _ = self.client.recvfrom(2048)
@@ -99,34 +91,27 @@ class Okno(QtWidgets.QMainWindow):
             }
         """)
 
-        # Predvolené IP a port
-        self._saved_address = "192.168.88.11"
-        self._saved_port = 11000
+        # Default IP and port
+        self._saved_address = share.Share.ip_add if share.Share.ip_add != "0.0.0.0" else "192.168.88.11"
+        self._saved_port = share.Share.port if share.Share.port != 0 else 11000
 
         self.main_window()
         self.showFullScreen()
 
     def button_pressed(self):
-        """Uloží IP adresu a port zo vstupov do globálneho configu."""
         ip = self._address.text()
         port_text = self._port.text()
         try:
             port = int(port_text)
-            self._saved_address =   ip
+            self._saved_address = ip
             self._saved_port = port
 
             share.Share.ip_add = ip
             share.Share.port = port
 
-            print(f"Uložená IP adresa: {ip}, PORT: {port}")
+            print(f"Saved IP: {ip}, PORT: {port}")
         except ValueError:
-            print("Zadaj platný číselný port.")
-
-    def get_saved_address(self):
-        return self._saved_address
-
-    def get_saved_port(self):
-        return self._saved_port
+            print("Please enter a valid port number.")
 
     def clear(self):
         for widget in self.findChildren(QtWidgets.QWidget):
@@ -135,7 +120,6 @@ class Okno(QtWidgets.QMainWindow):
     def main_window(self):
         self.clear()
 
-        # ŠTART tlačidlo
         self._btn_start = QtWidgets.QPushButton("START", self)
         self._btn_start.clicked.connect(self.start)
         self._btn_start.setStyleSheet(BUTTON_STYLE +
@@ -149,31 +133,18 @@ class Okno(QtWidgets.QMainWindow):
                                       "}"
                                       )
 
-        # MULTI PLAYER tlačidlo
         self._btn_multy_settings = QtWidgets.QPushButton("SETTINGS", self)
         self._btn_multy_settings.clicked.connect(self.multy)
         self._btn_multy_settings.setStyleSheet(BUTTON_STYLE)
 
         self._btn_server = QtWidgets.QPushButton("SERVER", self)
         self._btn_server.clicked.connect(self.server)
-        self._btn_server.setStyleSheet(BUTTON_STYLE +
-                                               "QPushButton {"
-                                               "margin-bottom: 50px;"
-                                               "}"
-                                               )
+        self._btn_server.setStyleSheet(BUTTON_STYLE + "QPushButton { margin-bottom: 50px; }")
 
-
-
-
-
-
-
-        # EXIT tlačidlo
         self._btn_exit = QtWidgets.QPushButton("EXIT", self)
         self._btn_exit.clicked.connect(self.exit)
         self._btn_exit.setStyleSheet(BUTTON_STYLE)
 
-        # Vertikálne: vystredovanie do stredu
         main_layout = QVBoxLayout()
         main_layout.addStretch()
         main_layout.addSpacing(30)
@@ -181,18 +152,13 @@ class Okno(QtWidgets.QMainWindow):
         main_layout.addWidget(self._btn_multy_settings, alignment=Qt.AlignmentFlag.AlignCenter)
         main_layout.addWidget(self._btn_server, alignment=Qt.AlignmentFlag.AlignCenter)
         main_layout.addWidget(self._btn_exit, alignment=Qt.AlignmentFlag.AlignCenter)
-
         main_layout.addStretch()
 
-        # Použije layout na celé okno
         central_widget = QtWidgets.QWidget(self)
         central_widget.setLayout(main_layout)
-        self.setCentralWidget(central_widget)  # <- required if you're in QMainWindow
-
-
+        self.setCentralWidget(central_widget)
 
     def server_pressed(self):
-
         ip = self.s_address.text()
         port_text = self.s_port.text()
         try:
@@ -203,126 +169,100 @@ class Okno(QtWidgets.QMainWindow):
             share.Share.s_ip = ip
             share.Share.s_port = port
 
-            print(f"Uložená IP adresa: {ip}, PORT: {port}")
+            print(f"Saved Server IP: {ip}, PORT: {port}")
         except ValueError:
-            print("Zadaj platný číselný port.")
-
+            print("Please enter a valid port number.")
 
     def run_server(self):
-        subprocess.Popen([sys.executable, "server.py"])
+        ip = self._saved_address
+        port = str(self._saved_port)
+
+        subprocess.Popen([sys.executable, "server.py", ip, port])
 
     def server(self):
         self.clear()
 
-        # Vstupy pre IP a port
         self.s_address = QtWidgets.QLineEdit(self._saved_address, self)
         self.s_address.setStyleSheet(INPUT)
 
         self.s_port = QtWidgets.QLineEdit(str(self._saved_port), self)
         self.s_port.setStyleSheet(INPUT)
 
-        # ULOŽIŤ tlačidlo
-        self._btn_save = QtWidgets.QPushButton("ULOŽIŤ", self)
+        self._btn_save = QtWidgets.QPushButton("SAVE", self)
         self._btn_save.clicked.connect(self.server_pressed)
         self._btn_save.setStyleSheet(BUTTON_STYLE)
 
-        self._btn_spusti_server = QtWidgets.QPushButton("SPUSTIŤ SERVER", self)
+        self._btn_spusti_server = QtWidgets.QPushButton("START SERVER", self)
         self._btn_spusti_server.clicked.connect(self.run_server)
-        self._btn_spusti_server.setStyleSheet(BUTTON_STYLE +
-                                     "QPushButton {"
-                                     "margin-bottom: 50px;"
-                                     "}"
-                                     )
+        self._btn_spusti_server.setStyleSheet(BUTTON_STYLE + "QPushButton { margin-bottom: 50px; }")
 
-        # SPÄŤ tlačidlo
-        self._btn_back_main = QtWidgets.QPushButton("VRÁTIŤ SA", self)
+        self._btn_back_main = QtWidgets.QPushButton("BACK", self)
         self._btn_back_main.clicked.connect(self.main_window)
         self._btn_back_main.setStyleSheet(BUTTON_STYLE)
 
-        server = QVBoxLayout()
-        server.addStretch()
-        server.addSpacing(30)
-        server.addWidget(self.s_address, alignment=Qt.AlignmentFlag.AlignCenter)
-        server.addWidget(self.s_port, alignment=Qt.AlignmentFlag.AlignCenter)
-        server.addWidget(self._btn_save, alignment=Qt.AlignmentFlag.AlignCenter)
-        server.addWidget(self._btn_spusti_server, alignment=Qt.AlignmentFlag.AlignCenter)
-        server.addWidget(self._btn_back_main, alignment=Qt.AlignmentFlag.AlignCenter)
-        server.addStretch()
+        layout = QVBoxLayout()
+        layout.addStretch()
+        layout.addSpacing(30)
+        layout.addWidget(self.s_address, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self.s_port, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self._btn_save, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self._btn_spusti_server, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self._btn_back_main, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addStretch()
 
         central_widget = QtWidgets.QWidget(self)
-        central_widget.setLayout(server)
+        central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
-
-
-
     def multy(self):
-
         self.clear()
 
-        # Vstupy pre IP a port
         self._address = QtWidgets.QLineEdit(self._saved_address, self)
         self._address.setStyleSheet(INPUT)
 
         self._port = QtWidgets.QLineEdit(str(self._saved_port), self)
         self._port.setStyleSheet(INPUT)
 
-        # ULOŽIŤ tlačidlo
-        self._btn_save = QtWidgets.QPushButton("ULOŽIŤ", self)
+        self._btn_save = QtWidgets.QPushButton("SAVE", self)
         self._btn_save.clicked.connect(self.button_pressed)
-        self._btn_save.setStyleSheet(BUTTON_STYLE +
-                                               "QPushButton {"
-                                               "margin-bottom: 50px;"
-                                               "}"
-                                               )
+        self._btn_save.setStyleSheet(BUTTON_STYLE + "QPushButton { margin-bottom: 50px; }")
 
-        # SPÄŤ tlačidlo
-        self._btn_back_main = QtWidgets.QPushButton("VRÁTIŤ SA", self)
+        self._btn_back_main = QtWidgets.QPushButton("BACK", self)
         self._btn_back_main.clicked.connect(self.main_window)
         self._btn_back_main.setStyleSheet(BUTTON_STYLE)
 
-        multy = QVBoxLayout()
-        multy.addStretch()
-        multy.addSpacing(30)
-        multy.addWidget(self._address, alignment=Qt.AlignmentFlag.AlignCenter)
-        multy.addWidget(self._port, alignment=Qt.AlignmentFlag.AlignCenter)
-        multy.addWidget(self._btn_save, alignment=Qt.AlignmentFlag.AlignCenter)
-        multy.addWidget(self._btn_back_main, alignment=Qt.AlignmentFlag.AlignCenter)
-        multy.addStretch()
+        layout = QVBoxLayout()
+        layout.addStretch()
+        layout.addSpacing(30)
+        layout.addWidget(self._address, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self._port, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self._btn_save, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self._btn_back_main, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addStretch()
 
-        # Použije layout na celé okno
         central_widget = QtWidgets.QWidget(self)
-        central_widget.setLayout(multy)
+        central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
     def exit(self):
         sys.exit()
-
-     # Spustí nový proces
-
 
     def start(self):
         root = tk.Tk()
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight()
         root.destroy()
-        player.stop()
-        self.close()#zatvorenie okna lobby
-        g = game.Game(screen_width, screen_height)  # Očakávame, že trieda Game existuje v games.py
-        g.run()  # Spustíme hru
 
-
-    def periodic(self):
-        """Periodicky kontroluje prijaté správy zo socketu."""
         try:
-            self._sock.settimeout(0.1)
-            data, addr = self._sock.recvfrom(1024)
-            message = data.decode()
-            self.add_message(addr[0], message)
-        except socket.timeout:
+            player.stop()  # Stop music before starting game
+        except Exception:
             pass
 
+        self.close()  # Close lobby window
 
+        # Start the game
+        g = game.Game(screen_width, screen_height)
+        g.run()
 
 app = QtWidgets.QApplication([])
 
@@ -330,19 +270,12 @@ audio_output = QAudioOutput()
 player = QMediaPlayer()
 player.setAudioOutput(audio_output)
 
-# Load the MP3 file
 player.setSource(QUrl.fromLocalFile("soundFx/lobby_music.mp3"))
 audio_output.setVolume(0.4)
 
-# Loop forever
 player.setLoops(QMediaPlayer.Loops.Infinite)
-
-# Play the music
 player.play()
 
-win = Okno()  # Vytvoríme GUI okno
+win = Okno()
 win.show()
-app.exec()  # Spustíme aplikáciu
-
-
-
+app.exec()

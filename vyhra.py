@@ -1,6 +1,7 @@
 import subprocess
 import sys
 import os
+import time
 import pygame
 from PyQt6 import QtWidgets
 from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QVBoxLayout, QPushButton
@@ -9,13 +10,13 @@ from PyQt6.QtCore import Qt
 class Okno(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        self.return_to_lobby_requested = False  # kontrolný príznak
+        self.return_to_lobby_requested = False
 
         self.setWindowTitle("Triskáč blast")
         self.showFullScreen()
         self.init_ui()
 
-        # 🔊 Spusti prehrávanie hudby
+        # 🎵 Play win music
         pygame.mixer.init()
         pygame.mixer.music.load("soundFx/win.mp3")
         pygame.mixer.music.play(-1)
@@ -28,7 +29,6 @@ class Okno(QtWidgets.QMainWindow):
                 background-position: center;
                 background-size: cover;
             }
-
             QPushButton {
                 background-color: white;
                 color: black;
@@ -37,7 +37,6 @@ class Okno(QtWidgets.QMainWindow):
                 border-radius: 10px;
                 padding: 10px;
             }
-
             QPushButton:hover {
                 background-color: lightgray;
             }
@@ -69,22 +68,31 @@ class Okno(QtWidgets.QMainWindow):
 
     def return_to_lobby(self):
         self.return_to_lobby_requested = True
-        pygame.mixer.music.stop()
         self.close()
 
     def closeEvent(self, event):
         pygame.mixer.music.stop()
-        self.return_to_lobby_requested = True  # Zabezpečí, že lobby sa otvorí aj pri X-ku
+
+        if self.return_to_lobby_requested:
+            # 🧠 Debugging + fallback
+            try:
+                lobby_path = os.path.join(os.path.dirname(__file__), "lobby.py")
+                print(f"▶ Trying to launch: {lobby_path}")
+
+                if os.path.isfile(lobby_path):
+                    # Windows fix: Use shell=True, and pass full command as string
+                    subprocess.Popen(f'"{sys.executable}" "{lobby_path}"', shell=True)
+                    print("✅ lobby.py launched.")
+                    time.sleep(1)
+                else:
+                    print("❌ lobby.py not found.")
+            except Exception as e:
+                print(f"⚠️ Error launching lobby.py: {e}")
+
         event.accept()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     okno = Okno()
     okno.show()
-    app.exec()
-
-    # 🔁 Spusti lobby po zatvorení okna
-    if okno.return_to_lobby_requested:
-        path_to_lobby = os.path.join(os.path.dirname(__file__), "lobby.py")
-        if os.path.isfile(path_to_lobby):
-            subprocess.Popen([sys.executable, path_to_lobby])
+    sys.exit(app.exec())
